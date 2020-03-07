@@ -39,7 +39,8 @@ Karol Ślusarz:
 Podstawy inżynierii programowania/inżynieria programowania: Bank  
 Temat pracy inżynierskiej: Zamek elektroniczny 
 
-Mateusz Wójcik
+Mateusz Wójcik:
+
 Podstawy inżynierii programowania/inżynieria programowania: System zarządzania lotniskiem
 Temat pracy inżynierksiej: Plugin do IDE Intelij
   
