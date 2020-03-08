@@ -42,6 +42,7 @@ Temat pracy inżynierskiej: Zamek elektroniczny
 Mateusz Wójcik:
 
 Podstawy inżynierii programowania/inżynieria programowania: System zarządzania lotniskiem
+
 Temat pracy inżynierksiej: Plugin do IDE Intelij
   
 Podział prac:   
