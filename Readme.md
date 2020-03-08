@@ -25,14 +25,14 @@ Administrator
 *może przeglądać raporty z poszczególnych tras  
   
 Wykorzystywane technologie:  
-Front-end: Angular  
+Front-end: Angular, Bootstrap, Kendo UI  
 Back-end: Spring  
 Baza danych: MySQL (+ ewentualnie ElasticSearch)  
   
 Skład zespołu:  
 Karol Ślusarz  
 Mateusz Wójcik  
-Vladyslaw Bilous  
+Vladyslav Bilous  
   
 Realizowane tematy:  
 Karol Ślusarz:  
@@ -44,6 +44,10 @@ Mateusz Wójcik:
 Podstawy inżynierii programowania/inżynieria programowania: System zarządzania lotniskiem
 
 Temat pracy inżynierksiej: Plugin do IDE Intelij
+
+Vladyslav Bilous:
+Podstawy inżynierii programowania/inżynieria programowania: System zarządzania lotniskiem
+Temat pracy inżynierksiej: Aplikacja do zarządzania finansami firmy
   
 Podział prac:   
 Karol Ślusarz: system uprawnień, funkcje administratora  
