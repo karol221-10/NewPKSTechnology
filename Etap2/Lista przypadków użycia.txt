@@ -1,0 +1,78 @@
+Przypadek użycia 1 – kupno biletu
+Aktor główny – użytkownik zalogowany
+Zakres: moduł biletów
+Poziom: Użytkownik chce kupić i wydrukować bilet na kurs autobusowy.
+Warunek początkowy: Użytkownik znajduje się na stronie głównej
+Minimalna gwarancja: Użytkownik nie wykonuje przelewu za bilet, bilet nie zostanie kupiony
+Gwarancja powodzenia: Użytkownik wykonał opłatę za bilet. Użytkownik może wydrukować bilet 
+Wyzwalacz: Użytkownik wchodzi na stronę rozkładu jazdy
+Główny scenariusz powodzenia:
+1. Uzupełnienie warunków filtrowania (miejscowości początkowej i końcowej)
+2. Wybranie interesującego kursu i kliknięcie przycisku „Kup bilet”
+3. Wybranie rodzaju biletu (normalny, ulgowy), wprowadzenie kodu zniżkowego
+4. Przeczytanie strony podsumowującej zamówienie. Wyświetlenie listy dodatkowych zniżek Kliknięcie przycisku „Kup”
+5. Przeniesienie na stronę zewnętrznego dostawcy płatności i dokończenie zamówienia
+6. Powrót na stronę serwisu, wyświetlenie kodu QR zawierającego ID biletu
+7. Kliknięcie przycisku „Wydrukuj bilet”.
+
+Lista wariantów
+2a: Na dany kurs została wyczerpana liczba miejsc 
+3: Wyświetl komunikat informujący o błędzie „Nie można zapisać na kurs, brak miejsc”
+
+5a: Użytkownik nie dokończył płatności w sposób prawidłowy
+6: Wyświetl komunikat o błędzie „Błąd przeprowadzenia płatności”
+
+Przypadek użycia 2 – kierowca busu
+Aktor główny – kierowca busu
+Zakres: moduł biletów
+Poziom: Kierowca busu chce sprawdzić listę pasażerów na kurs
+Warunek początkowy: Użytkownik znajduje się na stronie głównej, jest zalogowany jako kierowca busu
+Minimalna gwarancja: Stan systemu nie zmienia się
+Gwarancja powodzenia: Użytkownik pobiera listę pasażerów
+Wyzwalacz: Użytkownik wchodzi na stronę „Lista kursów”
+Główny scenariusz powodzenia:
+1. Wybranie aktualnie odbywanego kursu
+2. Wyświetlenie listy pasażerów
+3. Pobranie wydruku w formie PDF
+
+Lista wariantów
+2a: Kierowca nie posiada żadnych kursów
+3: Wyświetl komunikat informujący o sytuacji wyjątkowej: „Brak odbywanych kursów”. 
+
+Przypadek użycia 3 – administrator
+Aktor główny – administrator
+Zakres: moduł zarządzania
+Poziom: Administrator chce dodać nowy kurs
+Warunek początkowy: Użytkownik znajduje się na stronie listy kursów
+Minimalna gwarancja: Stan systemu nie zmienia się
+Gwarancja powodzenia: Nowy kurs zostaje dodane
+Wyzwalacz: Użytkownik wchodzi na stronę „Lista kursów”
+Główny scenariusz powodzenia:
+1. Kliknięcie przycisku „Dodaj nowy kurs”
+2. Uzupełnienie formatki podstawowych informacji o kursie 
+2a. Wybór autobusu (pociąga za sobą wybór kierowcy)
+2b. Wprowadzenie daty i godziny kursu
+3. Uzupełnienie listy przystanków 
+4. Zapis kursu
+
+Lista wariantów
+2a: Nie dodano żadnych przystanków
+3: Wyświetl komunikat informujący o sytuacji wyjątkowej: „Kurs musi posiadać co najmniej dwa przystanki”. 
+
+Przypadek użycia 4 – administrator
+Aktor główny – administrator
+Zakres: moduł zarządzania
+Poziom: Administrator chce dodać nowe zniżki
+Warunek początkowy: Użytkownik znajduje się na stronie listy zniżek
+Minimalna gwarancja: Stan systemu nie zmienia się
+Gwarancja powodzenia: Nowa zniżka zostaje dodana
+Wyzwalacz: Użytkownik wchodzi na stronę „Lista zniżek”
+Główny scenariusz powodzenia:
+1. Kliknięcie przycisku „Dodaj zniżkę”
+2. Wprowadzenie warunku udzielenia zniżki (liczba kursów/kwota wydana na bilety)
+3. Wprowadzenie procentowej wartości zniżki.
+4. Zatwierdzenie zniżki
+
+Lista wariantów
+2a: Nieprawidłowo wypełniony formularz (podanie ujemnej kwoty w warunku/liczbie kursów)
+3: Wyświetl komunikat informujący o sytuacji wyjątkowej: „Formularz został nieprawidłowo wypełniony)
