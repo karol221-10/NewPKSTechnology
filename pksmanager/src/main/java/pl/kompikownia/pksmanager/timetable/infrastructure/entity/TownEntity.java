@@ -7,7 +7,7 @@ import javax.persistence.Id;
 
 
 @Entity(name = "Town")
-public class Town{
+public class TownEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,10 +15,10 @@ public class Town{
 
     private String name;
 
-    public Town() {
+    public TownEntity() {
     }
 
-    public Town(String name) {
+    public TownEntity(String name) {
         this.name = name;
     }
 
@@ -40,7 +40,7 @@ public class Town{
 
     @Override
     public String toString() {
-        return "Town{" +
+        return "TownEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
