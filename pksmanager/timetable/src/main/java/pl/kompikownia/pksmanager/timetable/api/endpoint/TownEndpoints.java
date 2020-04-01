@@ -1,5 +1,6 @@
 package pl.kompikownia.pksmanager.timetable.api.endpoint;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import pl.kompikownia.pksmanager.cqrs.domain.QueryExecutor;
@@ -12,6 +13,7 @@ import java.util.List;
 
 
 @Controller
+@AllArgsConstructor
 public class TownEndpoints {
 
     private QueryExecutor queryExecutor;

@@ -9,7 +9,6 @@ import pl.kompikownia.pksmanager.timetable.infrastructure.entity.TownEntity;
 import pl.kompikownia.pksmanager.timetable.infrastructure.repository.jpa.TownEntityRepositoryImpl;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,17 +19,14 @@ public class GetTownListQueryHandler extends QueryHandler<List<TownView>, GetTow
     @Inject
     TownEntityRepositoryImpl repository = new TownEntityRepositoryImpl();
 
-    public List<TownView>  convertToView(List<TownEntity> townEntities){
+    public List<TownView> convertToView(List<TownEntity> townEntities){
 
         List<TownView> result = townEntities.stream().map(temp ->{
-            TownView obj = new TownView();
-            obj.setId(temp.getId());
-            obj.setName(temp.getName());
-
+          TownView obj = TownView.builder().id(temp.getId()).name(temp.getName()).build();
             return obj;
         }).collect(Collectors.toList());
 
-
+        return result;
     }
 
     @Override
