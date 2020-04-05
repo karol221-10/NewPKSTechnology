@@ -4,6 +4,7 @@ package pl.kompikownia.pksmanager.timetable.infrastructure.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,4 +20,8 @@ public class ScheduleEntity {
     private Long workerId;
     private boolean isActive;
     private float price;
+
+    @OneToMany(mappedBy = "schedule")
+    private List<BusStopEntity> busStopEntities;
+
 }

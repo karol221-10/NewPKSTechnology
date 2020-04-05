@@ -24,6 +24,17 @@ public class ScheduleEntityRepositoryImpl implements ScheduleEntityRepository {
     }
 
     @Override
+    public List<ScheduleEntity> findCoursebyTownId(Long id1, Long id2) {
+        JPAQuery<ScheduleEntity> query = new JPAQuery<>(em);
+
+        QScheduleEntity scheduleEntity = QScheduleEntity.scheduleEntity;
+
+      // return query.from(scheduleEntity).where(scheduleEntity.busStopEntities.get(0).townId.eq(id1).and(scheduleEntity.busStopEntities.get(scheduleEntity.busStopEntities.get(scheduleEntity.busStopEntities.size().)).townId.eq(id2))))
+        //return query.from(scheduleEntity).where(scheduleEntity.busStopEntities.get(0).eq(id1).and(scheduleEntity.busStopEntities.get(scheduleEntity.busStopEntities.get())))
+        return null;
+    }
+
+    @Override
     public List<ScheduleEntity> findAll() {
         JPAQuery<ScheduleEntity> query = new JPAQuery<>(em);
 
