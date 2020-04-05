@@ -19,4 +19,6 @@ public class QueryHandlerFactoryImpl implements QueryHandlerFactory {
     public void addQueryHandler(QueryHandler<?, ? extends Query> queryHandler, Class<Query<?>> query) {
         queryHandlerMap.put(query, queryHandler);
     }
+
+
 }
