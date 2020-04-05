@@ -24,6 +24,7 @@
         <java.version>1.8</java.version>
         <querydsl.version>4.1.3</querydsl.version>
         <swaggerui.version>2.9.2</swaggerui.version>
+        <springbootmaven.version>1.4.2.RELEASE</springbootmaven.version>
         <spring-boot.repackage.skip>true</spring-boot.repackage.skip>
     </properties>
 
