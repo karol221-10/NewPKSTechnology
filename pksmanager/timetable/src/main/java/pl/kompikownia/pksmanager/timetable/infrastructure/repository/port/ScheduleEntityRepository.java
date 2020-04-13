@@ -8,7 +8,7 @@ public interface ScheduleEntityRepository {
 
     public ScheduleEntity save(ScheduleEntity scheduleEntity);
 
-    public List<ScheduleEntity> findCoursebyTownId(Long id1, Long id2);
+    public List<ScheduleEntity> findCourseByTownId(Long id1, Long id2);
 
     public List<ScheduleEntity> findAll();
 
