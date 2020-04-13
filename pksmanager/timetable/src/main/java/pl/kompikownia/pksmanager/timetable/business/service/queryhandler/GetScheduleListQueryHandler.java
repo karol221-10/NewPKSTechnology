@@ -1,20 +1,23 @@
 package pl.kompikownia.pksmanager.timetable.business.service.queryhandler;
 
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import pl.kompikownia.pksmanager.cqrs.domain.QueryHandler;
+import pl.kompikownia.pksmanager.cqrs.infrastructure.Handler;
 import pl.kompikownia.pksmanager.timetable.api.response.ScheduleView;
 import pl.kompikownia.pksmanager.timetable.business.api.internal.query.GetScheduleListQuery;
 import pl.kompikownia.pksmanager.timetable.infrastructure.entity.BusStopEntity;
 import pl.kompikownia.pksmanager.timetable.infrastructure.entity.ScheduleEntity;
-import pl.kompikownia.pksmanager.timetable.infrastructure.entity.TownEntity;
 import pl.kompikownia.pksmanager.timetable.infrastructure.repository.jpa.ScheduleEntityRepositoryImpl;
 
-import javax.inject.Inject;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
+@AllArgsConstructor
+@Handler
 public class GetScheduleListQueryHandler extends QueryHandler<List<ScheduleView>, GetScheduleListQuery> {
 
-    @Inject
     ScheduleEntityRepositoryImpl repository = new ScheduleEntityRepositoryImpl();
 
 
@@ -58,10 +61,8 @@ public class GetScheduleListQueryHandler extends QueryHandler<List<ScheduleView>
     }
 
 
-
-
     @Override
     public List<ScheduleView> handle(GetScheduleListQuery query) {
-        return convertToView(shortList(id1,id2));
+        return convertToView(shortList(query.getId1(),query.getId2()));
     }
 }
