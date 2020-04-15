@@ -1,5 +1,6 @@
 package pl.kompikownia.pksmanager.timetable.business.service.queryhandler;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pl.kompikownia.pksmanager.cqrs.domain.QueryHandler;
 import pl.kompikownia.pksmanager.cqrs.infrastructure.Handler;
@@ -14,9 +15,10 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Handler
+@AllArgsConstructor
 public class GetTownListQueryHandler extends QueryHandler<List<TownView>, GetTownListQuery> {
 
-    @Inject
+
     TownEntityRepositoryImpl repository = new TownEntityRepositoryImpl();
 
     public List<TownView> convertToView(List<TownEntity> townEntities){

@@ -8,10 +8,12 @@ public interface ScheduleEntityRepository {
 
     public ScheduleEntity save(ScheduleEntity scheduleEntity);
 
+    public List<ScheduleEntity> findCourseByTownId(Long id1, Long id2);
 
     public List<ScheduleEntity> findAll();
 
     public List<ScheduleEntity> findById(Long id);
 
     public void deleteById(Long id);
+
 }
