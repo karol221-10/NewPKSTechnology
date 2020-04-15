@@ -5,11 +5,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.kompikownia.pksmanager.cqrs.domain.QueryExecutor;
-import pl.kompikownia.pksmanager.timetable.api.response.ScheduleView;
+import pl.kompikownia.pksmanager.timetable.api.mapper.ScheduleToScheduleForListViewMapper;
+import pl.kompikownia.pksmanager.timetable.api.response.ScheduleForListView;
 import pl.kompikownia.pksmanager.timetable.business.api.internal.query.GetScheduleListQuery;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @AllArgsConstructor
@@ -18,14 +20,15 @@ public class ScheduleEndpoints {
     private QueryExecutor queryExecutor;
 
     @GetMapping("/api/schedule")
-    List<String> getScheduleForTowns(@RequestParam Long id1,@RequestParam Long id2){
+    List<ScheduleForListView> getScheduleForTowns(@RequestParam Long sourceTownId,@RequestParam Long destinationTownId){
         GetScheduleListQuery getScheduleListQuery = GetScheduleListQuery.builder()
-                .id1(id1)
-                .id2(id2)
+                .sourceTownId(sourceTownId)
+                .destinationTownId(destinationTownId)
                 .build();
 
-        List<ScheduleView> result = queryExecutor.execute(getScheduleListQuery);
-
-        return Collections.singletonList(result.toString());
+        return queryExecutor.execute(getScheduleListQuery)
+                .stream()
+                .map(ScheduleToScheduleForListViewMapper::map)
+                .collect(Collectors.toList());
     }
 }

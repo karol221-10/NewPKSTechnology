@@ -1,0 +1,8 @@
+package pl.kompikownia.pksmanager.timetable.infrastructure.repository.port;
+
+import org.springframework.data.repository.CrudRepository;
+import pl.kompikownia.pksmanager.timetable.infrastructure.entity.ScheduleEntity;
+
+
+public interface ScheduleCrudRepository extends CrudRepository<ScheduleEntity, Long> {
+}

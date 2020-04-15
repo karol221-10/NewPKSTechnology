@@ -1,10 +1,8 @@
 package pl.kompikownia.pksmanager.timetable.infrastructure.entity;
 
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import pl.kompikownia.pksmanager.timetable.business.projection.BusStopProjection;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,6 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @EqualsAndHashCode
+@Builder
 public class BusStopEntity {
 
     @Id
@@ -30,4 +29,22 @@ public class BusStopEntity {
 
     private LocalDateTime arrivalDate;
     private LocalDateTime departureDate;
+
+    public BusStopProjection toProjection() {
+        return BusStopProjection.builder()
+                .id(id)
+                .scheduleId(schedule.getId())
+                .townId(town.getId())
+                .arrivalDate(arrivalDate)
+                .departureDate(departureDate)
+                .build();
+    }
+
+    public static BusStopEntity of(EntityManager em, BusStopProjection busStopProjection) {
+        return BusStopEntity.builder()
+                .id(busStopProjection.getId())
+                .schedule(em.getReference(ScheduleEntity.class, busStopProjection.getScheduleId()))
+                .town(em.getReference(TownEntity.class, busStopProjection.getTownId()))
+                .build();
+    }
 }

@@ -1,9 +1,6 @@
 package pl.kompikownia.pksmanager.timetable.infrastructure.entity;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,6 +11,9 @@ import java.util.List;
 @Setter
 @ToString
 @EqualsAndHashCode
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class TownEntity{
 
     @Id
