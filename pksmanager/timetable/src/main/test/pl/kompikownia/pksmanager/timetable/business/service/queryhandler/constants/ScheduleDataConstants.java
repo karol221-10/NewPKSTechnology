@@ -1,7 +1,5 @@
 package pl.kompikownia.pksmanager.timetable.business.service.queryhandler.constants;
 
-import org.springframework.format.datetime.DateFormatter;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 

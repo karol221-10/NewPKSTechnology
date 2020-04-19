@@ -8,8 +8,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import pl.kompikownia.pksmanager.cqrs.domain.QueryExecutor;
 import pl.kompikownia.pksmanager.timetable.base.IntegrationTest;
@@ -19,10 +17,8 @@ import pl.kompikownia.pksmanager.timetable.business.projection.ScheduleProjectio
 import pl.kompikownia.pksmanager.timetable.business.repository.BusStopRepository;
 import pl.kompikownia.pksmanager.timetable.business.repository.ScheduleEntityRepository;
 import pl.kompikownia.pksmanager.timetable.business.repository.TownEntityRepository;
-import pl.kompikownia.pksmanager.timetable.business.service.queryhandler.constants.ScheduleDataPreparement;
 
 import javax.transaction.Transactional;
-
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
