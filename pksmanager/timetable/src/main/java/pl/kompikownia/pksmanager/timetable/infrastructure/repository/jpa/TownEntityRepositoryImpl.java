@@ -2,26 +2,30 @@ package pl.kompikownia.pksmanager.timetable.infrastructure.repository.jpa;
 
 import com.querydsl.jpa.impl.JPADeleteClause;
 import com.querydsl.jpa.impl.JPAQuery;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pl.kompikownia.pksmanager.timetable.infrastructure.entity.QTownEntity;
 import pl.kompikownia.pksmanager.timetable.infrastructure.entity.TownEntity;
-import pl.kompikownia.pksmanager.timetable.infrastructure.repository.port.TownEntityRepository;
+import pl.kompikownia.pksmanager.timetable.business.repository.TownEntityRepository;
+import pl.kompikownia.pksmanager.timetable.infrastructure.repository.port.TownCrudRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
+@RequiredArgsConstructor
 public class TownEntityRepositoryImpl implements TownEntityRepository {
 
     @PersistenceContext
     private EntityManager em;
 
+    private final TownCrudRepository townCrudRepository;
+
 
     @Override
     public TownEntity save(TownEntity townEntity) {
-        em.persist(townEntity);
-        return townEntity;
+        return townCrudRepository.save(townEntity);
     }
 
     @Override
@@ -47,5 +51,8 @@ public class TownEntityRepositoryImpl implements TownEntityRepository {
         deleteClause.where(townEntity.id.eq(id)).execute();
     }
 
-
+    @Override
+    public void deleteAll() {
+        townCrudRepository.deleteAll();
+    }
 }

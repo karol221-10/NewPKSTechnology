@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class GetTownListQueryHandler extends QueryHandler<List<TownView>, GetTownListQuery> {
 
 
-    TownEntityRepositoryImpl repository = new TownEntityRepositoryImpl();
+    TownEntityRepositoryImpl repository;
 
     public List<TownView> convertToView(List<TownEntity> townEntities){
 

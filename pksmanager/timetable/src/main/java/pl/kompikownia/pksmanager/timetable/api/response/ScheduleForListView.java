@@ -7,18 +7,21 @@ import lombok.ToString;
 
 import pl.kompikownia.pksmanager.timetable.infrastructure.entity.BusStopEntity;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @ToString
 @Getter
 @Builder
 @AllArgsConstructor(staticName = "of")
-public class ScheduleView {
+public class ScheduleForListView {
 
-    private Long id;
-    private Long busId;
-    private Long workerId;
-    private boolean isActive;
-    private float price;
-    private List<BusStopEntity> busStopEntities;
+    private long id;
+    private long leavingFrom;
+    private long leavingTo;
+    private LocalDateTime date;
+    private int passengers;
+    private int numberOfStops;
+    private Duration travelTime;
 }
