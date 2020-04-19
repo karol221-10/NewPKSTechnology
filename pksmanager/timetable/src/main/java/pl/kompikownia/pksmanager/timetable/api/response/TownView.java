@@ -1,7 +1,10 @@
 package pl.kompikownia.pksmanager.timetable.api.response;
 
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.ToString;
 
 
 @ToString

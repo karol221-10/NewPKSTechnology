@@ -9,7 +9,6 @@ import pl.kompikownia.pksmanager.timetable.api.mapper.ScheduleToScheduleForListV
 import pl.kompikownia.pksmanager.timetable.api.response.ScheduleForListView;
 import pl.kompikownia.pksmanager.timetable.business.api.internal.query.GetScheduleListQuery;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 

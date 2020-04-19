@@ -11,7 +11,6 @@ import pl.kompikownia.pksmanager.timetable.infrastructure.entity.BusStopEntity;
 import pl.kompikownia.pksmanager.timetable.infrastructure.entity.QBusStopEntity;
 import pl.kompikownia.pksmanager.timetable.infrastructure.entity.ScheduleEntity;
 import pl.kompikownia.pksmanager.timetable.infrastructure.repository.port.BusStopCrudRepository;
-import pl.kompikownia.pksmanager.timetable.infrastructure.repository.port.ScheduleCrudRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

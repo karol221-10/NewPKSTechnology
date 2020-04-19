@@ -7,7 +7,6 @@ import pl.kompikownia.pksmanager.cqrs.domain.QueryExecutor;
 import pl.kompikownia.pksmanager.timetable.api.response.TownView;
 import pl.kompikownia.pksmanager.timetable.business.api.internal.query.GetTownListQuery;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 

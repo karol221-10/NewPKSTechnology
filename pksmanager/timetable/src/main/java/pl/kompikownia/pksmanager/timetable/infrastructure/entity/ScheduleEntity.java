@@ -2,14 +2,10 @@ package pl.kompikownia.pksmanager.timetable.infrastructure.entity;
 
 
 import lombok.*;
-import org.hibernate.annotations.Cascade;
-import pl.kompikownia.pksmanager.timetable.business.projection.BusStopProjection;
 import pl.kompikownia.pksmanager.timetable.business.projection.ScheduleProjection;
-import pl.kompikownia.pksmanager.timetable.infrastructure.entity.namemapper.BusStopColumnNames;
 import pl.kompikownia.pksmanager.timetable.infrastructure.entity.namemapper.ScheduleColumnNames;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

@@ -5,11 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
-import pl.kompikownia.pksmanager.timetable.infrastructure.entity.BusStopEntity;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @ToString
 @Getter

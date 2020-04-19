@@ -4,9 +4,9 @@ import com.querydsl.jpa.impl.JPADeleteClause;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import pl.kompikownia.pksmanager.timetable.business.repository.TownEntityRepository;
 import pl.kompikownia.pksmanager.timetable.infrastructure.entity.QTownEntity;
 import pl.kompikownia.pksmanager.timetable.infrastructure.entity.TownEntity;
-import pl.kompikownia.pksmanager.timetable.business.repository.TownEntityRepository;
 import pl.kompikownia.pksmanager.timetable.infrastructure.repository.port.TownCrudRepository;
 
 import javax.persistence.EntityManager;
@@ -21,7 +21,6 @@ public class TownEntityRepositoryImpl implements TownEntityRepository {
     private EntityManager em;
 
     private final TownCrudRepository townCrudRepository;
-
 
     @Override
     public TownEntity save(TownEntity townEntity) {

@@ -9,7 +9,6 @@ import pl.kompikownia.pksmanager.timetable.business.api.internal.query.GetTownLi
 import pl.kompikownia.pksmanager.timetable.infrastructure.entity.TownEntity;
 import pl.kompikownia.pksmanager.timetable.infrastructure.repository.jpa.TownEntityRepositoryImpl;
 
-import javax.inject.Inject;
 import java.util.List;
 import java.util.stream.Collectors;
 
