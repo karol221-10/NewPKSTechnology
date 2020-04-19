@@ -9,11 +9,13 @@ import pl.kompikownia.pksmanager.timetable.business.projection.BusStopProjection
 import pl.kompikownia.pksmanager.timetable.business.repository.BusStopRepository;
 import pl.kompikownia.pksmanager.timetable.infrastructure.entity.BusStopEntity;
 import pl.kompikownia.pksmanager.timetable.infrastructure.entity.QBusStopEntity;
+import pl.kompikownia.pksmanager.timetable.infrastructure.entity.ScheduleEntity;
 import pl.kompikownia.pksmanager.timetable.infrastructure.repository.port.BusStopCrudRepository;
 import pl.kompikownia.pksmanager.timetable.infrastructure.repository.port.ScheduleCrudRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,10 +30,13 @@ public class BusStopRepositoryImpl implements BusStopRepository {
     private final BusStopCrudRepository busStopCrudRepository;
 
     @Override
+    @Transactional
     public BusStopProjection save(BusStopProjection busStopProjection) {
         val entityToPersist = BusStopEntity.of(em, busStopProjection);
-        em.persist(entityToPersist);
-        em.flush();
+        val parentEntity = em.getReference(ScheduleEntity.class, busStopProjection.getScheduleId());
+        parentEntity.getBusStopEntities().add(entityToPersist);
+        em.merge(entityToPersist);
+        em.merge(parentEntity);
         return entityToPersist.toProjection();
     }
 

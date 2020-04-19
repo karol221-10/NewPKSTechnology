@@ -7,12 +7,14 @@ import lombok.val;
 import org.springframework.stereotype.Repository;
 import pl.kompikownia.pksmanager.timetable.business.projection.ScheduleProjection;
 import pl.kompikownia.pksmanager.timetable.business.repository.ScheduleEntityRepository;
-import pl.kompikownia.pksmanager.timetable.infrastructure.entity.QScheduleEntity;
 import pl.kompikownia.pksmanager.timetable.infrastructure.entity.ScheduleEntity;
+import pl.kompikownia.pksmanager.timetable.infrastructure.repository.port.BusStopCrudRepository;
 import pl.kompikownia.pksmanager.timetable.infrastructure.repository.port.ScheduleCrudRepository;
+import pl.kompikownia.pksmanager.timetable.infrastructure.repository.port.TownCrudRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,10 +29,15 @@ public class ScheduleEntityRepositoryImpl implements ScheduleEntityRepository {
 
     private final ScheduleCrudRepository scheduleCrudRepository;
 
+    private final TownCrudRepository townCrudRepository;
+
+    private final BusStopCrudRepository busStopCrudRepository;
+
     @Override
+    @Transactional
     public ScheduleProjection save(ScheduleProjection scheduleProjection) {
-        val entityToPersist = ScheduleEntity.of(scheduleProjection);
-        em.persist(entityToPersist);
+        val entityToPersist = ScheduleEntity.of(scheduleProjection, em);
+        em.merge(entityToPersist);
         em.flush();
         return entityToPersist.toProjection();
     }

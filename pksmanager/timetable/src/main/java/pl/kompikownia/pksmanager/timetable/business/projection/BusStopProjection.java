@@ -1,15 +1,14 @@
 package pl.kompikownia.pksmanager.timetable.business.projection;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
+@Builder(builderClassName = "builder")
 @Getter
+@ToString
+@EqualsAndHashCode
 public class BusStopProjection {
     private Long id;
     private Long scheduleId;

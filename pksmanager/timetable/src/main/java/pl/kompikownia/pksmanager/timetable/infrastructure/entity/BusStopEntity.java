@@ -3,31 +3,37 @@ package pl.kompikownia.pksmanager.timetable.infrastructure.entity;
 
 import lombok.*;
 import pl.kompikownia.pksmanager.timetable.business.projection.BusStopProjection;
+import pl.kompikownia.pksmanager.timetable.infrastructure.entity.namemapper.BusStopColumnNames;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity(name = "BusStop")
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
-@Builder
+@Entity
+@Table(name = BusStopColumnNames.TABLE_NAME)
+@Builder(builderClassName = "builder")
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(exclude = { "schedule"})
+@ToString(exclude = { "schedule"})
 public class BusStopEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = BusStopColumnNames.COLUMN_ID)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "courseId", referencedColumnName = "id")
+    @JoinColumn(name = BusStopColumnNames.COLUMN_SCHEDULE_ID)
     private ScheduleEntity schedule;
 
     @ManyToOne
-    @JoinColumn(name = "townId",referencedColumnName = "id")
+    @JoinColumn(name = BusStopColumnNames.COLUMN_TOWN_ID)
     private TownEntity town;
 
+    @Column(name = BusStopColumnNames.COLUMN_ARRIVAL_DATE)
     private LocalDateTime arrivalDate;
+
+    @Column(name = BusStopColumnNames.COLUMN_DEPARTURE_DATE)
     private LocalDateTime departureDate;
 
     public BusStopProjection toProjection() {
@@ -43,6 +49,8 @@ public class BusStopEntity {
     public static BusStopEntity of(EntityManager em, BusStopProjection busStopProjection) {
         return BusStopEntity.builder()
                 .id(busStopProjection.getId())
+                .arrivalDate(busStopProjection.getArrivalDate())
+                .departureDate(busStopProjection.getDepartureDate())
                 .schedule(em.getReference(ScheduleEntity.class, busStopProjection.getScheduleId()))
                 .town(em.getReference(TownEntity.class, busStopProjection.getTownId()))
                 .build();

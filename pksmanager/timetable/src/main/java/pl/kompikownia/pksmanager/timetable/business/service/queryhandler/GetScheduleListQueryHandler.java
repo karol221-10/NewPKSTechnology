@@ -10,6 +10,8 @@ import pl.kompikownia.pksmanager.timetable.business.projection.BusStopProjection
 import pl.kompikownia.pksmanager.timetable.business.projection.ScheduleProjection;
 import pl.kompikownia.pksmanager.timetable.infrastructure.repository.jpa.ScheduleEntityRepositoryImpl;
 
+import javax.transaction.Transactional;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -23,6 +25,7 @@ public class GetScheduleListQueryHandler extends QueryHandler<List<ScheduleProje
     ScheduleEntityRepositoryImpl repository;
 
     @Override
+    @Transactional
     public List<ScheduleProjection> handle(GetScheduleListQuery query) {
         return handleInternal(query.getSourceTownId(), query.getDestinationTownId());
     }
@@ -49,24 +52,24 @@ public class GetScheduleListQueryHandler extends QueryHandler<List<ScheduleProje
 
     private boolean containsTown(Long sourceTownId, ScheduleProjection scheduleProjection) {
         return scheduleProjection.getBusStops().stream()
-                .anyMatch(busStopProjection -> busStopProjection.getId().equals(sourceTownId));
+                .anyMatch(busStopProjection -> busStopProjection.getTownId().equals(sourceTownId));
     }
 
     private void cutListToContainOnlyBetweenBusStops(Long sourceTown,
                                                      Long destinationTown,
                                                      ScheduleProjection projection) {
-        val beginIndex = getBusStopIndex(sourceTown, projection);
-        val destinationIndex = getBusStopIndex(destinationTown, projection);
-        projection.setBusStops(subListBusStopList(projection, beginIndex, destinationIndex));
+        val busStops = projection.getBusStops().stream()
+                .sorted(Comparator.comparing(BusStopProjection::getDepartureDate))
+                .collect(Collectors.toList());
+        val beginIndex = getBusStopIndex(sourceTown, busStops);
+        val destinationIndex = getBusStopIndex(destinationTown, busStops);
+        val newList = busStops.subList(beginIndex, destinationIndex+1);
+        projection.setBusStops(newList);
     }
 
-    private List<BusStopProjection> subListBusStopList(ScheduleProjection projection, int beginIndex, int destinationIndex) {
-        return projection.getBusStops().subList(beginIndex, destinationIndex);
-    }
-
-    private int getBusStopIndex(Long sourceTown, ScheduleProjection projection) {
-        return IntStream.range(0, projection.getBusStops().size())
-                .filter(busStop -> projection.getBusStops().get(busStop).getId().equals(sourceTown))
+    private int getBusStopIndex(Long sourceTown, List<BusStopProjection> projection) {
+        return IntStream.range(0, projection.size())
+                .filter(busStop -> projection.get(busStop).getTownId().equals(sourceTown))
                 .findFirst()
                 .getAsInt();
     }
