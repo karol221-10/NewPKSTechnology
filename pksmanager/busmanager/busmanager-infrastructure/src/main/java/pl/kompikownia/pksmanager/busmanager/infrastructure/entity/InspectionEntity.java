@@ -22,6 +22,11 @@ public class InspectionEntity {
     @Column(name = InspectionColumnNames.COLUMN_ID)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = InspectionColumnNames.COLUMN_BUS_ID)
+    @Column(name = InspectionColumnNames.COLUMN_BUS_ID)
+    private Long busId;
+
     @Column(name = InspectionColumnNames.COLUMN_TYPE)
     private String type;
 
@@ -34,7 +39,5 @@ public class InspectionEntity {
     @Column(name = InspectionColumnNames.COLUMN_COMMENT)
     private String comment;
 
-    @OneToMany(mappedBy = "inspection")
-    private BusInspectionEntity busInspectionEntity;
 
 }

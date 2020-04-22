@@ -1,6 +1,7 @@
 package pl.kompikownia.pksmanager.busmanager.infrastructure.entity;
 
 import lombok.*;
+import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.namemapper.BusColumnNames;
 import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.namemapper.InsurancesColumnNames;
 
 import javax.persistence.*;
@@ -34,6 +35,7 @@ public class InsurancesEntity {
     @Column(name = InsurancesColumnNames.COLUMN_COMMENT)
     private String comment;
 
-    @OneToMany(mappedBy = "insurance")
-    private BusInsuranceEntity busInsuranceEntity;
+    @ManyToOne
+    @JoinColumn(name = BusColumnNames.COLUMN_BUS_ID)
+    private BusEntity busEntity;
 }

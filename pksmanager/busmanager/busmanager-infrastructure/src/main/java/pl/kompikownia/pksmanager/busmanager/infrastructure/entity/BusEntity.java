@@ -5,6 +5,7 @@ import lombok.*;
 import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.namemapper.BusColumnNames;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -25,19 +26,17 @@ public class BusEntity {
     @Column(name = BusColumnNames.COLUMN_MODEL)
     private String model;
 
+    @OneToMany(mappedBy = "bus")
     @Column(name = BusColumnNames.COLUMN_INSURANCE_ID)
-    private String insuranceId;
+    private Long insuranceId;
 
     @Column(name = BusColumnNames.COLUMN_REGISTRATION_NUMBER)
     private String registrationNumber;
 
     @OneToMany(mappedBy = "bus")
-    private BusFuelEntity busFuelEntity;
+    private List<FuelEntity> fuelEntity;
 
     @OneToMany(mappedBy = "bus")
-    private BusInspectionEntity busInspectionEntity;
-
-    @OneToMany(mappedBy = "bus")
-    private BusInsuranceEntity busInsuranceEntity;
+    private InspectionEntity inspectionEntity;
 
 }

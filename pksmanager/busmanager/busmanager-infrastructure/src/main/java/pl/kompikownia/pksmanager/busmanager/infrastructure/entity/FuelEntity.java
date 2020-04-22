@@ -1,6 +1,7 @@
 package pl.kompikownia.pksmanager.busmanager.infrastructure.entity;
 
 import lombok.*;
+import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.namemapper.BusColumnNames;
 import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.namemapper.FuelColumnNames;
 
 import javax.persistence.*;
@@ -21,6 +22,8 @@ public class FuelEntity {
     @Column(name = FuelColumnNames.COLUMN_ID)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = BusColumnNames.COLUMN_BUS_ID)
     @Column(name = FuelColumnNames.COLUMN_BUS_ID)
     private Long busId;
 
@@ -29,7 +32,4 @@ public class FuelEntity {
 
     @Column(name = FuelColumnNames.COLUMN_TYPE)
     private String type;
-
-    @OneToMany(mappedBy = "fuel")
-    private BusFuelEntity busFuelEntity;
 }
