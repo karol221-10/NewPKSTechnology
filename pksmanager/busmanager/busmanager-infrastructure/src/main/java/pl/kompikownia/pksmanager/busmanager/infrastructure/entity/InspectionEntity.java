@@ -1,6 +1,7 @@
 package pl.kompikownia.pksmanager.busmanager.infrastructure.entity;
 
 import lombok.*;
+import pl.kompikownia.pksmanager.busmanager.business.projection.InspectionProjection;
 import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.namemapper.BusColumnNames;
 import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.namemapper.InspectionColumnNames;
 
@@ -38,5 +39,27 @@ public class InspectionEntity {
     @ManyToOne
     @JoinColumn(name = BusColumnNames.COLUMN_BUS_ID)
     private BusEntity bus;
+
+    public InspectionProjection toProjection(){
+        return InspectionProjection.builder()
+                .id(id)
+                .type(type)
+                .creationDate(creationDate)
+                .expiryDate(expiryDate)
+                .comment(comment)
+                .busId(bus.getId())
+                .build();
+    }
+
+    public static InspectionEntity of(EntityManager em, InspectionProjection inspectionProjection){
+        return InspectionEntity.builder()
+                .id(inspectionProjection.getId())
+                .type(inspectionProjection.getType())
+                .creationDate(inspectionProjection.getCreationDate())
+                .expiryDate(inspectionProjection.getExpiryDate())
+                .comment(inspectionProjection.getComment())
+                .bus(em.getReference(BusEntity.class,inspectionProjection.getBusId()))
+                .build();
+    }
 
 }

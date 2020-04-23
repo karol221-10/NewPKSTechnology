@@ -1,6 +1,7 @@
 package pl.kompikownia.pksmanager.busmanager.infrastructure.entity;
 
 import lombok.*;
+import pl.kompikownia.pksmanager.busmanager.business.projection.InsurancesProjection;
 import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.namemapper.BusColumnNames;
 import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.namemapper.InsurancesColumnNames;
 
@@ -38,4 +39,27 @@ public class InsurancesEntity {
     @ManyToOne
     @JoinColumn(name = BusColumnNames.COLUMN_BUS_ID)
     private BusEntity bus;
+
+    public InsurancesProjection toProjection(){
+        return InsurancesProjection.builder()
+                .id(id)
+                .type(type)
+                .creationDate(creationDate)
+                .expiryDate(expiryDate)
+                .comment(comment)
+                .busId(bus.getId())
+                .build();
+    }
+
+    public static InsurancesEntity of(EntityManager em, InsurancesProjection insurancesProjection){
+        return InsurancesEntity.builder()
+                .id(insurancesProjection.getId())
+                .type(insurancesProjection.getType())
+                .creationDate(insurancesProjection.getCreationDate())
+                .expiryDate(insurancesProjection.getExpiryDate())
+                .comment(insurancesProjection.getComment())
+                .bus(em.getReference(BusEntity.class,insurancesProjection.getBusId()))
+                .build();
+    }
+
 }

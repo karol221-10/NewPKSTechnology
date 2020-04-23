@@ -1,6 +1,7 @@
 package pl.kompikownia.pksmanager.busmanager.infrastructure.entity;
 
 import lombok.*;
+import pl.kompikownia.pksmanager.busmanager.business.projection.FuelProjection;
 import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.namemapper.BusColumnNames;
 import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.namemapper.FuelColumnNames;
 
@@ -31,4 +32,22 @@ public class FuelEntity {
 
     @Column(name = FuelColumnNames.COLUMN_TYPE)
     private String type;
+
+    public FuelProjection toProjection(){
+        return FuelProjection.builder()
+                .id(id)
+                .quantify(quantify)
+                .type(type)
+                .busId(bus.getId())
+                .build();
+    }
+
+    public static FuelEntity of(EntityManager em, FuelProjection fuelProjection){
+        return FuelEntity.builder()
+                .id(fuelProjection.getId())
+                .quantify(fuelProjection.getQuantify())
+                .type(fuelProjection.getType())
+                .bus(em.getReference(BusEntity.class, fuelProjection.getBusId()))
+                .build();
+    }
 }

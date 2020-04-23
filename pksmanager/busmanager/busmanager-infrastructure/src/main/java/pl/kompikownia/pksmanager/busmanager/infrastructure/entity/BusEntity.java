@@ -2,10 +2,12 @@ package pl.kompikownia.pksmanager.busmanager.infrastructure.entity;
 
 
 import lombok.*;
+import pl.kompikownia.pksmanager.busmanager.business.projection.BusProjection;
 import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.namemapper.BusColumnNames;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -37,4 +39,22 @@ public class BusEntity {
 
     @OneToMany(mappedBy = "bus")
     private List<InsurancesEntity> insurancesEntities;
+
+    public BusProjection toProjection() {
+        return BusProjection.builder()
+                .id(id)
+                .model(model)
+                .registrationNumber(registrationNumber)
+                .fuelEntity(fuelEntity.stream()
+                        .map(FuelEntity::toProjection)
+                        .collect(Collectors.toList()))
+                .inspectionEntity(inspectionEntity.stream()
+                        .map(InspectionEntity::toProjection)
+                        .collect(Collectors.toList()))
+                .insurancesEntities(insurancesEntities.stream()
+                        .map(InsurancesEntity::toProjection)
+                        .collect(Collectors.toList()))
+                .build();
+    }
+
 }
