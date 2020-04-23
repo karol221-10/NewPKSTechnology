@@ -24,8 +24,7 @@ public class FuelEntity {
 
     @ManyToOne
     @JoinColumn(name = BusColumnNames.COLUMN_BUS_ID)
-    @Column(name = FuelColumnNames.COLUMN_BUS_ID)
-    private Long busId;
+    private BusEntity bus;
 
     @Column(name = FuelColumnNames.COLUMN_QUANTIFY)
     private Long quantify;

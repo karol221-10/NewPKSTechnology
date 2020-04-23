@@ -26,17 +26,15 @@ public class BusEntity {
     @Column(name = BusColumnNames.COLUMN_MODEL)
     private String model;
 
-    @OneToMany(mappedBy = "bus")
-    @Column(name = BusColumnNames.COLUMN_INSURANCE_ID)
-    private Long insuranceId;
-
     @Column(name = BusColumnNames.COLUMN_REGISTRATION_NUMBER)
     private String registrationNumber;
 
-    @OneToMany(mappedBy = "bus")
+    @OneToMany(mappedBy = "bus",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<FuelEntity> fuelEntity;
 
     @OneToMany(mappedBy = "bus")
-    private InspectionEntity inspectionEntity;
+    private List<InspectionEntity> inspectionEntity;
 
+    @OneToMany(mappedBy = "bus")
+    private List<InsurancesEntity> insurancesEntities;
 }

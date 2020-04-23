@@ -37,5 +37,5 @@ public class InsurancesEntity {
 
     @ManyToOne
     @JoinColumn(name = BusColumnNames.COLUMN_BUS_ID)
-    private BusEntity busEntity;
+    private BusEntity bus;
 }

@@ -1,6 +1,7 @@
 package pl.kompikownia.pksmanager.busmanager.infrastructure.entity;
 
 import lombok.*;
+import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.namemapper.BusColumnNames;
 import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.namemapper.InspectionColumnNames;
 
 import javax.persistence.*;
@@ -22,11 +23,6 @@ public class InspectionEntity {
     @Column(name = InspectionColumnNames.COLUMN_ID)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = InspectionColumnNames.COLUMN_BUS_ID)
-    @Column(name = InspectionColumnNames.COLUMN_BUS_ID)
-    private Long busId;
-
     @Column(name = InspectionColumnNames.COLUMN_TYPE)
     private String type;
 
@@ -39,5 +35,8 @@ public class InspectionEntity {
     @Column(name = InspectionColumnNames.COLUMN_COMMENT)
     private String comment;
 
+    @ManyToOne
+    @JoinColumn(name = BusColumnNames.COLUMN_BUS_ID)
+    private BusEntity bus;
 
 }
