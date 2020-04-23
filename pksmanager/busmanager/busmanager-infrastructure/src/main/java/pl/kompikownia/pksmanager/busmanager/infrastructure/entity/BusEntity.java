@@ -3,6 +3,7 @@ package pl.kompikownia.pksmanager.busmanager.infrastructure.entity;
 
 import lombok.*;
 import pl.kompikownia.pksmanager.busmanager.business.projection.BusProjection;
+import pl.kompikownia.pksmanager.busmanager.business.projection.FuelProjection;
 import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.namemapper.BusColumnNames;
 
 import javax.persistence.*;
@@ -56,5 +57,17 @@ public class BusEntity {
                         .collect(Collectors.toList()))
                 .build();
     }
+
+    public static BusEntity of(EntityManager em, BusProjection projection){
+        return BusEntity.builder()
+                .id(projection.getId())
+                .model(projection.getModel())
+                .registrationNumber(projection.getRegistrationNumber())
+                .fuelEntity(projection.getFuelEntity().stream()
+                        .map(fuelProjection -> FuelEntity.of(em, fuelProjection))
+                        .collect(Collectors.toList()))
+                .build();
+    }
+
 
 }
