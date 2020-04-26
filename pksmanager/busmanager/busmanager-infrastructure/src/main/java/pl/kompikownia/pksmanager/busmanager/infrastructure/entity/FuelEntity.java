@@ -19,7 +19,7 @@ import javax.persistence.*;
 public class FuelEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = FuelColumnNames.COLUMN_ID)
     private Long id;
 

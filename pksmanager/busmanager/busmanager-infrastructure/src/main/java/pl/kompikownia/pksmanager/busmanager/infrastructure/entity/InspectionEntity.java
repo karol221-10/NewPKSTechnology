@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public class InspectionEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = InspectionColumnNames.COLUMN_ID)
     private Long id;
 
