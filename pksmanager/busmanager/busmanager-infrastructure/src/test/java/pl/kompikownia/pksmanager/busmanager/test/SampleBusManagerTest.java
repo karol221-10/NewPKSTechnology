@@ -6,8 +6,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class SampleBusManagerTest extends BusManagerIntegrationTest {
 
-    @Test
+/*    @Test
     public void SampleTest() {
         assertThat(true).isEqualTo(true);
-    }
+    }*/
 }
