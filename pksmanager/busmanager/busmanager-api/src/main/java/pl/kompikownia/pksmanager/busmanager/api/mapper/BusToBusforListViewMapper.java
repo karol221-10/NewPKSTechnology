@@ -3,6 +3,8 @@ package pl.kompikownia.pksmanager.busmanager.api.mapper;
 import jdk.vm.ci.meta.Local;
 import pl.kompikownia.pksmanager.busmanager.api.response.BusView;
 import pl.kompikownia.pksmanager.busmanager.business.projection.BusProjection;
+import pl.kompikownia.pksmanager.busmanager.business.projection.InspectionProjection;
+import pl.kompikownia.pksmanager.busmanager.business.projection.InsurancesProjection;
 
 import java.time.LocalDateTime;
 
@@ -17,10 +19,10 @@ public class BusToBusforListViewMapper {
     }
 
     private static LocalDateTime getInsuranceExpiry(BusProjection busProjection){
-        return busProjection.getInsurancesProjections().get(busProjection.getInsurancesProjections().size()-1).getExpiryDate();
+        return busProjection.getInsurancesProjections().stream().map(InsurancesProjection::getExpiryDate).max(LocalDateTime::compareTo).get();
     }
 
     private static LocalDateTime getInspectionExpiry(BusProjection busProjection){
-        return busProjection.getInspectionProjections().get(busProjection.getInspectionProjections().size()-1).getExpiryDate();
+        return busProjection.getInspectionProjections().stream().map(InspectionProjection::getExpiryDate).max(LocalDateTime::compareTo).get();
     }
 }

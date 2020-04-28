@@ -38,8 +38,6 @@ public class InspectionRepositoryImpl implements InspectionRepository {
 
         em.merge(entityToPersist);
         em.merge(parentEntity);
-        em.merge(parentProjection);
-
         em.flush();
         return entityToPersist.toProjection();
     }
@@ -54,8 +52,6 @@ public class InspectionRepositoryImpl implements InspectionRepository {
         parentProjection.getInspectionProjections().add(inspectionProjection);
         em.merge(entityToPersist);
         em.merge(parentEntity);
-        em.merge(parentProjection);
-
         em.flush();
         return entityToPersist.toProjection();
     }
