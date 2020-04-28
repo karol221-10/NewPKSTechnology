@@ -3,7 +3,6 @@ package pl.kompikownia.pksmanager.busmanager.infrastructure.entity;
 
 import lombok.*;
 import pl.kompikownia.pksmanager.busmanager.business.projection.BusProjection;
-import pl.kompikownia.pksmanager.busmanager.business.projection.FuelProjection;
 import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.namemapper.BusColumnNames;
 
 import javax.persistence.*;
@@ -46,13 +45,13 @@ public class BusEntity {
                 .id(id)
                 .model(model)
                 .registrationNumber(registrationNumber)
-                .fuelEntity(fuelEntity.stream()
+                .fuelProjections(fuelEntity.stream()
                         .map(FuelEntity::toProjection)
                         .collect(Collectors.toList()))
-                .inspectionEntity(inspectionEntity.stream()
+                .inspectionProjections(inspectionEntity.stream()
                         .map(InspectionEntity::toProjection)
                         .collect(Collectors.toList()))
-                .insurancesEntities(insurancesEntities.stream()
+                .insurancesProjections(insurancesEntities.stream()
                         .map(InsurancesEntity::toProjection)
                         .collect(Collectors.toList()))
                 .build();
@@ -63,7 +62,7 @@ public class BusEntity {
                 .id(projection.getId())
                 .model(projection.getModel())
                 .registrationNumber(projection.getRegistrationNumber())
-                .fuelEntity(projection.getFuelEntity().stream()
+                .fuelEntity(projection.getFuelProjections().stream()
                         .map(fuelProjection -> FuelEntity.of(em, fuelProjection))
                         .collect(Collectors.toList()))
                 .build();

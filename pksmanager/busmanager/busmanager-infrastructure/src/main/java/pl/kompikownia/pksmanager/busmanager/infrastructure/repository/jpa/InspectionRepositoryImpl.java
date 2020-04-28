@@ -34,7 +34,7 @@ public class InspectionRepositoryImpl implements InspectionRepository {
         val parentEntity = em.getReference(BusEntity.class,inspectionProjection.getBusId());
         val parentProjection = em.getReference(BusProjection.class, inspectionProjection.getBusId());
         parentEntity.getInspectionEntity().add(entityToPersist);
-        parentProjection.getInspectionEntity().add(inspectionProjection);
+        parentProjection.getInspectionProjections().add(inspectionProjection);
 
         em.merge(entityToPersist);
         em.merge(parentEntity);
@@ -51,7 +51,7 @@ public class InspectionRepositoryImpl implements InspectionRepository {
         val parentEntity = em.getReference(BusEntity.class,id);
         val parentProjection = em.getReference(BusProjection.class, id);
         parentEntity.getInspectionEntity().add(entityToPersist);
-        parentProjection.getInspectionEntity().add(inspectionProjection);
+        parentProjection.getInspectionProjections().add(inspectionProjection);
         em.merge(entityToPersist);
         em.merge(parentEntity);
         em.merge(parentProjection);

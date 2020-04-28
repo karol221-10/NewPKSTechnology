@@ -35,7 +35,7 @@ public class InsurancesRepositoryImpl implements InsurancesRepository {
         val parentEntity = em.getReference(BusEntity.class, insurancesProjection.getBusId());
         val parentProjection = em.getReference(BusProjection.class, insurancesProjection.getBusId());
         parentEntity.getInsurancesEntities().add(entityToPersist);
-        parentProjection.getInsurancesEntities().add(insurancesProjection);
+        parentProjection.getInsurancesProjections().add(insurancesProjection);
         em.merge(parentProjection);
         em.merge(entityToPersist);
         em.merge(parentEntity);
@@ -49,7 +49,7 @@ public class InsurancesRepositoryImpl implements InsurancesRepository {
         val parentEntity = em.getReference(BusEntity.class, id);
         val parentProjection = em.getReference(BusProjection.class, id);
         parentEntity.getInsurancesEntities().add(entityToPersist);
-        parentProjection.getInsurancesEntities().add(insurancesProjection);
+        parentProjection.getInsurancesProjections().add(insurancesProjection);
         em.merge(parentProjection);
         em.merge(entityToPersist);
         em.merge(parentEntity);
