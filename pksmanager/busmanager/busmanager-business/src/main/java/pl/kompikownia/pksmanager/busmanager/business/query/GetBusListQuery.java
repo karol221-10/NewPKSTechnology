@@ -7,7 +7,6 @@ import pl.kompikownia.pksmanager.cqrs.domain.Query;
 
 import java.util.List;
 
-@Getter
-@Builder
+
 public class GetBusListQuery implements Query<List<BusProjection>> {
 }

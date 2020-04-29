@@ -1,6 +1,5 @@
 package pl.kompikownia.pksmanager.busmanager.api.mapper;
 
-import jdk.vm.ci.meta.Local;
 import pl.kompikownia.pksmanager.busmanager.api.response.BusView;
 import pl.kompikownia.pksmanager.busmanager.business.projection.BusProjection;
 import pl.kompikownia.pksmanager.busmanager.business.projection.InspectionProjection;
@@ -8,7 +7,7 @@ import pl.kompikownia.pksmanager.busmanager.business.projection.InsurancesProjec
 
 import java.time.LocalDateTime;
 
-public class BusToBusforListViewMapper {
+public class BusToBusForListViewMapper {
     public static BusView map(BusProjection busProjection){
         return BusView.builder()
                 .id(busProjection.getId())
