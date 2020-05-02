@@ -15,7 +15,7 @@ import java.util.List;
 @Handler
 public class GetBusListQueryHandler extends QueryHandler<List<BusProjection>, GetBusListQuery> {
 
-    BusRepository repository;
+    private BusRepository repository;
 
     @Override
     public List<BusProjection> handle(GetBusListQuery query) {
