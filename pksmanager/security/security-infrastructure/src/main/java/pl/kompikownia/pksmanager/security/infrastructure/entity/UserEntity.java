@@ -16,6 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
+@Getter
 public class UserEntity {
 
     @Id
