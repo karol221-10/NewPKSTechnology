@@ -14,6 +14,7 @@
     <modules>
         <module>security-infrastructure</module>
         <module>security-business</module>
+        <module>security-business-internal-api</module>
     </modules>
 
     <dependencies>

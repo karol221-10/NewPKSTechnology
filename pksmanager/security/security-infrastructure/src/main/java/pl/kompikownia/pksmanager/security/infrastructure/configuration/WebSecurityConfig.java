@@ -15,10 +15,14 @@ import pl.kompikownia.pksmanager.security.infrastructure.repository.UserReposito
 import pl.kompikownia.pksmanager.security.infrastructure.repository.port.UserAuthenticationRepository;
 import pl.kompikownia.pksmanager.security.infrastructure.service.TokenProviderImpl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Configuration
 @EnableWebSecurity
 
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -26,8 +30,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public AuthenticationFilter authenticationFilter(final TokenProvider tokenProvider, final UserAuthenticationRepository userAuthenticationRepository) {
-        return new AuthenticationFilter();
+    public AuthenticationFilter authenticationFilter() {
+        return new AuthenticationFilter(getSwaggerUrls());
     }
 
     @Bean
@@ -42,7 +46,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**");
 
     }
 
@@ -53,7 +56,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").permitAll()
                 .antMatchers("/api/**").authenticated()
                 .and()
-                .addFilterAt(authenticationFilter(tokenProvider(), userAuthenticationRepository()),
+                .addFilterAt(authenticationFilter(),
                         UsernamePasswordAuthenticationFilter.class);
+    }
+
+    private List<String> getSwaggerUrls() {
+        return List.of("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**");
     }
 }

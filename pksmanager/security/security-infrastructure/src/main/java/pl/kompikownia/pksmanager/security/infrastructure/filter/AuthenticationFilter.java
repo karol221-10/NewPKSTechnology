@@ -10,24 +10,20 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 import pl.kompikownia.pksmanager.security.business.exception.BadTokenException;
 import pl.kompikownia.pksmanager.security.business.service.TokenProvider;
 import pl.kompikownia.pksmanager.security.infrastructure.namemapper.TokenFieldNames;
-import pl.kompikownia.pksmanager.security.infrastructure.repository.jpa.UserCrudRepository;
 import pl.kompikownia.pksmanager.security.infrastructure.repository.port.UserAuthenticationRepository;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -39,7 +35,12 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private UserAuthenticationRepository userAuthenticationRepository;
 
-    public AuthenticationFilter() {
+    private List<String> authenticationUrls;
+
+    private AntPathMatcher pathMatcher = new AntPathMatcher();
+
+    public AuthenticationFilter(List<String> authenticationUrls) {
+        this.authenticationUrls = authenticationUrls;
     }
 
     @Override
@@ -88,11 +89,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException
     {
-        val pathMacher = new AntPathMatcher();
-
-        if(pathMacher.match("/swagger-ui.html", request.getServletPath())) {
-            return true;
-        }
-        return false;
+        return authenticationUrls.stream()
+                .anyMatch(url -> pathMatcher.match(url, request.getServletPath()));
     }
 }

@@ -15,17 +15,32 @@ public class CqrsConfiguration {
     private Collection<QueryHandler> queryHandlers;
 
     @Autowired
+    private Collection<CommandHandler> commandHandlers;
+
+    @Autowired
     private QueryHandlerFactory queryHandlerFactory;
+
+    @Autowired
+    private CommandHandlerFactory commandHandlerFactory;
 
     @PostConstruct
     protected void initializeHandlerFactories() {
         queryHandlers.forEach( e-> {
             queryHandlerFactory.addQueryHandler(e, (Class<Query<?>>) e.getQueryType());
         });
+
+        commandHandlers.forEach( e-> {
+            commandHandlerFactory.addCommandHandler(e, (Class<Command<?>>) e.getCommandType());
+        });
     }
 
     @Bean
     public QueryExecutor getQueryExecutor() {
         return new QueryExecutorImpl(queryHandlerFactory);
+    }
+
+    @Bean
+    public CommandExecutor getCommandExecutor() {
+        return new CommandExecutorImpl(commandHandlerFactory);
     }
 }
