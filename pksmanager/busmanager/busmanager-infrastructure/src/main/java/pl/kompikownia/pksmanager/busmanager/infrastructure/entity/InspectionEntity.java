@@ -36,7 +36,7 @@ public class InspectionEntity {
     @Column(name = InspectionColumnNames.COLUMN_COMMENT)
     private String comment;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = BusColumnNames.COLUMN_BUS_ID)
     private BusEntity bus;
 

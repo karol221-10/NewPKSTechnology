@@ -1,6 +1,8 @@
 package pl.kompikownia.pksmanager.busmanager.infrastructure.entity;
 
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import pl.kompikownia.pksmanager.busmanager.business.projection.FuelProjection;
 import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.namemapper.BusColumnNames;
 import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.namemapper.FuelColumnNames;
@@ -23,7 +25,8 @@ public class FuelEntity {
     @Column(name = FuelColumnNames.COLUMN_ID)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @LazyCollection(LazyCollectionOption.TRUE)
     @JoinColumn(name = BusColumnNames.COLUMN_BUS_ID)
     private BusEntity bus;
 
