@@ -6,16 +6,17 @@ import org.springframework.context.annotation.Configuration;
 import pl.kompikownia.pksmanager.cqrs.domain.*;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Configuration
 public class CqrsConfiguration {
 
-    @Autowired
-    private Collection<QueryHandler> queryHandlers;
+    @Autowired(required = false)
+    private Collection<QueryHandler> queryHandlers = new ArrayList<>();
 
-    @Autowired
-    private Collection<CommandHandler> commandHandlers;
+    @Autowired(required = false)
+    private Collection<CommandHandler> commandHandlers = new ArrayList<>();
 
     @Autowired
     private QueryHandlerFactory queryHandlerFactory;

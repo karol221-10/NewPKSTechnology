@@ -11,5 +11,12 @@
 
     <artifactId>security-business-internal-api</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>pl.kompikownia</groupId>
+            <artifactId>cqrs</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 </project>

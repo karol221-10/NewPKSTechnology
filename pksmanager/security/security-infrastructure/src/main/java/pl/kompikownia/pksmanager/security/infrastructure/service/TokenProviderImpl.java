@@ -33,17 +33,10 @@ public class TokenProviderImpl implements TokenProvider {
     private long validitySeconds;
 
     @Override
-    public String generateToken(Authentication authentication) {
-        final String authorities = authentication.getRoles().stream()
-                .map(RoleProjection::getAssociatedPermissions)
-                .flatMap(Collection::stream)
-                .map(PermissionProjection::getPermissionName)
-                .distinct()
-                .collect(Collectors.joining(","));
-
-
+    public String generateToken(String username, List<String> userAuthorities) {
+        String authorities = String.join(",", userAuthorities);
         return Jwts.builder()
-                .setSubject(authentication.getLogin())
+                .setSubject(username)
                 .claim(AUTHORITIES_KEY, authorities)
                 .signWith(SignatureAlgorithm.HS256, signingKey)
                 .setIssuedAt(Date.from(

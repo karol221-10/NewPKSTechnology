@@ -13,6 +13,7 @@ import java.util.Set;
 @Builder(builderClassName = "builder")
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 @EqualsAndHashCode(exclude = {"users"})
 @ToString(exclude = {"users"})
 public class RoleEntity {

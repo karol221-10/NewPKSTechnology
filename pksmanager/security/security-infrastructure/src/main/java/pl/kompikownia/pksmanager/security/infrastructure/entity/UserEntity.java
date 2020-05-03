@@ -1,6 +1,8 @@
 package pl.kompikownia.pksmanager.security.infrastructure.entity;
 
 import lombok.*;
+import pl.kompikownia.pksmanager.security.business.internal.api.projection.UserProjection;
+import pl.kompikownia.pksmanager.security.business.projection.NewUserData;
 import pl.kompikownia.pksmanager.security.infrastructure.namemapper.UserColumnNames;
 import pl.kompikownia.pksmanager.security.infrastructure.namemapper.UserRoleColumnNames;
 
@@ -8,6 +10,7 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = UserColumnNames.TABLE_NAME)
@@ -37,4 +40,14 @@ public class UserEntity {
             inverseJoinColumns = { @JoinColumn(name = UserRoleColumnNames.COLUMN_ROLE_ID)}
     )
     private Set<RoleEntity> roles = new HashSet<>();
+
+    public static UserEntity of(EntityManager em,NewUserData newUserData) {
+        return UserEntity.builder()
+                .username(newUserData.getUsername())
+                .password(newUserData.getPassword())
+                .roles(newUserData.getRolesId().stream()
+                    .map(roleId -> em.getReference(RoleEntity.class, roleId))
+                    .collect(Collectors.toSet()))
+                .build();
+    }
 }

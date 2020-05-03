@@ -11,11 +11,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import pl.kompikownia.pksmanager.security.business.service.TokenProvider;
 import pl.kompikownia.pksmanager.security.infrastructure.filter.AuthenticationFilter;
-import pl.kompikownia.pksmanager.security.infrastructure.repository.UserRepository;
+import pl.kompikownia.pksmanager.security.infrastructure.repository.UserRepositoryImpl;
 import pl.kompikownia.pksmanager.security.infrastructure.repository.port.UserAuthenticationRepository;
 import pl.kompikownia.pksmanager.security.infrastructure.service.TokenProviderImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
@@ -41,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public UserAuthenticationRepository userAuthenticationRepository() {
-        return new UserRepository();
+        return new UserRepositoryImpl();
     }
 
     @Override
