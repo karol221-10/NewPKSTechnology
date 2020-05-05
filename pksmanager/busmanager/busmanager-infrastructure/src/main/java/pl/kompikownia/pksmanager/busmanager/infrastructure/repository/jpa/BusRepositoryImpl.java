@@ -37,6 +37,7 @@ public class BusRepositoryImpl implements BusRepository {
     }
 
     @Override
+    @Transactional
     public List<BusProjection> findAll() {
         JPAQuery<BusEntity> query = new JPAQuery<>(em);
         return query.from(busEntity).orderBy(busEntity.id.asc()).fetch()

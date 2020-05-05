@@ -16,6 +16,7 @@ import static pl.kompikownia.pksmanager.busmanager.infrastructure.entity.QFuelEn
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +30,7 @@ public class FuelRepositoryImpl  implements FuelRepository {
     private final FuelCrudRepository fuelCrudRepository;
 
     @Override
+    @Transactional
     public FuelProjection save(FuelProjection fuelProjection) {
 
         val entityToPersist = FuelEntity.of(em,fuelProjection);

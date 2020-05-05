@@ -14,6 +14,7 @@ import pl.kompikownia.pksmanager.busmanager.infrastructure.repository.port.Insur
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +31,7 @@ public class InsurancesRepositoryImpl implements InsurancesRepository {
 
 
     @Override
+    @Transactional
     public InsurancesProjection save(InsurancesProjection insurancesProjection) {
         val entityToPersist = InsurancesEntity.of(em,insurancesProjection);
         val parentEntity = em.getReference(BusEntity.class, insurancesProjection.getBusId());

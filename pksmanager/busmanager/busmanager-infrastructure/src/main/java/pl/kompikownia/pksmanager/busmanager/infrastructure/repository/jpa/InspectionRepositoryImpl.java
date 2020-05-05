@@ -14,6 +14,7 @@ import pl.kompikownia.pksmanager.busmanager.infrastructure.repository.port.Inspe
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +30,7 @@ public class InspectionRepositoryImpl implements InspectionRepository {
     private final InspectionCrudRepository inspectionCrudRepository;
 
     @Override
+    @Transactional
     public InspectionProjection save(InspectionProjection inspectionProjection) {
         val entityToPersist = InspectionEntity.of(em,inspectionProjection);
         val parentEntity = em.getReference(BusEntity.class,inspectionProjection.getBusId());
