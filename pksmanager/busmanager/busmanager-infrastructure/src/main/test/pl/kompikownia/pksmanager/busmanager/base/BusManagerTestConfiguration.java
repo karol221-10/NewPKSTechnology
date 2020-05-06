@@ -18,7 +18,7 @@ import pl.kompikownia.pksmanager.cqrs.configuration.CqrsConfiguration;
         "pl.kompikownia.pksmanager.busmanager.business.service.queryhandler",
         "pl.kompikownia.pksmanager.cqrs.domain"
 })
-@EntityScan(basePackages = "pl.kompikownia.pksmanager.timetable.infrastructure.entity")
+@EntityScan(basePackages = "pl.kompikownia.pksmanager.busmanager.infrastructure.entity")
 @EnableAutoConfiguration
 @EnableTransactionManagement
 public class BusManagerTestConfiguration {
