@@ -1,9 +1,14 @@
 package pl.kompikownia.pksmanager.security.infrastructure.configuration;
 
+import lombok.val;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -11,6 +16,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.*;
+import pl.kompikownia.pksmanager.security.business.internal.api.annotation.AnonymousAccess;
 import pl.kompikownia.pksmanager.security.business.internal.api.configuration.UrlWithoutAuthConfigurer;
 import pl.kompikownia.pksmanager.security.business.service.TokenProvider;
 import pl.kompikownia.pksmanager.security.infrastructure.filter.AuthenticationFilter;
@@ -19,9 +26,8 @@ import pl.kompikownia.pksmanager.security.infrastructure.repository.port.UserAut
 import pl.kompikownia.pksmanager.security.infrastructure.service.PermissionAspectChecker;
 import pl.kompikownia.pksmanager.security.infrastructure.service.TokenProviderImpl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.lang.reflect.Method;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -39,6 +45,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthenticationFilter authenticationFilter() {
+        val urls = AnonymousUrlAccessFinder.scanForAnonymousAccessEndpoints();
+        urls.addAll(getSwaggerUrls());
         return new AuthenticationFilter(getUrlsWithoutAuth());
     }
 

@@ -7,6 +7,7 @@ import pl.kompikownia.pksmanager.cqrs.domain.QueryExecutor;
 import pl.kompikownia.pksmanager.security.base.queryhandler.TestQueryWithInsufficientPermission;
 import pl.kompikownia.pksmanager.security.base.queryhandler.TestQueryWithPermission;
 import pl.kompikownia.pksmanager.security.base.queryhandler.TestQueryWithoutPermission;
+import pl.kompikownia.pksmanager.security.business.internal.api.annotation.AnonymousAccess;
 
 @RestController
 @AllArgsConstructor
@@ -20,6 +21,7 @@ public class TestController {
     }
 
     @GetMapping("/withoutAuth")
+    @AnonymousAccess
     Boolean testMethodWithoutAuth() {
         return true;
     }
