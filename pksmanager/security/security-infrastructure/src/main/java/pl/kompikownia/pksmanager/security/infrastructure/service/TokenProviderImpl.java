@@ -3,6 +3,8 @@ package pl.kompikownia.pksmanager.security.infrastructure.service;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,26 +13,27 @@ import pl.kompikownia.pksmanager.security.business.projection.PermissionProjecti
 import pl.kompikownia.pksmanager.security.business.projection.RoleProjection;
 import pl.kompikownia.pksmanager.security.business.service.Authentication;
 import pl.kompikownia.pksmanager.security.business.service.TokenProvider;
+import pl.kompikownia.pksmanager.security.infrastructure.configuration.DateResolver;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static pl.kompikownia.pksmanager.security.infrastructure.namemapper.TokenFieldNames.AUTHORITIES_KEY;
 
 @Service
+@RequiredArgsConstructor
 public class TokenProviderImpl implements TokenProvider {
 
-    @Value("{pl.kompikownia.pksmanager.security.signingkey}")
+    @Value("${pl.kompikownia.pksmanager.security.signingkey}")
     private String signingKey;
 
     @Value("${pl.kompikownia.pksmanager.security.validity}")
     private long validitySeconds;
+
+    private final DateResolver dateResolver;
 
     @Override
     public String generateToken(String username, List<String> userAuthorities) {
@@ -39,16 +42,16 @@ public class TokenProviderImpl implements TokenProvider {
                 .setSubject(username)
                 .claim(AUTHORITIES_KEY, authorities)
                 .signWith(SignatureAlgorithm.HS256, signingKey)
-                .setIssuedAt(Date.from(
-                        LocalDateTime.now()
-                        .atZone(ZoneId.systemDefault())
-                        .toInstant()))
-                .setExpiration(Date.from(
-                        LocalDateTime.now()
-                                .plusSeconds(validitySeconds)
-                        .atZone(ZoneId.systemDefault())
-                        .toInstant()))
+                .setIssuedAt(dateResolver.getActualDate())
+                .setExpiration(getExpirationDate())
                 .compact();
+    }
+
+    private Date getExpirationDate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dateResolver.getActualDate());
+        calendar.add(Calendar.SECOND, (int) validitySeconds);
+        return calendar.getTime();
     }
 
     @Override

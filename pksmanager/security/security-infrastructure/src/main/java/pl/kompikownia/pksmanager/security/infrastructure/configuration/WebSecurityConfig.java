@@ -1,7 +1,9 @@
 package pl.kompikownia.pksmanager.security.infrastructure.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -9,19 +11,26 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import pl.kompikownia.pksmanager.security.business.internal.api.configuration.UrlWithoutAuthConfigurer;
 import pl.kompikownia.pksmanager.security.business.service.TokenProvider;
 import pl.kompikownia.pksmanager.security.infrastructure.filter.AuthenticationFilter;
 import pl.kompikownia.pksmanager.security.infrastructure.repository.UserRepositoryImpl;
 import pl.kompikownia.pksmanager.security.infrastructure.repository.port.UserAuthenticationRepository;
+import pl.kompikownia.pksmanager.security.infrastructure.service.PermissionAspectChecker;
 import pl.kompikownia.pksmanager.security.infrastructure.service.TokenProviderImpl;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Configuration
 @EnableWebSecurity
-
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired(required = false)
+    private Collection<UrlWithoutAuthConfigurer> urlWithoutAuthConfigurers = new ArrayList<>();
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -30,12 +39,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthenticationFilter authenticationFilter() {
-        return new AuthenticationFilter(getSwaggerUrls());
+        return new AuthenticationFilter(getUrlsWithoutAuth());
     }
 
     @Bean
-    public TokenProvider tokenProvider() {
-        return new TokenProviderImpl();
+    public PermissionAspectChecker permissionAspectChecker() {
+        return new PermissionAspectChecker();
+    }
+
+    @Bean
+    public TokenProvider tokenProvider(DateResolver dateResolver) {
+        return new TokenProviderImpl(dateResolver);
     }
 
     @Bean
@@ -51,12 +65,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/**").permitAll()
-                .antMatchers("/api/**").authenticated()
-                .and()
                 .addFilterAt(authenticationFilter(),
                         UsernamePasswordAuthenticationFilter.class);
+    }
+
+    private List<String> getUrlsWithoutAuth() {
+        return urlWithoutAuthConfigurers.stream()
+                .map(UrlWithoutAuthConfigurer::getUrlWithoutAuth)
+                .flatMap(List::stream)
+                .distinct()
+                .collect(Collectors.toList());
     }
 
     private List<String> getSwaggerUrls() {

@@ -24,7 +24,7 @@ public class UserDetailsModel implements UserDetails {
 
     @Override
     public String getUsername() {
-        return null;
+        return username;
     }
 
     @Override

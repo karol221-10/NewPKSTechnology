@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@ToString
 @Getter
+@ToString
 public class UserEntity {
 
     @Id
@@ -39,6 +39,8 @@ public class UserEntity {
             joinColumns = { @JoinColumn(name = UserRoleColumnNames.COLUMN_USER_ID)},
             inverseJoinColumns = { @JoinColumn(name = UserRoleColumnNames.COLUMN_ROLE_ID)}
     )
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Set<RoleEntity> roles = new HashSet<>();
 
     public static UserEntity of(EntityManager em,NewUserData newUserData) {

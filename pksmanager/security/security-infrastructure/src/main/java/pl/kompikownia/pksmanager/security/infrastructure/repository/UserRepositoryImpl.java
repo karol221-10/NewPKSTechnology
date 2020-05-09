@@ -72,6 +72,7 @@ public class UserRepositoryImpl implements UserAuthenticationRepository, UserRep
     }
 
     @Override
+    @Transactional
     public UserWithPermissionProjection getUserWithPermissionsById(Long id) {
         val userEntity = entityManager.getReference(UserEntity.class, id);
         return UserWithPermissionProjection.builder()

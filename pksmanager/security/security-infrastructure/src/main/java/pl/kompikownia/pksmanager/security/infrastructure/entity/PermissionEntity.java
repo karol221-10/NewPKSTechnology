@@ -13,8 +13,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@ToString
 @Getter
+@ToString
 public class PermissionEntity {
 
     @Id
@@ -26,5 +26,7 @@ public class PermissionEntity {
     private String permissionName;
 
     @ManyToMany(mappedBy = "permissions")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Set<RoleEntity> roles = new HashSet<>();
 }

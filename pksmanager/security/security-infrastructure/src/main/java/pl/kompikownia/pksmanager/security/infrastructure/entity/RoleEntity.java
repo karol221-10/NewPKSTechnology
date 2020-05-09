@@ -14,8 +14,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@EqualsAndHashCode(exclude = {"users"})
-@ToString(exclude = {"users"})
+@EqualsAndHashCode
+@ToString
 public class RoleEntity {
 
     @Id
@@ -27,6 +27,8 @@ public class RoleEntity {
     private String roleName;
 
     @ManyToMany(mappedBy = "roles")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     Set<UserEntity> users = new HashSet<>();
 
     @ManyToMany
@@ -35,5 +37,7 @@ public class RoleEntity {
             joinColumns = { @JoinColumn(name = RolePermissionColumnNames.COLUMN_ROLE_ID)},
             inverseJoinColumns = { @JoinColumn(name = RolePermissionColumnNames.COLUMN_PERMISSION_ID)}
             )
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Set<PermissionEntity> permissions = new HashSet<>();
 }

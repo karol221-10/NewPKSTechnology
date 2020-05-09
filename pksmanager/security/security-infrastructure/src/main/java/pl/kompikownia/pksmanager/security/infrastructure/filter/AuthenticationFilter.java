@@ -14,6 +14,7 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 import pl.kompikownia.pksmanager.security.business.exception.BadTokenException;
 import pl.kompikownia.pksmanager.security.business.service.TokenProvider;
+import pl.kompikownia.pksmanager.security.infrastructure.configuration.DateResolver;
 import pl.kompikownia.pksmanager.security.infrastructure.namemapper.TokenFieldNames;
 import pl.kompikownia.pksmanager.security.infrastructure.repository.port.UserAuthenticationRepository;
 
@@ -33,6 +34,9 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     private TokenProvider tokenProvider;
 
     @Autowired
+    private DateResolver dateResolver;
+
+    @Autowired
     private UserAuthenticationRepository userAuthenticationRepository;
 
     private List<String> authenticationUrls;
@@ -49,6 +53,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         if(authResult != null) {
             this.successfulAuthentication(authResult);
         }
+        filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 
     private String getToken(String header) {
@@ -61,7 +66,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
     private void validateToken(String token) {
         val date = tokenProvider.getExpirationDateFromToken(token);
-        if(!date.after(new Date())) {
+        if(!date.after(dateResolver.getActualDate())) {
             throw new BadTokenException(String.format("Token %s is expired", token));
         }
     }
@@ -90,6 +95,6 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException
     {
         return authenticationUrls.stream()
-                .anyMatch(url -> pathMatcher.match(url, request.getServletPath()));
+                .anyMatch(url -> pathMatcher.match(url, request.getRequestURI()));
     }
 }
