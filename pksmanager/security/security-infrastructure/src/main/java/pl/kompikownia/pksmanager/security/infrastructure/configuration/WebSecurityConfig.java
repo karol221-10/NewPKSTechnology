@@ -4,10 +4,7 @@ import lombok.val;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.*;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -33,6 +30,7 @@ import java.util.stream.Stream;
 
 @Configuration
 @EnableWebSecurity
+@Profile("SECURITY")
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired(required = false)
