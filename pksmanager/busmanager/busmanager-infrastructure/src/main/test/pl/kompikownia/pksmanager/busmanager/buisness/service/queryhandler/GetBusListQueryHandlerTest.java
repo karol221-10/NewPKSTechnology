@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
 @Sql("/GetBusListTest.sql")
-public class GetBusListQueryHandlerTest extends BusManagerIntegrationTest{
+public class GetBusListQueryHandlerTest extends BusManagerIntegrationTest {
 
     @Autowired
     private BusRepository busRepository;
