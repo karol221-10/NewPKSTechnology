@@ -36,6 +36,18 @@
             <artifactId>busmanager-api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
+        <dependency>
+            <groupId>pl.kompikownia</groupId>
+            <artifactId>security-infrastructure</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.kompikownia</groupId>
+            <artifactId>security-business</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>
