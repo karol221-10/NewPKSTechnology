@@ -15,11 +15,23 @@
         <module>security-infrastructure</module>
         <module>security-business</module>
         <module>security-business-internal-api</module>
+        <module>security-api</module>
     </modules>
     <properties>
         <aspectj.version>1.7.4</aspectj.version>
     </properties>
 
+    <profiles>
+        <profile>
+            <id>SECURITY</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <spring.profiles.active>SECURITY</spring.profiles.active>
+            </properties>
+        </profile>
+    </profiles>
     <dependencies>
         <dependency>
             <groupId>pl.kompikownia</groupId>

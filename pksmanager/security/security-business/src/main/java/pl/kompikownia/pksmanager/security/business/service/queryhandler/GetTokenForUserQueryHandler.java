@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.val;
 import pl.kompikownia.pksmanager.cqrs.domain.QueryHandler;
 import pl.kompikownia.pksmanager.cqrs.infrastructure.Handler;
-import pl.kompikownia.pksmanager.security.business.internal.api.query.GetTokenForUserQuery;
+import pl.kompikownia.pksmanager.security.business.query.GetTokenForUserQuery;
 import pl.kompikownia.pksmanager.security.business.repository.UserRepository;
 import pl.kompikownia.pksmanager.security.business.service.TokenProvider;
 

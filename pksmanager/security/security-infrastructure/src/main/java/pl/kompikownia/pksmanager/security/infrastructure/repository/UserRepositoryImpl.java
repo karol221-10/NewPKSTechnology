@@ -1,7 +1,6 @@
 package pl.kompikownia.pksmanager.security.infrastructure.repository;
 
 import com.querydsl.jpa.impl.JPAQuery;
-import lombok.AllArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;
 import pl.kompikownia.pksmanager.security.business.exception.CannotFindUserException;
@@ -19,8 +18,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import static pl.kompikownia.pksmanager.security.infrastructure.entity.QUserEntity.userEntity;

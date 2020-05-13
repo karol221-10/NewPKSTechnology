@@ -1,4 +1,4 @@
-package pl.kompikownia.pksmanager.security.business.internal.api.query;
+package pl.kompikownia.pksmanager.security.business.query;
 
 import lombok.Builder;
 import lombok.Getter;

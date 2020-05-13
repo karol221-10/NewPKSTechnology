@@ -11,6 +11,7 @@ public class Constants {
     public static final String TOKEN_EXPIRATION_DATE_MOCK_STRING = "2020-04-12 12:00:00";
     public static final String TEST_USER = "testuser";
     public static final String TEST_PASSWORD = "5554432";
+    public static final String BAD_PASSWORD = "323235353";
     public static Date ACTUAL_DATE_MOCK;
     public static Date TOKEN_EXPIRATION_DATE_MOCK;
     public static final String TOKEN_TO_TEST = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsInBlcm1pc3Npb25zIjoiVEVTVF9QRVJNSVNTSU9OIiwiaWF0IjoxNTg2NjgyMDAwLCJleHAiOjE1ODY2ODU2MDB9.gZ1XyBrTth9vjd_iqW9i0Z2DVA1zGQAkka6_VUnE_rk";
