@@ -1,7 +1,6 @@
 package pl.kompikownia.pksmanager.security.infrastructure.configuration;
 
 import lombok.val;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -12,7 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import pl.kompikownia.pksmanager.security.business.service.TokenProvider;
 import pl.kompikownia.pksmanager.security.infrastructure.filter.AuthenticationFilter;
-import pl.kompikownia.pksmanager.security.infrastructure.repository.UserRepositoryImpl;
+import pl.kompikownia.pksmanager.security.infrastructure.repository.UserSecurityRepositoryImpl;
 import pl.kompikownia.pksmanager.security.infrastructure.repository.port.UserAuthenticationRepository;
 import pl.kompikownia.pksmanager.security.infrastructure.service.PermissionAspectChecker;
 import pl.kompikownia.pksmanager.security.infrastructure.service.TokenProviderImpl;
@@ -48,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public UserAuthenticationRepository userAuthenticationRepository() {
-        return new UserRepositoryImpl();
+        return new UserSecurityRepositoryImpl();
     }
 
     @Override

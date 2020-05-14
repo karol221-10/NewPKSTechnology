@@ -29,7 +29,7 @@ public class RoleEntity {
     @ManyToMany(mappedBy = "roles")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    Set<UserEntity> users = new HashSet<>();
+    Set<SecurityUserEntity> users = new HashSet<>();
 
     @ManyToMany
     @JoinTable(

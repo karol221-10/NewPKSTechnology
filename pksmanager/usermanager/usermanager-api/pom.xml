@@ -11,5 +11,11 @@
 
     <artifactId>usermanager-api</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>pl.kompikownia</groupId>
+            <artifactId>usermanager-business</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>
