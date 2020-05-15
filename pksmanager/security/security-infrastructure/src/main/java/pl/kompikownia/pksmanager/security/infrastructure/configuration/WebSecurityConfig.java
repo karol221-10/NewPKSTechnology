@@ -45,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationFilter authenticationFilter() {
         val urls = AnonymousUrlAccessFinder.scanForAnonymousAccessEndpoints();
         urls.addAll(getSwaggerUrls());
-        return new AuthenticationFilter(getUrlsWithoutAuth());
+        return new AuthenticationFilter(urls);
     }
 
     @Bean
