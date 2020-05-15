@@ -17,7 +17,6 @@ import pl.kompikownia.pksmanager.security.infrastructure.model.UserDetailsModel;
 import java.lang.reflect.Method;
 
 @Aspect
-@Component
 public class PermissionAspectChecker {
 
     @Before("@within(pl.kompikownia.pksmanager.security.business.internal.api.annotation.RequiresPermission) ||" +

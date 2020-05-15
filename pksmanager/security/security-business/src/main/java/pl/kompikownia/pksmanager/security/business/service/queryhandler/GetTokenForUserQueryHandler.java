@@ -13,12 +13,12 @@ import pl.kompikownia.pksmanager.security.business.service.TokenProvider;
 public class GetTokenForUserQueryHandler extends QueryHandler<String, GetTokenForUserQuery> {
 
     private TokenProvider tokenProvider;
-    private UserRepository userRepository;
+    private UserRepository userAuthenticationRepository;
 
     @Override
     public String handle(GetTokenForUserQuery query) {
-        val userId = userRepository.getUserByUsernameAndPassword(query.getUsername(), query.getPassword());
-        val userWithPermissions = userRepository.getUserWithPermissionsById(userId);
+        val userId = userAuthenticationRepository.getUserByUsernameAndPassword(query.getUsername(), query.getPassword());
+        val userWithPermissions = userAuthenticationRepository.getUserWithPermissionsById(userId);
         return tokenProvider.generateToken(userWithPermissions.getUsername(), userWithPermissions.getPermissionNames());
     }
 }
