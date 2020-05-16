@@ -14,4 +14,5 @@ public class CreateUserCommand implements Command<CreatedUserProjection> {
     private String login;
     private String password;
     private String email;
+    private String roleName;
 }

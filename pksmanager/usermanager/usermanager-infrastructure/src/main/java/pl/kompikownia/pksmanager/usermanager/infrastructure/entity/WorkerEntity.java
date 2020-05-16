@@ -2,6 +2,7 @@ package pl.kompikownia.pksmanager.usermanager.infrastructure.entity;
 
 
 import lombok.*;
+import pl.kompikownia.pksmanager.usermanager.business.projection.WorkerData;
 import pl.kompikownia.pksmanager.usermanager.infrastructure.namemapper.UserColumnNames;
 import pl.kompikownia.pksmanager.usermanager.infrastructure.namemapper.WorkerColumnNames;
 
@@ -34,4 +35,13 @@ public class WorkerEntity {
 
     @Column(name = WorkerColumnNames.COLUMN_PESEL)
     private String pesel;
+
+    public static WorkerEntity of(WorkerData workerData, EntityManager entityManager) {
+        return WorkerEntity.builder()
+                .userEntity(entityManager.getReference(UserEntity.class, workerData.getWorkerId()))
+                .driverLicenseNumber(workerData.getDriverLicenseNumber())
+                .personIdNumber(workerData.getPersonIdNumber())
+                .pesel(workerData.getPesel())
+                .build();
+    }
 }

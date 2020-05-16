@@ -8,4 +8,5 @@ public class UserColumnNames {
     public static final String COLUMN_NAME = "NAME";
     public static final String COLUMN_SURNAME = "SURNAME";
     public static final String COLUMN_EMAIL = "EMAIL";
+    public static final String COLUMN_ACTIVE = "ACTIVE";
 }

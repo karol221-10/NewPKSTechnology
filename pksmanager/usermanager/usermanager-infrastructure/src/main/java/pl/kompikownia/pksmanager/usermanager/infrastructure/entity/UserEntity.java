@@ -33,6 +33,10 @@ public class UserEntity {
     @Column(name = UserColumnNames.COLUMN_EMAIL)
     private String email;
 
+    @Column(name = UserColumnNames.COLUMN_ACTIVE)
+    @Setter
+    private boolean active;
+
     public static UserEntity of(UserData userData) {
         return UserEntity.builder()
                 .securityUserId(userData.getSecuredId())

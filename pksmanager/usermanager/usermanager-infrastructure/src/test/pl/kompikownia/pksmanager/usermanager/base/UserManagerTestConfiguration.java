@@ -19,6 +19,7 @@ import static org.mockito.Mockito.when;
 @ComponentScan(basePackages = {
         "pl.kompikownia.pksmanager.usermanager.infrastructure.repository",
         "pl.kompikownia.pksmanager.usermanager.business.service.command",
+        "pl.kompikownia.pksmanager.usermanager.business.service.query",
         "pl.kompikownia.pksmanager.cqrs.domain",
         "pl.kompikownia.pksmanager.usermanager.api.endpoint",
         "pl.kompikownia.pksmanager.security.business.service.queryhandler",

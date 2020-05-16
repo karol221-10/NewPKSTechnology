@@ -5,11 +5,13 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class UserData {
-
+public class CreatedWorkerProjection {
     private String id;
+    private String securityUserId;
     private String name;
     private String surname;
     private String email;
-    private String securedId;
+    private String driverLicenseNumber;
+    private String pesel;
+    private String personIdNumber;
 }

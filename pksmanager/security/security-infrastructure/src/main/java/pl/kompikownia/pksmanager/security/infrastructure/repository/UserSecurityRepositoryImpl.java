@@ -5,12 +5,14 @@ import lombok.val;
 import org.springframework.stereotype.Service;
 import pl.kompikownia.pksmanager.security.business.exception.CannotFindUserException;
 import pl.kompikownia.pksmanager.security.business.internal.api.projection.UserProjection;
+import pl.kompikownia.pksmanager.security.business.internal.api.projection.UserWithLoginData;
 import pl.kompikownia.pksmanager.security.business.projection.NewUserData;
 import pl.kompikownia.pksmanager.security.business.projection.UserWithPermissionProjection;
 import pl.kompikownia.pksmanager.security.business.repository.UserRepository;
 import pl.kompikownia.pksmanager.security.infrastructure.entity.PermissionEntity;
 import pl.kompikownia.pksmanager.security.infrastructure.entity.RoleEntity;
 import pl.kompikownia.pksmanager.security.infrastructure.entity.SecurityUserEntity;
+import pl.kompikownia.pksmanager.security.infrastructure.mapper.UserWithLoginDataMapper;
 import pl.kompikownia.pksmanager.security.infrastructure.model.UserDetailsModel;
 import pl.kompikownia.pksmanager.security.infrastructure.repository.port.UserAuthenticationRepository;
 
@@ -18,9 +20,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
-import static pl.kompikownia.pksmanager.security.infrastructure.entity.QUserEntity.userEntity;
+import static pl.kompikownia.pksmanager.security.infrastructure.entity.QSecurityUserEntity.securityUserEntity;
+
 
 @Service
 public class UserSecurityRepositoryImpl implements UserAuthenticationRepository, UserRepository {
@@ -32,7 +36,7 @@ public class UserSecurityRepositoryImpl implements UserAuthenticationRepository,
     @Transactional
     public UserDetailsModel findByUsername(String username) {
         JPAQuery<SecurityUserEntity> query = new JPAQuery<>(entityManager);
-        val entity = query.from(userEntity).where(userEntity.username.eq(username)).fetchFirst();
+        val entity = query.from(securityUserEntity).where(securityUserEntity.username.eq(username)).fetchFirst();
         return UserDetailsModel.of(entity);
     }
 
@@ -40,6 +44,7 @@ public class UserSecurityRepositoryImpl implements UserAuthenticationRepository,
     @Transactional
     public UserProjection putNewUser(NewUserData newUserData) {
         val entityToPersist = SecurityUserEntity.of(entityManager, newUserData);
+        entityToPersist.setActive(true);
         entityManager.persist(entityToPersist);
         newUserData.getRolesId().forEach(roleId -> {
             val roleEntity = entityManager.getReference(RoleEntity.class, Long.parseLong(roleId));
@@ -59,9 +64,9 @@ public class UserSecurityRepositoryImpl implements UserAuthenticationRepository,
     public Long getUserByUsernameAndPassword(String username, String password) {
         JPAQuery<SecurityUserEntity> query = new JPAQuery<>(entityManager);
 
-        val user = query.from(userEntity)
-                .where(userEntity.username.eq(username))
-                .where(userEntity.password.eq(password))
+        val user = query.from(securityUserEntity)
+                .where(securityUserEntity.username.eq(username))
+                .where(securityUserEntity.password.eq(password))
                 .fetchFirst();
         if(user == null) {
             throw new CannotFindUserException("Cannot find user "+username + " with given password");
@@ -82,5 +87,22 @@ public class UserSecurityRepositoryImpl implements UserAuthenticationRepository,
                         .collect(Collectors.toList())
                 )
                 .build();
+    }
+
+    @Override
+    public List<UserWithLoginData> getUsersByIds(List<String> ids) {
+        JPAQuery<SecurityUserEntity> query = new JPAQuery<>(entityManager);
+
+        val idslong = ids.stream().map(Long::parseLong)
+                .collect(Collectors.toList());
+
+        val users = query.from(securityUserEntity)
+                .where(securityUserEntity.id.in(idslong))
+                .fetchAll()
+                .fetch();
+
+        return users.stream()
+                .map(UserWithLoginDataMapper::map)
+                .collect(Collectors.toList());
     }
 }

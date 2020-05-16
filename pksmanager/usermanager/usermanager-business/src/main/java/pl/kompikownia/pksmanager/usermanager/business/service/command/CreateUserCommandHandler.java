@@ -32,12 +32,9 @@ public class CreateUserCommandHandler extends CommandHandler<CreatedUserProjecti
         this.userRepository = userRepository;
     }
 
-    @Value("${pl.kompikownia.defaultRoleName}")
-    private String defaultRoleName;
-
     @Override
     public CreatedUserProjection handle(CreateUserCommand command) {
-        val roleId = queryExecutor.execute(GetRoleIdByNameQuery.of(defaultRoleName));
+        val roleId = queryExecutor.execute(GetRoleIdByNameQuery.of(command.getRoleName()));
         CreateNewUserCommand createUserCommand = CreateNewUserCommand.builder()
                 .username(command.getLogin())
                 .password(command.getPassword())

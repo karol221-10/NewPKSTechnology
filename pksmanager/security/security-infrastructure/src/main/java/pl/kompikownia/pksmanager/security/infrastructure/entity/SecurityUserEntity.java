@@ -31,6 +31,10 @@ public class SecurityUserEntity {
     @Column(name = UserColumnNames.COLUMN_USER_PASSWORD)
     private String password;
 
+    @Column(name = UserColumnNames.COLUMN_IS_ACTIVE)
+    @Setter
+    private Boolean active;
+
     @ManyToMany
     @JoinTable(
             name = UserRoleColumnNames.TABLE_NAME,
