@@ -10,9 +10,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>main</artifactId>
-    <modules>
-        <module>../busmanager</module>
-    </modules>
 
 
     <dependencies>
@@ -21,28 +18,27 @@
             <artifactId>timetable</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-
         <dependency>
             <groupId>pl.kompikownia</groupId>
-            <artifactId>busmanager</artifactId>
+            <artifactId>busmanager-api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-
-
-
         <dependency>
             <groupId>pl.kompikownia</groupId>
-            <artifactId>security-infrastructure</artifactId>
+            <artifactId>busmanager-business</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-
         <dependency>
             <groupId>pl.kompikownia</groupId>
-            <artifactId>security-business</artifactId>
+            <artifactId>busmanager-infrastructure</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>pl.kompikownia</groupId>
+            <artifactId>timetable</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
-
     <build>
        <plugins>
            <plugin>
