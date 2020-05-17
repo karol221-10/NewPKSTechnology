@@ -13,4 +13,6 @@ public interface UserRepository {
     Long getUserByUsernameAndPassword(String username, String password);
     UserWithPermissionProjection getUserWithPermissionsById(Long id);
     List<UserWithLoginData> getUsersByIds(List<String> ids);
+    boolean isUserActive(String id);
+    void deactivateUser(String userId);
 }

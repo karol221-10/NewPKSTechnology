@@ -85,4 +85,16 @@ public class UserRepositoryImpl implements UserRepository {
                 .map(WorkerDataMapper::map)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    @Transactional
+    public void deactivateUser(String userId) {
+        val entity = entityManager.getReference(UserEntity.class, Long.parseLong(userId));
+
+        if(entity.getId() == null) {
+            throw new IllegalArgumentException("User with id " + userId + " does not exists!");
+        }
+        entity.setActive(false);
+        entityManager.merge(entity);
+    }
 }

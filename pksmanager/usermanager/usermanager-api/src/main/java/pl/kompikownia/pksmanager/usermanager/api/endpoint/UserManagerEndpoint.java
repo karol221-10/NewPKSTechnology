@@ -4,10 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import pl.kompikownia.pksmanager.cqrs.domain.CommandExecutor;
 import pl.kompikownia.pksmanager.cqrs.domain.QueryExecutor;
 import pl.kompikownia.pksmanager.security.business.internal.api.annotation.AnonymousAccess;
@@ -18,6 +16,7 @@ import pl.kompikownia.pksmanager.usermanager.api.response.CreateNewUserResponse;
 import pl.kompikownia.pksmanager.usermanager.api.response.CreateNewWorkerResponse;
 import pl.kompikownia.pksmanager.usermanager.api.response.GetUserListResponse;
 import pl.kompikownia.pksmanager.usermanager.api.response.GetWorkerListResponse;
+import pl.kompikownia.pksmanager.usermanager.business.command.DeactivateUserCommand;
 import pl.kompikownia.pksmanager.usermanager.business.query.GetUserListQuery;
 import pl.kompikownia.pksmanager.usermanager.business.query.GetWorkerListQuery;
 
@@ -56,5 +55,10 @@ public class UserManagerEndpoint {
         val workers = queryExecutor.execute(new GetWorkerListQuery());
         val users = queryExecutor.execute(new GetUserListQuery());
         return GetWorkerListResponseMapper.map(workers, users);
+    }
+
+    @DeleteMapping("/api/users/{id}")
+    public void deleteWorker(@PathVariable String id) {
+        commandExecutor.execute(DeactivateUserCommand.of(id));
     }
 }

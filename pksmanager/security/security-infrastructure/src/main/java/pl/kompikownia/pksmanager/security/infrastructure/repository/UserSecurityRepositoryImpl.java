@@ -105,4 +105,25 @@ public class UserSecurityRepositoryImpl implements UserAuthenticationRepository,
                 .map(UserWithLoginDataMapper::map)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    @Transactional
+    public void deactivateUser(String userId) {
+        val entity = entityManager.getReference(SecurityUserEntity.class, Long.parseLong(userId));
+        if(entity.getId() == null) {
+            throw new IllegalArgumentException("Security user with id "+ userId + " does not exists!");
+        }
+        entity.setActive(false);
+        entityManager.merge(entity);
+    }
+
+    @Override
+    @Transactional
+    public boolean isUserActive(String id) {
+        val entity = entityManager.getReference(SecurityUserEntity.class, Long.parseLong(id));
+        if(entity.getId() == null) {
+            throw new IllegalArgumentException("Security user with id "+ id + " does not exists!");
+        }
+        return entity.getActive();
+    }
 }

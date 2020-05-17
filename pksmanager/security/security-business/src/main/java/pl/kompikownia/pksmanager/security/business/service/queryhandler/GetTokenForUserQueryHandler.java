@@ -19,6 +19,9 @@ public class GetTokenForUserQueryHandler extends QueryHandler<String, GetTokenFo
     public String handle(GetTokenForUserQuery query) {
         val userId = userRepository.getUserByUsernameAndPassword(query.getUsername(), query.getPassword());
         val userWithPermissions = userRepository.getUserWithPermissionsById(userId);
+        if(!userRepository.isUserActive(userId.toString())) {
+            throw new IllegalArgumentException("User "+ userId+ "is deactivated");
+        }
         return tokenProvider.generateToken(userWithPermissions.getUsername(), userWithPermissions.getPermissionNames());
     }
 }

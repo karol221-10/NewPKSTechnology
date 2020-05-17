@@ -19,8 +19,8 @@ import pl.kompikownia.pksmanager.usermanager.api.response.GetWorkerListResponse;
 import pl.kompikownia.pksmanager.usermanager.base.UserManagerIntegrationTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static pl.kompikownia.pksmanager.usermanager.test.TestConstants.getResponseWorkerData;
 
 @TestPropertySource("classpath:application.properties")
@@ -123,5 +123,23 @@ public class UserEndpointTest extends UserManagerIntegrationTest {
         val mappedResult = objectMapper.readValue(result.getResponse().getContentAsString(), GetWorkerListResponse.class);
         assertThat(mappedResult.getWorkers().size()).isEqualTo(1);
         assertThat(mappedResult.getWorkers()).contains(getResponseWorkerData());
+    }
+
+    @Test
+    void shouldDeactivateUser() throws Exception {
+        // given
+        // when
+        val result = mockMvc.perform(delete("/api/users/1")
+            .contentType("application/json"))
+                .andExpect(status().isOk());
+
+        val userResult = mockMvc.perform(get("/api/users")
+                .contentType("application/json"))
+                .andReturn();
+
+        // then
+        val mappedResult = objectMapper.readValue(userResult.getResponse().getContentAsString(), GetUserListResponse.class);
+
+        assertThat(mappedResult.getUsers().size()).isEqualTo(1);
     }
 }

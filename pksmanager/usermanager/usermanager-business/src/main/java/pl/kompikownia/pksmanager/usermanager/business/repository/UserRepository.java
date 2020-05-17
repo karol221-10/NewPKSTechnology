@@ -16,4 +16,6 @@ public interface UserRepository {
     List<UserData> getUserList();
 
     List<WorkerData> getWorkersList();
+
+    void deactivateUser(String userId);
 }
