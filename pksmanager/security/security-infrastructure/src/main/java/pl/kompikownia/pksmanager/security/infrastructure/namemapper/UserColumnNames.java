@@ -5,4 +5,5 @@ public class UserColumnNames {
     public static final String COLUMN_ID = "ID";
     public static final String COLUMN_USER_NAME = "USERNAME";
     public static final String COLUMN_USER_PASSWORD = "PASSWORD";
+    public static final String COLUMN_IS_ACTIVE = "ACTIVE";
 }

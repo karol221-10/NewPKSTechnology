@@ -1,21 +1,16 @@
 package pl.kompikownia.pksmanager.security.test;
 
 import lombok.val;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import pl.kompikownia.pksmanager.cqrs.domain.QueryExecutor;
 import pl.kompikownia.pksmanager.security.base.SecurityIntegrationTest;
-import pl.kompikownia.pksmanager.security.business.internal.api.query.GetTokenForUserQuery;
+import pl.kompikownia.pksmanager.security.business.query.GetTokenForUserQuery;
 import pl.kompikownia.pksmanager.security.business.service.TokenProvider;
-import pl.kompikownia.pksmanager.security.infrastructure.configuration.DateResolver;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
 import static pl.kompikownia.pksmanager.security.test.Constants.*;
 
 @TestPropertySource("classpath:application.properties")
