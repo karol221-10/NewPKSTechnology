@@ -13,7 +13,7 @@ import pl.kompikownia.pksmanager.security.business.service.TokenProvider;
 public class GetTokenForUserQueryHandler extends QueryHandler<String, GetTokenForUserQuery> {
 
     private TokenProvider tokenProvider;
-    private UserRepository userRepository;
+    private UserRepository userAuthenticationRepository;
 
     @Override
     public String handle(GetTokenForUserQuery query) {

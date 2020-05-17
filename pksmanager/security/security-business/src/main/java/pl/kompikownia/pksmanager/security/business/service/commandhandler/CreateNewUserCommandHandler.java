@@ -12,11 +12,11 @@ import pl.kompikownia.pksmanager.security.business.repository.UserRepository;
 @AllArgsConstructor
 public class CreateNewUserCommandHandler extends CommandHandler<UserProjection, CreateNewUserCommand> {
 
-    private UserRepository userRepository;
+    private UserRepository userAuthenticationRepository;
 
     @Override
     public UserProjection handle(CreateNewUserCommand command) {
-        return userRepository.putNewUser(NewUserData.builder()
+        return userAuthenticationRepository.putNewUser(NewUserData.builder()
             .username(command.getUsername())
             .password(command.getPassword())
             .rolesId(command.getRolesId())
