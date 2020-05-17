@@ -14,10 +14,10 @@ import java.util.List;
 @AllArgsConstructor
 public class GetUsersByIdsQueryHandler extends QueryHandler<List<UserWithLoginData>, GetUsersByIdsQuery> {
 
-    private UserRepository userRepository;
+    private UserRepository userAuthenticationRepository;
 
     @Override
     public List<UserWithLoginData> handle(GetUsersByIdsQuery query) {
-        return userRepository.getUsersByIds(query.getIds());
+        return userAuthenticationRepository.getUsersByIds(query.getIds());
     }
 }

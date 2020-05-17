@@ -10,11 +10,11 @@ import pl.kompikownia.pksmanager.security.business.repository.UserRepository;
 @AllArgsConstructor
 public class DeactivateSecurityUserCommandHandler extends CommandHandler<Void, DeactivateSecurityUserCommand> {
 
-    private UserRepository userRepository;
+    private UserRepository userAuthenticationRepository;
 
     @Override
     public Void handle(DeactivateSecurityUserCommand command) {
-        userRepository.deactivateUser(command.getUserId());
+        userAuthenticationRepository.deactivateUser(command.getUserId());
         return null;
     }
 }
