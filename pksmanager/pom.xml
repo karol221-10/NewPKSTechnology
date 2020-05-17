@@ -6,9 +6,9 @@
     <modules>
         <module>cqrs</module>
         <module>timetable</module>
-        <module>main</module>
         <module>busmanager</module>
         <module>security</module>
+        <module>main</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

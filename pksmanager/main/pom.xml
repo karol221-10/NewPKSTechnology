@@ -18,34 +18,24 @@
             <artifactId>timetable</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-
-        <dependency>
-            <groupId>pl.kompikownia</groupId>
-            <artifactId>busmanager-infrastructure</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>pl.kompikownia</groupId>
-            <artifactId>busmanager-business</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
         <dependency>
             <groupId>pl.kompikownia</groupId>
             <artifactId>busmanager-api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-
         <dependency>
             <groupId>pl.kompikownia</groupId>
-            <artifactId>security-infrastructure</artifactId>
+            <artifactId>busmanager-business</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-
         <dependency>
             <groupId>pl.kompikownia</groupId>
-            <artifactId>security-business</artifactId>
+            <artifactId>busmanager-infrastructure</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>pl.kompikownia</groupId>
+            <artifactId>timetable</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
@@ -63,7 +53,6 @@
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
     </dependencies>
-
     <build>
        <plugins>
            <plugin>

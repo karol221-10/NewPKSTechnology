@@ -21,4 +21,5 @@ public class GetBusListQueryHandler extends QueryHandler<List<BusProjection>, Ge
     public List<BusProjection> handle(GetBusListQuery query) {
         return repository.findAll();
     }
+
 }
