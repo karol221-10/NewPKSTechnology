@@ -94,6 +94,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException
     {
+        log.debug("Request URL: "+ request.getRequestURI());
         return authenticationUrls.stream()
                 .anyMatch(url -> pathMatcher.match(url, request.getRequestURI()));
     }

@@ -3,7 +3,7 @@ package pl.kompikownia.pksmanager.security.infrastructure.model;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import pl.kompikownia.pksmanager.security.infrastructure.entity.UserEntity;
+import pl.kompikownia.pksmanager.security.infrastructure.entity.SecurityUserEntity;
 
 import java.util.Collection;
 
@@ -47,7 +47,7 @@ public class UserDetailsModel implements UserDetails {
         return false;
     }
 
-    public static UserDetailsModel of(UserEntity userEntity) {
-        return new UserDetailsModel(userEntity.getUsername());
+    public static UserDetailsModel of(SecurityUserEntity securityUserEntity) {
+        return new UserDetailsModel(securityUserEntity.getUsername());
     }
 }

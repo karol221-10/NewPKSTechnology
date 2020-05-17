@@ -6,11 +6,12 @@
     <modules>
         <module>cqrs</module>
         <module>timetable</module>
-        <module>busmanager</module>
+	<module>busmanager</module>
         <module>security</module>
         <module>main</module>
-    </modules>
-    <parent>
+        <module>usermanager</module>
+</modules>
+	<parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.2.5.RELEASE</version>
@@ -29,6 +30,24 @@
         <springbootmaven.version>1.4.2.RELEASE</springbootmaven.version>
         <spring-boot.repackage.skip>true</spring-boot.repackage.skip>
     </properties>
+
+    <profiles>
+        <profile>
+            <id>SECURITY</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <includeSpringProfile>SECURITY</includeSpringProfile>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod-database</id>
+            <properties>
+                <includeSpringProfile>SECURITY,prod</includeSpringProfile>
+            </properties>
+        </profile>
+    </profiles>
 
     <dependencies>
         <dependency>
