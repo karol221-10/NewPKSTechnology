@@ -28,7 +28,7 @@ public class UserManagerEndpoint {
 
     private final QueryExecutor queryExecutor;
 
-    @Value("${pl.kompikownia.defaultRoleName}")
+    @Value("${pl.kompikownia.pksmanager.defaultRoleName}")
     private String defaultRoleName;
 
     @PostMapping("/api/users")

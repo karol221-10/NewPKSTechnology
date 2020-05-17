@@ -19,7 +19,7 @@ public class CreateWorkerCommandHandler extends CommandHandler<CreatedWorkerProj
 
     private UserRepository userRepository;
 
-    @Value("${pl.kompikownia.defaultWorkerRoleName}")
+    @Value("${pl.kompikownia.pksmanager.defaultWorkerRoleName}")
     private String defaultWorkerRoleName;
 
     public CreateWorkerCommandHandler(@Lazy CommandExecutor commandExecutor, UserRepository userRepository) {
