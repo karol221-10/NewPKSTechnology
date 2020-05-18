@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 @AllArgsConstructor
-public class InspectionView {
+public class InspectionResponse {
     private Long id;
     private String type;
     private LocalDateTime creationDate;
