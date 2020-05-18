@@ -1,4 +1,4 @@
-package pl.kompikownia.pksmanager.busmanager.api.response;
+package pl.kompikownia.pksmanager.busmanager.api.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,10 +11,11 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 @AllArgsConstructor(staticName = "of")
-public class InsurancesView {
+public class PostInsurancesRequest {
     private Long id;
     private String type;
     private LocalDateTime creationDate;
     private LocalDateTime expiryDate;
     private String comment;
+    private Long busId;
 }

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import pl.kompikownia.pksmanager.busmanager.api.mapper.InsurancesToInsurancesForListViewMapper;
+import pl.kompikownia.pksmanager.busmanager.api.mapper.PostInsuranceResponseMapper;
 import pl.kompikownia.pksmanager.busmanager.business.query.GetInsurancesListQuery;
 import pl.kompikownia.pksmanager.cqrs.domain.QueryExecutor;
 
@@ -22,13 +22,13 @@ public class GetInsurancesListResponse {
 
     @RequestMapping(value = "api/bus/{id}/insurance",method = RequestMethod.GET)
     @ResponseBody
-    public List<InsurancesView> getInsurancesList(@PathVariable("id") Long id){
+    public List<InsurancesResponse> getInsurancesList(@PathVariable("id") Long id){
 
       GetInsurancesListQuery getInsurancesListQuery = new GetInsurancesListQuery(id);
 
         return queryExecutor.execute(getInsurancesListQuery)
                 .stream()
-                .map(InsurancesToInsurancesForListViewMapper::map)
+                .map(PostInsuranceResponseMapper::map)
                 .collect(Collectors.toList());
 
     }
