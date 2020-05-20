@@ -30,7 +30,7 @@ public class GetScheduleListResponseMapper {
                 .build();
     }
 
-    private static BusStopDto mapBusStop(BusStop busStop) {
+    public static BusStopDto mapBusStop(BusStop busStop) {
         return BusStopDto.builder()
                 .id(busStop.getId())
                 .arrivalDate(busStop.getArrivalDate())

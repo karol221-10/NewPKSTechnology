@@ -13,8 +13,6 @@ import java.time.LocalDateTime;
 @Builder(builderClassName = "builder")
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(exclude = { "schedule"})
-@ToString(exclude = { "schedule"})
 public class BusStopEntity {
 
     @Id
@@ -24,6 +22,8 @@ public class BusStopEntity {
 
     @ManyToOne
     @JoinColumn(name = BusStopColumnNames.COLUMN_SCHEDULE_ID)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private ScheduleEntity schedule;
 
     @ManyToOne
@@ -36,6 +36,16 @@ public class BusStopEntity {
     @Column(name = BusStopColumnNames.COLUMN_DEPARTURE_DATE)
     private LocalDateTime departureDate;
 
+    public BusStopProjection toProjection(Long scheduleId) {
+        return BusStopProjection.builder()
+                .id(id)
+                .scheduleId(scheduleId)
+                .townId(town.getId())
+                .arrivalDate(arrivalDate)
+                .departureDate(departureDate)
+                .build();
+    }
+
     public BusStopProjection toProjection() {
         return BusStopProjection.builder()
                 .id(id)
@@ -46,13 +56,18 @@ public class BusStopEntity {
                 .build();
     }
 
+
     public static BusStopEntity of(EntityManager em, BusStopProjection busStopProjection) {
         return BusStopEntity.builder()
                 .id(busStopProjection.getId())
                 .arrivalDate(busStopProjection.getArrivalDate())
                 .departureDate(busStopProjection.getDepartureDate())
-                .schedule(em.getReference(ScheduleEntity.class, busStopProjection.getScheduleId()))
+                .schedule(setSchedule(busStopProjection.getId(), em))
                 .town(em.getReference(TownEntity.class, busStopProjection.getTownId()))
                 .build();
+    }
+
+    private static ScheduleEntity setSchedule(Long id,EntityManager entityManager) {
+        return id == null ? null : entityManager.getReference(ScheduleEntity.class, entityManager);
     }
 }

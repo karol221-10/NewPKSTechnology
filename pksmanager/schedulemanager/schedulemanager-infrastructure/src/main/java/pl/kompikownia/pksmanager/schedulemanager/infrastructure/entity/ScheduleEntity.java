@@ -38,7 +38,7 @@ public class ScheduleEntity {
     @Column(name = ScheduleColumnNames.COLUMN_PRICE)
     private float price;
 
-    @OneToMany(mappedBy = "schedule")
+    @OneToMany(mappedBy = "schedule", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<BusStopEntity> busStopEntities;
 
     public ScheduleProjection toProjection() {
@@ -49,7 +49,7 @@ public class ScheduleEntity {
                 .isActive(isActive)
                 .price(price)
                 .busStops(busStopEntities.stream()
-                    .map(BusStopEntity::toProjection)
+                    .map(busStop -> busStop.toProjection(id))
                     .collect(Collectors.toList()))
                 .build();
     }

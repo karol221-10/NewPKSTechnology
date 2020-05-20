@@ -15,6 +15,8 @@ import pl.kompikownia.pksmanager.cqrs.configuration.CqrsConfiguration;
 @ComponentScan(basePackages = {
         "pl.kompikownia.pksmanager.schedulemanager.infrastructure.repository",
         "pl.kompikownia.pksmanager.schedulemanager.business.application.service.query",
+        "pl.kompikownia.pksmanager.schedulemanager.business.application.service.command",
+        "pl.kompikownia.pksmanager.schedulemanager.api.endpoint",
         "pl.kompikownia.pksmanager.cqrs.domain"
 })
 @EntityScan(basePackages = "pl.kompikownia.pksmanager.schedulemanager.infrastructure.entity")

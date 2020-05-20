@@ -38,7 +38,7 @@ public class BusStopRepositoryImpl implements BusStopRepository {
         parentEntity.getBusStopEntities().add(entityToPersist);
         em.merge(entityToPersist);
         em.merge(parentEntity);
-        return entityToPersist.toProjection();
+        return entityToPersist.toProjection(parentEntity.getId());
     }
 
     @Override

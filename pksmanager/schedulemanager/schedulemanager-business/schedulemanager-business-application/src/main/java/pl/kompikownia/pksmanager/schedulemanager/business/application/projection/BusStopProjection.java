@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 public class BusStopProjection {
     private Long id;
+    @Setter
     private Long scheduleId;
     private Long townId;
     private LocalDateTime arrivalDate;
