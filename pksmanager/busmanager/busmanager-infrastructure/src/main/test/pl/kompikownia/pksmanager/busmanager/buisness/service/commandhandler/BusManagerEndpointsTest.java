@@ -54,8 +54,8 @@ public class BusManagerEndpointsTest extends BusManagerIntegrationTest {
 
         //then
 
-        val mappedResult = objectMapper.readValue(result.getResponse().getContentAsString(),InspectionResponse.class);
-        assertThat(mappedResult.)
+       // val mappedResult = objectMapper.readValue(result.getResponse().getContentAsString(),InspectionResponse.class);
+        //assertThat(mappedResult.)
     }
 
 }
