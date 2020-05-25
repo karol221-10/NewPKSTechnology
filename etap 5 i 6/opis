@@ -1,0 +1,67 @@
+ Aplikacja jest podzielona na
+> niezależne moduły.
+>
+> busmanager – zarządzanie autobusami,
+>
+> security – logowanie i bezpieczeństwo,
+>
+> usermanager – zarządzanie użytkownikami itd.
+>
+> Każdy z modułów jest podzielony na trzy warstwy:
+>
+> Api: to co jest wyprowadzone dla front-endu
+>
+> Business: warstwa biznesowa – realizująca logikę biznesową.
+>
+> Infrastructure: wszelkie zależności infrastrukturalne – bezpośrednie
+> zależności do springa i innych modułów bezpośrednio zależnych od
+> infrastruktury.
+>
+> Warstwa business nie posiada zależności infrastrukturalnych.
+>
+> Podział na moduły pozwoliłby na bardzo szybkie przeskoczenie na
+> architekturę mikroserwisową.
+>
+> W projekcie staram się stosować podejście cqrs – Command Query
+> Separation.
+>
+> Wszystkie operacje, które w jakikolwiek sposób modyfikują stan
+> aplikacji są wywoływane w postaci commandów (np.:
+> CreateNewUserCommand).
+>
+> Operacje, które jedynie pobierają jakieś informacje z bazy danych,
+> nie modyfikując stanu aplikacji są realizowane w formie query.
+>
+> Przepływ wygląda następująco:
+>
+> W warstwie api są endpointy wywoływane przez frontend. Np.:
+> CreateNewUserRequest. Endpoint zwykle wywołuje komendę lub query za
+> pomocą query lub commandexecutora. Np.:
+> CommandExecutor.execute(CreateNewUserCommand.of(args…)).
+>
+> Commandy i Query są warstwie business. Także w tej warstwie znajdują
+> się command i queryhandlery.
+>
+> Handlery zwykle wykorzystują repozytorium. W warstwie business jest
+> tylko interfejs repozytorium, który zawiera metody dostępowe do
+> repozytorium. Zarówno argumenty, jak i zwracane wartości są
+> projekcjami danych, co pozwala na całkowite odizolowanie warstwy
+> infrastrukturalnej. Repozytorium jest implementowane w warstwie
+> infrastructure konkretnego modułu. Kontener IOT Springa dba o to, aby
+> odpowiednie beany zostały wstrzyknięte w miejsce interfejsów.
+>
+> Do każdej funkcjonalności tworzone są testy jednostkowe oraz
+> integracyjne w JUNIT5.
+>
+> Ciekawą kwestią będzie system uprawnień, który jest bardzo
+> uniwersalny, a jednocześnie niezwykle prosty w użyciu. Dostęp do
+> każdej funkcjonalności wymaga uprawnienia, np.: Pobierz listę
+> pracowników wymaga uprawnienia GET_ROLE_LIST. Każdy użytkownik
+> posiada
+> przypisaną rolę, a rola posiada przypisane uprawnienia.
+>
+> Zabezpieczenie metody za pomocą danego uprawnienia to jedynie
+> umieszczenie adnotacji @RequiresPermission(„PermissionName”). W celu
+> obsługi tego mechanizmu używany jest AspectJ oraz częściowo
+> Spring-Security.
+> 
