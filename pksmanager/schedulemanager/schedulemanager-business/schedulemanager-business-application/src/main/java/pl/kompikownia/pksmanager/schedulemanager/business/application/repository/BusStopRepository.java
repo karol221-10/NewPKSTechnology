@@ -9,6 +9,10 @@ public interface BusStopRepository {
 
     BusStopProjection save(BusStopProjection busStopProjection);
 
+    BusStopProjection update(BusStopProjection busStopProjection);
+
+    BusStopProjection findById(String id);
+
     List<BusStopProjection> findAll();
 
     List<BusStopProjection> findByCourseId(Long scheduleId);

@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 @Builder(builderClassName = "builder")
 @NoArgsConstructor
 @AllArgsConstructor
+@Setter
+@Getter
 public class BusStopEntity {
 
     @Id
@@ -62,12 +64,12 @@ public class BusStopEntity {
                 .id(busStopProjection.getId())
                 .arrivalDate(busStopProjection.getArrivalDate())
                 .departureDate(busStopProjection.getDepartureDate())
-                .schedule(setSchedule(busStopProjection.getId(), em))
+                .schedule(setSchedule(busStopProjection.getScheduleId(), em))
                 .town(em.getReference(TownEntity.class, busStopProjection.getTownId()))
                 .build();
     }
 
     private static ScheduleEntity setSchedule(Long id,EntityManager entityManager) {
-        return id == null ? null : entityManager.getReference(ScheduleEntity.class, entityManager);
+        return id == null ? null : entityManager.getReference(ScheduleEntity.class, id);
     }
 }

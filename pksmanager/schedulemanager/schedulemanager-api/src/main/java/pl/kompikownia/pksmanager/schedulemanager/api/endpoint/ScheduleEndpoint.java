@@ -7,10 +7,12 @@ import pl.kompikownia.pksmanager.cqrs.domain.CommandExecutor;
 import pl.kompikownia.pksmanager.cqrs.domain.QueryExecutor;
 import pl.kompikownia.pksmanager.schedulemanager.api.mapper.BusStopMapper;
 import pl.kompikownia.pksmanager.schedulemanager.api.mapper.GetScheduleListResponseMapper;
+import pl.kompikownia.pksmanager.schedulemanager.api.request.AddNewBusStopRequest;
 import pl.kompikownia.pksmanager.schedulemanager.api.request.AddNewScheduleRequest;
-import pl.kompikownia.pksmanager.schedulemanager.api.response.AddNewScheduleResponse;
-import pl.kompikownia.pksmanager.schedulemanager.api.response.GetScheduleListResponse;
-import pl.kompikownia.pksmanager.schedulemanager.business.api.command.AddNewScheduleCommand;
+import pl.kompikownia.pksmanager.schedulemanager.api.request.UpdateBusStopRequest;
+import pl.kompikownia.pksmanager.schedulemanager.api.request.UpdateScheduleRequest;
+import pl.kompikownia.pksmanager.schedulemanager.api.response.*;
+import pl.kompikownia.pksmanager.schedulemanager.business.api.command.*;
 import pl.kompikownia.pksmanager.schedulemanager.business.api.query.GetScheduleListQuery;
 
 import java.util.stream.Collectors;
@@ -52,6 +54,75 @@ public class ScheduleEndpoint {
                 .busStops(result.getBusStops().stream()
                     .map(GetScheduleListResponseMapper::mapBusStop)
                     .collect(Collectors.toList()))
+                .build();
+    }
+
+    @PostMapping("/api/schedule/{scheduleId}/busstops")
+    public AddNewBusStopResponse addNewBusStop(@PathVariable String scheduleId, @RequestBody AddNewBusStopRequest request) {
+        val command = AddBusStopCommand.builder()
+                .arrivalDate(request.getArrivalDate())
+                .departureDate(request.getDepartureDate())
+                .scheduleId(scheduleId)
+                .townId(request.getTownId())
+                .build();
+        val result = commandExecutor.execute(command);
+        return AddNewBusStopResponse.builder()
+                .id(result.getId().toString())
+                .arrivalDate(result.getArrivalDate())
+                .departureDate(result.getDepartureDate())
+                .scheduleId(result.getScheduleId().toString())
+                .townId(result.getTownId().toString())
+                .build();
+    }
+
+    @PutMapping("/api/schedule/{scheduleId}/busstops/{busStopId}")
+    public UpdateBusStopResponse updateBusStop(@PathVariable String scheduleId, @PathVariable String busStopId,
+                                               @RequestBody UpdateBusStopRequest request) {
+        val command = UpdateBusStopCommand.builder()
+                .id(busStopId)
+                .arrivalDate(request.getArrivalDate())
+                .departureDate(request.getDepartureDate())
+                .townId(request.getTownId())
+                .build();
+        val result = commandExecutor.execute(command);
+        return UpdateBusStopResponse.builder()
+                .id(result.getId().toString())
+                .arrivalDate(result.getArrivalDate())
+                .departureDate(result.getDepartureDate())
+                .townId(result.getTownId())
+                .build();
+    }
+
+    @DeleteMapping("/api/schedule/{scheduleId}/busstops/{busStopId}")
+    public void deleteBusStop(@PathVariable String scheduleId, @PathVariable String busStopId) {
+        val command = DeleteBusStopCommand.builder()
+                .busStopId(busStopId)
+                .build();
+        commandExecutor.execute(command);
+    }
+
+    @DeleteMapping("/api/schedule/{scheduleId}")
+    public void deleteSchedule(@PathVariable String scheduleId) {
+        val command = DeleteScheduleCommand.builder()
+                .scheduleId(scheduleId)
+                .build();
+        commandExecutor.execute(command);
+    }
+
+    @PutMapping("/api/schedule/{scheduleId}")
+    public UpdateScheduleResponse updateSchedule(@PathVariable String scheduleId, @RequestBody UpdateScheduleRequest request) {
+        val command = UpdateScheduleCommand.builder()
+                .id(scheduleId)
+                .busId(request.getBusId())
+                .workerId(request.getWorkerId())
+                .isActive(request.getActive())
+                .build();
+        val result = commandExecutor.execute(command);
+        return UpdateScheduleResponse.builder()
+                .id(result.getId())
+                .busId(result.getBusId())
+                .workerId(result.getWorkerId())
+                .isActive(result.isActive())
                 .build();
     }
 }

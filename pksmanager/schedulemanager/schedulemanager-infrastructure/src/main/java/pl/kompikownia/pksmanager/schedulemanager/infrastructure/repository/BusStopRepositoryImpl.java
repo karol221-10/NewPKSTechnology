@@ -10,6 +10,7 @@ import pl.kompikownia.pksmanager.schedulemanager.business.application.repository
 import pl.kompikownia.pksmanager.schedulemanager.infrastructure.entity.BusStopEntity;
 import pl.kompikownia.pksmanager.schedulemanager.infrastructure.entity.QBusStopEntity;
 import pl.kompikownia.pksmanager.schedulemanager.infrastructure.entity.ScheduleEntity;
+import pl.kompikownia.pksmanager.schedulemanager.infrastructure.entity.TownEntity;
 import pl.kompikownia.pksmanager.schedulemanager.infrastructure.repository.jpa.BusStopCrudRepository;
 
 import javax.persistence.EntityManager;
@@ -36,9 +37,26 @@ public class BusStopRepositoryImpl implements BusStopRepository {
         val entityToPersist = BusStopEntity.of(em, busStopProjection);
         val parentEntity = em.getReference(ScheduleEntity.class, busStopProjection.getScheduleId());
         parentEntity.getBusStopEntities().add(entityToPersist);
-        em.merge(entityToPersist);
-        em.merge(parentEntity);
+        em.persist(entityToPersist);
+        em.persist(parentEntity);
         return entityToPersist.toProjection(parentEntity.getId());
+    }
+
+    @Override
+    @Transactional
+    public BusStopProjection update(BusStopProjection busStopProjection) {
+        val entity = em.find(BusStopEntity.class, busStopProjection.getId());
+        entity.setTown(em.find(TownEntity.class, busStopProjection.getTownId()));
+        entity.setArrivalDate(busStopProjection.getArrivalDate());
+        entity.setDepartureDate(busStopProjection.getDepartureDate());
+        val savedEntity = em.merge(entity);
+        return savedEntity.toProjection();
+    }
+
+    @Override
+    public BusStopProjection findById(String id) {
+        val entity = em.find(BusStopEntity.class, Long.parseLong(id));
+        return entity.toProjection();
     }
 
     @Override
@@ -67,10 +85,13 @@ public class BusStopRepositoryImpl implements BusStopRepository {
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
-        QBusStopEntity busStopEntity = QBusStopEntity.busStopEntity;
-        JPADeleteClause deleteClause = new JPADeleteClause(em,busStopEntity);
-        deleteClause.where(busStopEntity.id.eq(id)).execute();
+        val entity = em.find(BusStopEntity.class, id);
+        val parentEntity = entity.getSchedule();
+        parentEntity.getBusStopEntities().remove(entity);
+        em.remove(entity);
+        em.flush();
     }
 
     @Override

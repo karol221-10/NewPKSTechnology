@@ -10,9 +10,11 @@ public interface ScheduleRepository {
 
     List<ScheduleProjection> findCoursesByTownId(Long id1, Long id2);
 
-    List<ScheduleProjection> findById(Long id);
+    ScheduleProjection findById(Long id);
 
     List<ScheduleProjection> findAll();
+
+    ScheduleProjection update(ScheduleProjection toUpdate);
 
     void deleteById(Long id);
 

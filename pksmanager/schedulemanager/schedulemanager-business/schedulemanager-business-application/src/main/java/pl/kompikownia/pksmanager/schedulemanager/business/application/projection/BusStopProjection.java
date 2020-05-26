@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 @Getter
 @ToString
 @EqualsAndHashCode
+@Setter
 public class BusStopProjection {
     private Long id;
-    @Setter
     private Long scheduleId;
     private Long townId;
     private LocalDateTime arrivalDate;

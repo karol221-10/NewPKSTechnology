@@ -64,19 +64,31 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     }
 
     @Override
-    public List<ScheduleProjection> findById(Long id) {
-        JPAQuery<ScheduleEntity> query = new JPAQuery<>(em);
-        return query.from(scheduleEntity).where(scheduleEntity.id.eq(id)).fetch()
-                .stream()
-                .map(ScheduleEntity::toProjection)
-                .collect(Collectors.toList());
+    @Transactional
+    public ScheduleProjection update(ScheduleProjection toUpdate) {
+        val entity = em.find(ScheduleEntity.class, toUpdate.getId());
+        entity.setBusId(toUpdate.getBusId());
+        entity.setWorkerId(toUpdate.getWorkerId());
+        entity.setActive(toUpdate.isActive());
+        val newEntity = em.merge(entity);
+        return newEntity.toProjection();
     }
 
     @Override
-    public void deleteById(Long id) {
+    public ScheduleProjection findById(Long id) {
+        val entity = em.find(ScheduleEntity.class, id);
+        return entity.toProjection();
+    }
 
-        JPADeleteClause deleteClause = new JPADeleteClause(em, scheduleEntity);
-        deleteClause.where(scheduleEntity.id.eq(id)).execute();
+    @Override
+    @Transactional
+    public void deleteById(Long id) {
+        val entity = em.find(ScheduleEntity.class, id);
+        entity.getBusStopEntities().forEach(busStopEntity ->
+                em.remove(busStopEntity)
+        );
+        em.remove(entity);
+        em.flush();
     }
 
     @Override
