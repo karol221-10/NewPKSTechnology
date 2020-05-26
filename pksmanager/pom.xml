@@ -10,6 +10,7 @@
         <module>busmanager</module>
         <module>security</module>
         <module>usermanager</module>
+        <module>schedulemanager</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
