@@ -13,7 +13,8 @@ import pl.kompikownia.pksmanager.schedulemanager.api.request.UpdateBusStopReques
 import pl.kompikownia.pksmanager.schedulemanager.api.request.UpdateScheduleRequest;
 import pl.kompikownia.pksmanager.schedulemanager.api.response.*;
 import pl.kompikownia.pksmanager.schedulemanager.business.api.command.*;
-import pl.kompikownia.pksmanager.schedulemanager.business.api.query.GetScheduleListQuery;
+import pl.kompikownia.pksmanager.schedulemanager.business.api.query.GetAllSchedulesQuery;
+import pl.kompikownia.pksmanager.schedulemanager.business.api.query.GetScheduleListWithTownsQuery;
 
 import java.util.stream.Collectors;
 
@@ -28,12 +29,17 @@ public class ScheduleEndpoint {
 
     @GetMapping("/api/schedule")
     public GetScheduleListResponse getScheduleForTowns(@RequestParam Long sourceTownId, @RequestParam Long destinationTownId){
-        GetScheduleListQuery getScheduleListQuery = GetScheduleListQuery.builder()
+        GetScheduleListWithTownsQuery getScheduleListWithTownsQuery = GetScheduleListWithTownsQuery.builder()
                 .sourceTownId(sourceTownId)
                 .destinationTownId(destinationTownId)
                 .build();
 
-        return GetScheduleListResponseMapper.map(queryExecutor.execute(getScheduleListQuery));
+        return GetScheduleListResponseMapper.map(queryExecutor.execute(getScheduleListWithTownsQuery));
+    }
+
+    @GetMapping("/api/schedule")
+    public GetScheduleListResponse getAllSchedules() {
+        return GetScheduleListResponseMapper.map(queryExecutor.execute(new GetAllSchedulesQuery()));
     }
 
     @PostMapping("/api/schedule")

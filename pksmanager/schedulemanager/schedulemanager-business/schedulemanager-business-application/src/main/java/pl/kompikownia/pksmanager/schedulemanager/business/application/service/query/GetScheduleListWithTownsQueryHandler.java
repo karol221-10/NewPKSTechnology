@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import pl.kompikownia.pksmanager.cqrs.domain.QueryHandler;
 import pl.kompikownia.pksmanager.cqrs.infrastructure.Handler;
-import pl.kompikownia.pksmanager.schedulemanager.business.api.query.GetScheduleListQuery;
+import pl.kompikownia.pksmanager.schedulemanager.business.api.query.GetScheduleListWithTownsQuery;
 import pl.kompikownia.pksmanager.schedulemanager.business.api.response.Schedule;
 import pl.kompikownia.pksmanager.schedulemanager.business.application.mapper.ScheduleMapper;
 import pl.kompikownia.pksmanager.schedulemanager.business.application.projection.BusStopProjection;
@@ -22,13 +22,13 @@ import java.util.stream.IntStream;
 @Slf4j
 @AllArgsConstructor
 @Handler
-public class GetScheduleListQueryHandler extends QueryHandler<List<Schedule>, GetScheduleListQuery> {
+public class GetScheduleListWithTownsQueryHandler extends QueryHandler<List<Schedule>, GetScheduleListWithTownsQuery> {
 
     private final ScheduleRepository scheduleRepository;
 
     @Override
     @Transactional
-    public List<Schedule> handle(GetScheduleListQuery query) {
+    public List<Schedule> handle(GetScheduleListWithTownsQuery query) {
         return handleInternal(query.getSourceTownId(), query.getDestinationTownId());
     }
 

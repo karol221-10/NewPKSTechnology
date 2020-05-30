@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @Builder
-public class GetScheduleListQuery implements Query<List<Schedule>> {
+public class GetScheduleListWithTownsQuery implements Query<List<Schedule>> {
 
     private Long sourceTownId;
     private Long destinationTownId;
