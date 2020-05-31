@@ -7,6 +7,7 @@ import pl.kompikownia.pksmanager.busmanager.api.mapper.*;
 import pl.kompikownia.pksmanager.busmanager.api.response.BusView;
 import pl.kompikownia.pksmanager.busmanager.api.response.InspectionResponse;
 import pl.kompikownia.pksmanager.busmanager.api.response.InsurancesResponse;
+import pl.kompikownia.pksmanager.busmanager.business.projection.BusProjection;
 import pl.kompikownia.pksmanager.busmanager.business.projection.InspectionProjection;
 import pl.kompikownia.pksmanager.busmanager.business.projection.InsurancesProjection;
 import pl.kompikownia.pksmanager.busmanager.business.query.*;
@@ -74,6 +75,12 @@ public class BusManagerEndpoint {
                 .stream()
                 .map(PostInsuranceResponseMapper::map)
                 .collect(Collectors.toList());
+    }
+
+    @PostMapping("/api/bus")
+    public BusProjection createNewBus(@RequestBody BusProjection busProjection){
+        val result = commandExecutor.execute(PostBusRequestMapper.map(busProjection));
+        return result;
     }
 
     @PostMapping("/api/bus/{busId}/inspection")
