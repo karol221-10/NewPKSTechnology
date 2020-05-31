@@ -14,7 +14,6 @@ public class BusProjection {
     private Long id;
     private String model;
     private String registrationNumber;
-    private List<FuelProjection> fuelProjections;
     private List<InspectionProjection> inspectionProjections;
     private List<InsurancesProjection> insurancesProjections;
 
