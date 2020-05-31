@@ -27,7 +27,7 @@ public class ScheduleEndpoint {
 
     private CommandExecutor commandExecutor;
 
-    @GetMapping("/api/schedule")
+    @GetMapping(value = "/api/schedule", params = {"sourceTownId", "destinationTownId"})
     public GetScheduleListResponse getScheduleForTowns(@RequestParam Long sourceTownId, @RequestParam Long destinationTownId){
         GetScheduleListWithTownsQuery getScheduleListWithTownsQuery = GetScheduleListWithTownsQuery.builder()
                 .sourceTownId(sourceTownId)
