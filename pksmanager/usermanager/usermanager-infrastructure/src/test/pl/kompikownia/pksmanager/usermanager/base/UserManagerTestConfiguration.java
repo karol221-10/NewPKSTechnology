@@ -1,7 +1,5 @@
 package pl.kompikownia.pksmanager.usermanager.base;
 
-import lombok.val;
-import org.mockito.Mockito;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -11,13 +9,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import pl.kompikownia.pksmanager.cqrs.configuration.CqrsConfiguration;
 import pl.kompikownia.pksmanager.security.business.service.TokenProvider;
 
-import static org.mockito.Mockito.when;
-
 @Configuration
 @Import({CqrsConfiguration.class})
-@EnableJpaRepositories(basePackages = "pl.kompikownia.pksmanager.usermanager.infrastructure")
+@EnableJpaRepositories(basePackages = "pl.kompikownia.pksmanager.busmanager.infrastructure")
 @ComponentScan(basePackages = {
-        "pl.kompikownia.pksmanager.usermanager.infrastructure.repository",
+        "pl.kompikownia.pksmanager.busmanager.infrastructure.repository",
         "pl.kompikownia.pksmanager.usermanager.business.service.command",
         "pl.kompikownia.pksmanager.usermanager.business.service.query",
         "pl.kompikownia.pksmanager.cqrs.domain",
