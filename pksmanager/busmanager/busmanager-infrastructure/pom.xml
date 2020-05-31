@@ -17,6 +17,12 @@
                 <artifactId>busmanager-business</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
+        <dependency>
+            <groupId>pl.kompikownia</groupId>
+            <artifactId>busmanager-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
