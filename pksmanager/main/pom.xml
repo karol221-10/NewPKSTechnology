@@ -13,29 +13,34 @@
 
 
     <dependencies>
-        <dependency>
-            <groupId>pl.kompikownia</groupId>
-            <artifactId>timetable</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>pl.kompikownia</groupId>
-            <artifactId>busmanager-api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>pl.kompikownia</groupId>
-            <artifactId>busmanager-business</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+
         <dependency>
             <groupId>pl.kompikownia</groupId>
             <artifactId>busmanager-infrastructure</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
         <dependency>
             <groupId>pl.kompikownia</groupId>
-            <artifactId>timetable</artifactId>
+            <artifactId>busmanager-business</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.kompikownia</groupId>
+            <artifactId>busmanager-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.kompikownia</groupId>
+            <artifactId>security-infrastructure</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.kompikownia</groupId>
+            <artifactId>security-business</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
@@ -58,6 +63,30 @@
         </dependency>
 
         <dependency>
+            <groupId>pl.kompikownia</groupId>
+            <artifactId>schedulemanager-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.kompikownia</groupId>
+            <artifactId>schedulemanager-business-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.kompikownia</groupId>
+            <artifactId>schedulemanager-business-application</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.kompikownia</groupId>
+            <artifactId>schedulemanager-infrastructure</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
@@ -71,6 +100,7 @@
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
     </dependencies>
+
     <build>
        <plugins>
            <plugin>

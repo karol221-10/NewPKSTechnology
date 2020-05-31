@@ -5,13 +5,13 @@
     <packaging>pom</packaging>
     <modules>
         <module>cqrs</module>
-        <module>timetable</module>
-	<module>busmanager</module>
-        <module>security</module>
         <module>main</module>
+        <module>busmanager</module>
+        <module>security</module>
         <module>usermanager</module>
-</modules>
-	<parent>
+        <module>schedulemanager</module>
+    </modules>
+    <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.2.5.RELEASE</version>

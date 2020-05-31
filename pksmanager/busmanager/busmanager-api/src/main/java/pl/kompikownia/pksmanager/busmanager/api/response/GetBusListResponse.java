@@ -14,15 +14,5 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class GetBusListResponse {
 
-    private QueryExecutor queryExecutor;
 
-    @GetMapping("/api/bus")
-    public List<BusView> getBusList(){
-        GetBusListQuery getBusListQuery = new GetBusListQuery();
-
-        return queryExecutor.execute(getBusListQuery)
-                .stream()
-                .map(BusToBusForListViewMapper::map)
-                .collect(Collectors.toList());
-    }
 }
