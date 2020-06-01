@@ -45,9 +45,6 @@ public class BusEntity {
                 .id(id)
                 .model(model)
                 .registrationNumber(registrationNumber)
-                .fuelProjections(fuelEntity.stream()
-                        .map(FuelEntity::toProjection)
-                        .collect(Collectors.toList()))
                 .inspectionProjections(inspectionEntity.stream()
                         .map(InspectionEntity::toProjection)
                         .collect(Collectors.toList()))
@@ -62,9 +59,6 @@ public class BusEntity {
                 .id(projection.getId())
                 .model(projection.getModel())
                 .registrationNumber(projection.getRegistrationNumber())
-                .fuelEntity(projection.getFuelProjections().stream()
-                        .map(fuelProjection -> FuelEntity.of(em, fuelProjection))
-                        .collect(Collectors.toList()))
                 .build();
     }
 
