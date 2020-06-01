@@ -25,16 +25,7 @@ public class PostBusCommandHandler extends CommandHandler<BusProjection, PostBus
 
     @Override
     public BusProjection handle(PostBusCommand command) {
-        PostBusCommand postBusCommand = PostBusCommand.builder()
-                .id(command.getId())
-                .model(command.getModel())
-                .registrationNumber(command.getRegistrationNumber())
-                .inspectionProjections(command.getInspectionProjections())
-                .insurancesProjections(command.getInsurancesProjections())
-                .build();
-
-
-        val busProjection = commandExecutor.execute(postBusCommand);
+        val busProjection = commandExecutor.execute(command);
         return repository.save(busProjection);
     }
 }
