@@ -5,11 +5,14 @@
     <packaging>pom</packaging>
     <modules>
         <module>cqrs</module>
-        <module>main</module>
+        <module>timetable</module>
         <module>busmanager</module>
         <module>security</module>
+<<<<<<< HEAD
+        <module>main</module>
+=======
         <module>usermanager</module>
-        <module>schedulemanager</module>
+>>>>>>> develop
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
