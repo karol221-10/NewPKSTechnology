@@ -15,7 +15,10 @@ import pl.kompikownia.pksmanager.schedulemanager.api.response.*;
 import pl.kompikownia.pksmanager.schedulemanager.business.api.command.*;
 import pl.kompikownia.pksmanager.schedulemanager.business.api.query.GetAllSchedulesQuery;
 import pl.kompikownia.pksmanager.schedulemanager.business.api.query.GetScheduleListWithTownsQuery;
+import pl.kompikownia.pksmanager.schedulemanager.business.api.query.GetTownListQuery;
+import pl.kompikownia.pksmanager.schedulemanager.business.api.response.Town;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -40,6 +43,21 @@ public class ScheduleEndpoint {
     @GetMapping("/api/schedule")
     public GetScheduleListResponse getAllSchedules() {
         return GetScheduleListResponseMapper.map(queryExecutor.execute(new GetAllSchedulesQuery()));
+    }
+
+    @GetMapping("/api/town")
+    public List<Town> getAllTowns(){
+        return queryExecutor.execute(new GetTownListQuery());
+    }
+
+    @PostMapping("/api/town")
+    public Town addNewTown(@RequestBody Town town){
+        val command = AddTownCommand.builder()
+                .townName(town.getName())
+                .build();
+        return commandExecutor.execute(command);
+
+
     }
 
     @PostMapping("/api/schedule")
