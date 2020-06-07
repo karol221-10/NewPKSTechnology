@@ -31,9 +31,6 @@ public class GetBusListQueryHandlerTest extends BusManagerIntegrationTest {
     private BusRepository busRepository;
 
     @Autowired
-    private FuelRepository fuelRepository;
-
-    @Autowired
     private InsurancesRepository insurancesRepository;
 
     @Autowired
@@ -65,8 +62,6 @@ public class GetBusListQueryHandlerTest extends BusManagerIntegrationTest {
                                 .id(1L)
                                 .model("CITROEN")
                                 .registrationNumber("TKA 2137")
-                                .fuelProjections(List.of(FuelProjection.builder().id(1L)
-                                        .busId(1L).quantify(10L).type("BENZINE").build()))
                                 .inspectionProjections(List.of(InspectionProjection.builder()
                                         .id(1L)
                                         .busId(1L)

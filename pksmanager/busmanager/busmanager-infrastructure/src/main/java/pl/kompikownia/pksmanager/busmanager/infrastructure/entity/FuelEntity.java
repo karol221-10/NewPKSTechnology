@@ -1,11 +1,11 @@
-package pl.kompikownia.pksmanager.busmanager.entity;
+package pl.kompikownia.pksmanager.busmanager.infrastructure.entity;
 
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import pl.kompikownia.pksmanager.busmanager.business.projection.FuelProjection;
-import pl.kompikownia.pksmanager.busmanager.entity.namemapper.BusColumnNames;
-import pl.kompikownia.pksmanager.busmanager.entity.namemapper.FuelColumnNames;
+import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.namemapper.BusColumnNames;
+import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.namemapper.FuelColumnNames;
 
 import javax.persistence.*;
 

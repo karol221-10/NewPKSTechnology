@@ -5,12 +5,11 @@ import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Repository;
-import pl.kompikownia.pksmanager.busmanager.business.projection.BusProjection;
 import pl.kompikownia.pksmanager.busmanager.business.projection.InspectionProjection;
 import pl.kompikownia.pksmanager.busmanager.business.repository.InspectionRepository;
-import pl.kompikownia.pksmanager.busmanager.entity.BusEntity;
-import pl.kompikownia.pksmanager.busmanager.entity.InspectionEntity;
-import pl.kompikownia.pksmanager.busmanager.entity.QInspectionEntity;
+import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.BusEntity;
+import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.InspectionEntity;
+import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.QInspectionEntity;
 import pl.kompikownia.pksmanager.busmanager.repository.port.InspectionCrudRepository;
 
 import javax.persistence.EntityManager;
@@ -33,14 +32,12 @@ public class InspectionRepositoryImpl implements InspectionRepository {
     public InspectionProjection save(InspectionProjection inspectionProjection) {
         val entityToPersist = InspectionEntity.of(em,inspectionProjection);
         val parentEntity = em.getReference(BusEntity.class,inspectionProjection.getBusId());
-        val parentProjection = em.getReference(BusProjection.class, inspectionProjection.getBusId());
         parentEntity.getInspectionEntity().add(entityToPersist);
-        parentProjection.getInspectionProjections().add(inspectionProjection);
 
-        em.merge(entityToPersist);
+        val persistedEntity = em.merge(entityToPersist);
         em.merge(parentEntity);
         em.flush();
-        return entityToPersist.toProjection();
+        return persistedEntity.toProjection();
     }
 
     @Override
@@ -48,9 +45,7 @@ public class InspectionRepositoryImpl implements InspectionRepository {
 
         val entityToPersist = InspectionEntity.of(em,inspectionProjection);
         val parentEntity = em.getReference(BusEntity.class,id);
-        val parentProjection = em.getReference(BusProjection.class, id);
         parentEntity.getInspectionEntity().add(entityToPersist);
-        parentProjection.getInspectionProjections().add(inspectionProjection);
         em.merge(entityToPersist);
         em.merge(parentEntity);
         em.flush();

@@ -1,4 +1,4 @@
-package pl.kompikownia.pksmanager.busmanager.entity.namemapper;
+package pl.kompikownia.pksmanager.busmanager.infrastructure.entity.namemapper;
 
 public class FuelColumnNames {
     public static final String TABLE_NAME = "FUEL";

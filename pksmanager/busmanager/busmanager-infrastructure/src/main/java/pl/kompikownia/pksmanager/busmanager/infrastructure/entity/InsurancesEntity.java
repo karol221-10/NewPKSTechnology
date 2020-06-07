@@ -1,9 +1,9 @@
-package pl.kompikownia.pksmanager.busmanager.entity;
+package pl.kompikownia.pksmanager.busmanager.infrastructure.entity;
 
 import lombok.*;
 import pl.kompikownia.pksmanager.busmanager.business.projection.InsurancesProjection;
-import pl.kompikownia.pksmanager.busmanager.entity.namemapper.BusColumnNames;
-import pl.kompikownia.pksmanager.busmanager.entity.namemapper.InsurancesColumnNames;
+import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.namemapper.BusColumnNames;
+import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.namemapper.InsurancesColumnNames;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

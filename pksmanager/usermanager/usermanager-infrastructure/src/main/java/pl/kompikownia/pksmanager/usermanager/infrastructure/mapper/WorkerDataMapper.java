@@ -1,7 +1,7 @@
 package pl.kompikownia.pksmanager.usermanager.infrastructure.mapper;
 
 import lombok.experimental.UtilityClass;
-import pl.kompikownia.pksmanager.busmanager.entity.WorkerEntity;
+import pl.kompikownia.pksmanager.usermanager.infrastructure.entity.WorkerEntity;
 import pl.kompikownia.pksmanager.usermanager.business.projection.WorkerData;
 
 @UtilityClass

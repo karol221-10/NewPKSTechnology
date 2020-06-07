@@ -1,12 +1,13 @@
 package pl.kompikownia.pksmanager.busmanager.business.repository;
 
 import pl.kompikownia.pksmanager.busmanager.business.projection.BusProjection;
+import pl.kompikownia.pksmanager.busmanager.business.projection.SimpleBusProjection;
 
 import java.util.List;
 
 public interface BusRepository {
 
-    BusProjection save(BusProjection busProjection);
+    SimpleBusProjection save(SimpleBusProjection busProjection);
 
     List<BusProjection> findAll();
 
