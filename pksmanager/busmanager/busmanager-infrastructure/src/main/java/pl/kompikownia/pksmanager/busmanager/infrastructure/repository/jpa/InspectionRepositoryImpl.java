@@ -33,14 +33,12 @@ public class InspectionRepositoryImpl implements InspectionRepository {
     public InspectionProjection save(InspectionProjection inspectionProjection) {
         val entityToPersist = InspectionEntity.of(em,inspectionProjection);
         val parentEntity = em.getReference(BusEntity.class,inspectionProjection.getBusId());
-        val parentProjection = em.getReference(BusProjection.class, inspectionProjection.getBusId());
         parentEntity.getInspectionEntity().add(entityToPersist);
-        parentProjection.getInspectionProjections().add(inspectionProjection);
 
-        em.merge(entityToPersist);
+        val persistedEntity = em.merge(entityToPersist);
         em.merge(parentEntity);
         em.flush();
-        return entityToPersist.toProjection();
+        return persistedEntity.toProjection();
     }
 
     @Override
@@ -48,9 +46,7 @@ public class InspectionRepositoryImpl implements InspectionRepository {
 
         val entityToPersist = InspectionEntity.of(em,inspectionProjection);
         val parentEntity = em.getReference(BusEntity.class,id);
-        val parentProjection = em.getReference(BusProjection.class, id);
         parentEntity.getInspectionEntity().add(entityToPersist);
-        parentProjection.getInspectionProjections().add(inspectionProjection);
         em.merge(entityToPersist);
         em.merge(parentEntity);
         em.flush();

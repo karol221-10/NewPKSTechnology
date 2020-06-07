@@ -1,27 +1,11 @@
 package pl.kompikownia.pksmanager.busmanager.buisness.service.commandhandler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.val;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-import pl.kompikownia.pksmanager.busmanager.api.response.BusView;
-import pl.kompikownia.pksmanager.busmanager.api.response.InspectionResponse;
-import pl.kompikownia.pksmanager.busmanager.api.response.InsurancesResponse;
 import pl.kompikownia.pksmanager.busmanager.base.BusManagerIntegrationTest;
-import pl.kompikownia.pksmanager.busmanager.business.command.PostInspectionCommand;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 
 @Sql("/BusManagerTest.sql")

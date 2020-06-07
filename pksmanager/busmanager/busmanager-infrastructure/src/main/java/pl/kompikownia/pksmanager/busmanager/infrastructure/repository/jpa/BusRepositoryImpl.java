@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Repository;
 import pl.kompikownia.pksmanager.busmanager.business.projection.BusProjection;
+import pl.kompikownia.pksmanager.busmanager.business.projection.SimpleBusProjection;
 import pl.kompikownia.pksmanager.busmanager.business.repository.BusRepository;
 import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.BusEntity;
 import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.QBusEntity;
@@ -28,11 +29,11 @@ public class BusRepositoryImpl implements BusRepository {
 
     @Override
     @Transactional
-    public BusProjection save(BusProjection busProjection) {
+    public SimpleBusProjection save(SimpleBusProjection busProjection) {
         val entityToPersist = BusEntity.of(em, busProjection);
         em.persist(entityToPersist);
         em.flush();
-        return entityToPersist.toProjection();
+        return entityToPersist.toSimpleProjection();
     }
 
     @Override
