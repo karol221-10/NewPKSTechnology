@@ -14,4 +14,5 @@ import java.util.List;
 public class Town {
     private Long id;
     private String name;
+    private List<BusStop> busStops;
 }

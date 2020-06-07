@@ -7,6 +7,7 @@ import pl.kompikownia.pksmanager.cqrs.domain.CommandHandler;
 import pl.kompikownia.pksmanager.cqrs.infrastructure.Handler;
 import pl.kompikownia.pksmanager.schedulemanager.business.api.command.AddTownCommand;
 import pl.kompikownia.pksmanager.schedulemanager.business.api.response.Town;
+import pl.kompikownia.pksmanager.schedulemanager.business.application.mapper.TownMapper;
 import pl.kompikownia.pksmanager.schedulemanager.business.application.mapper.TownProjectionMapper;
 import pl.kompikownia.pksmanager.schedulemanager.business.application.projection.TownProjection;
 import pl.kompikownia.pksmanager.schedulemanager.business.application.repository.TownRepository;
@@ -26,8 +27,7 @@ public class AddTownCommandHandler extends CommandHandler<Town, AddTownCommand> 
 
     @Override
     public Town handle(AddTownCommand command) {
-        val town = commandExecutor.execute(command);
-        townRepository.save(TownProjectionMapper.map(town));
-        return town;
+    val townProjection = townRepository.save(TownProjectionMapper.map(command));
+    return TownMapper.map(townProjection);
     }
 }

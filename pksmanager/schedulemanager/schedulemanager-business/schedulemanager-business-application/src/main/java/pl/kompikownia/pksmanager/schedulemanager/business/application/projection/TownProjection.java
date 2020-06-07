@@ -5,6 +5,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Getter
 @ToString
 @EqualsAndHashCode
@@ -12,4 +14,5 @@ import lombok.ToString;
 public class TownProjection {
     private Long id;
     private String townName;
+    private List<BusStopProjection> busStopProjections;
 }

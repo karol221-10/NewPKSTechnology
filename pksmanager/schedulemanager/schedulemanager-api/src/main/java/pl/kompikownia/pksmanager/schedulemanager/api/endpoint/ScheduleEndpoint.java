@@ -47,7 +47,8 @@ public class ScheduleEndpoint {
 
     @GetMapping("/api/town")
     public List<Town> getAllTowns(){
-        return queryExecutor.execute(new GetTownListQuery());
+        GetTownListQuery getTownListQuery = new GetTownListQuery();
+        return queryExecutor.execute(getTownListQuery);
     }
 
     @PostMapping("/api/town")
@@ -56,7 +57,6 @@ public class ScheduleEndpoint {
                 .townName(town.getName())
                 .build();
         return commandExecutor.execute(command);
-
 
     }
 

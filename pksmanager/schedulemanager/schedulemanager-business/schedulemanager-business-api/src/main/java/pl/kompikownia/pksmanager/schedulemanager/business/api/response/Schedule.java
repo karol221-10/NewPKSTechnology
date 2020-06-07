@@ -12,7 +12,6 @@ import java.util.List;
 @EqualsAndHashCode
 @Builder
 public class Schedule {
-
     private Long id;
     private Long busId;
     private Long workerId;

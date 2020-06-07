@@ -1,10 +1,12 @@
 package pl.kompikownia.pksmanager.schedulemanager.infrastructure.entity;
 
 import lombok.*;
+import pl.kompikownia.pksmanager.schedulemanager.business.application.projection.TownProjection;
 import pl.kompikownia.pksmanager.schedulemanager.infrastructure.namemapper.TownColumnNames;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Entity
@@ -19,14 +21,34 @@ import java.util.List;
 public class TownEntity{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = TownColumnNames.COLUMN_ID)
     private Long id;
 
     @Column(name = TownColumnNames.COLUMN_NAME)
     private String name;
 
-    @OneToMany(mappedBy = "town")
+    @OneToMany(mappedBy = "town",cascade = CascadeType.PERSIST)
     private List<BusStopEntity> busStopEntities;
 
+    public TownProjection toProjection(){
+        return TownProjection.builder()
+                .id(id)
+                .townName(name)
+                .busStopProjections(busStopEntities.stream()
+                .map(busStop -> busStop.toProjection(id))
+                .collect(Collectors.toList()))
+                .build();
+    }
+
+    public static TownEntity of(EntityManager em, TownProjection projection){
+        return TownEntity.builder()
+                .id(projection.getId())
+                .name(projection.getTownName())
+                .busStopEntities(projection.getBusStopProjections()
+                        .stream()
+                        .map(busStopProjection -> BusStopEntity.of(em,busStopProjection))
+                        .collect(Collectors.toList()))
+                .build();
+    }
 }
