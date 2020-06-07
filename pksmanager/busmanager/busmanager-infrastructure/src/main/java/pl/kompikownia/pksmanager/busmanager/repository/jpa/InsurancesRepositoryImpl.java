@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 import pl.kompikownia.pksmanager.busmanager.business.projection.BusProjection;
 import pl.kompikownia.pksmanager.busmanager.business.projection.InsurancesProjection;
 import pl.kompikownia.pksmanager.busmanager.business.repository.InsurancesRepository;
-import pl.kompikownia.pksmanager.busmanager.entity.BusEntity;
-import pl.kompikownia.pksmanager.busmanager.entity.InsurancesEntity;
-import pl.kompikownia.pksmanager.busmanager.entity.QInsurancesEntity;
+import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.BusEntity;
+import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.InsurancesEntity;
+import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.QInsurancesEntity;
 import pl.kompikownia.pksmanager.busmanager.repository.port.InsurancesCrudRepository;
 
 import javax.persistence.EntityManager;
@@ -34,13 +34,11 @@ public class InsurancesRepositoryImpl implements InsurancesRepository {
     public InsurancesProjection save(InsurancesProjection insurancesProjection) {
         val entityToPersist = InsurancesEntity.of(em,insurancesProjection);
         val parentEntity = em.getReference(BusEntity.class, insurancesProjection.getBusId());
-        val parentProjection = em.getReference(BusProjection.class, insurancesProjection.getBusId());
         parentEntity.getInsurancesEntities().add(entityToPersist);
-        parentProjection.getInsurancesProjections().add(insurancesProjection);
-        em.merge(entityToPersist);
+        val persistedEntity = em.merge(entityToPersist);
         em.merge(parentEntity);
         em.flush();
-        return entityToPersist.toProjection();
+        return persistedEntity.toProjection();
     }
 
     @Override

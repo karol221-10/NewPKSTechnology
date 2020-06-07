@@ -18,10 +18,12 @@ public class BusToBusForListViewMapper {
     }
 
     private static LocalDateTime getInsuranceExpiry(BusProjection busProjection){
-        return busProjection.getInsurancesProjections().stream().map(InsurancesProjection::getExpiryDate).max(LocalDateTime::compareTo).get();
+        return busProjection.getInsurancesProjections().stream().map(InsurancesProjection::getExpiryDate).max(LocalDateTime::compareTo)
+                .orElse(null);
     }
 
     private static LocalDateTime getInspectionExpiry(BusProjection busProjection){
-        return busProjection.getInspectionProjections().stream().map(InspectionProjection::getExpiryDate).max(LocalDateTime::compareTo).get();
+        return busProjection.getInspectionProjections().stream().map(InspectionProjection::getExpiryDate).max(LocalDateTime::compareTo)
+                .orElse(null);
     }
 }

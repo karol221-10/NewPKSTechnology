@@ -4,11 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.val;
 import org.springframework.web.bind.annotation.*;
 import pl.kompikownia.pksmanager.busmanager.api.mapper.*;
+import pl.kompikownia.pksmanager.busmanager.api.request.SimpleBusRequest;
+import pl.kompikownia.pksmanager.busmanager.api.request.SimpleInspectionRequest;
+import pl.kompikownia.pksmanager.busmanager.api.request.SimpleInsuranceRequest;
 import pl.kompikownia.pksmanager.busmanager.api.response.BusView;
 import pl.kompikownia.pksmanager.busmanager.api.response.InspectionResponse;
 import pl.kompikownia.pksmanager.busmanager.api.response.InsurancesResponse;
+import pl.kompikownia.pksmanager.busmanager.business.projection.BusProjection;
 import pl.kompikownia.pksmanager.busmanager.business.projection.InspectionProjection;
 import pl.kompikownia.pksmanager.busmanager.business.projection.InsurancesProjection;
+import pl.kompikownia.pksmanager.busmanager.business.projection.SimpleBusProjection;
 import pl.kompikownia.pksmanager.busmanager.business.query.*;
 import pl.kompikownia.pksmanager.cqrs.domain.CommandExecutor;
 import pl.kompikownia.pksmanager.cqrs.domain.QueryExecutor;
@@ -76,15 +81,20 @@ public class BusManagerEndpoint {
                 .collect(Collectors.toList());
     }
 
+    @PostMapping("/api/bus")
+    public SimpleBusProjection createNewBus(@RequestBody SimpleBusRequest simpleBusRequest){
+        return commandExecutor.execute(PostBusRequestMapper.map(simpleBusRequest));
+    }
+
     @PostMapping("/api/bus/{busId}/inspection")
-    public InspectionResponse createNewInspection(@PathVariable String busId, @RequestBody InspectionProjection inspectionProjection){
-        val result = commandExecutor.execute(PostInspectionRequestMapper.map(inspectionProjection));
+    public InspectionResponse createNewInspection(@PathVariable String busId, @RequestBody SimpleInspectionRequest inspectionRequest){
+        val result = commandExecutor.execute(PostInspectionRequestMapper.map(busId, inspectionRequest));
         return PostInspectionResponseMapper.map(result);
     }
 
     @PostMapping("/api/bus/{busId}/insurance")
-    public InsurancesResponse createNewInsurance(@PathVariable String busId, @RequestBody InsurancesProjection insurancesProjection){
-        val result = commandExecutor.execute(PostInsurancesRequestMapper.map(insurancesProjection));
+    public InsurancesResponse createNewInsurance(@PathVariable String busId, @RequestBody SimpleInsuranceRequest insurancesProjection){
+        val result = commandExecutor.execute(PostInsurancesRequestMapper.map(busId, insurancesProjection));
         return PostInsuranceResponseMapper.map(result);
     }
 }

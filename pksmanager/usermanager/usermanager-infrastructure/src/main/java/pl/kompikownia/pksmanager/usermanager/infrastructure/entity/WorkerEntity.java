@@ -1,4 +1,4 @@
-package pl.kompikownia.pksmanager.busmanager.entity;
+package pl.kompikownia.pksmanager.usermanager.infrastructure.entity;
 
 
 import lombok.*;

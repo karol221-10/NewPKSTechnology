@@ -9,8 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Builder
-public class PostInspectionCommand implements Command<InspectionProjection> {
-    private Long id;
+public class CreateInspectionCommand implements Command<InspectionProjection> {
     private String type;
     private LocalDateTime creationDate;
     private LocalDateTime expiryDate;

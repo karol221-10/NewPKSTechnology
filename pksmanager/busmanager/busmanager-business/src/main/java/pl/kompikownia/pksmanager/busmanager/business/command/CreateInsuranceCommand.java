@@ -10,8 +10,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Builder
-public class PostInsurancesCommand  implements Command<InsurancesProjection> {
-    private Long id;
+public class CreateInsuranceCommand implements Command<InsurancesProjection> {
     private String type;
     private LocalDateTime creationDate;
     private LocalDateTime expiryDate;

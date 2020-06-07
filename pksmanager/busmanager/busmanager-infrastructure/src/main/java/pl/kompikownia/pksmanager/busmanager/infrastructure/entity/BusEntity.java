@@ -1,9 +1,10 @@
-package pl.kompikownia.pksmanager.busmanager.entity;
+package pl.kompikownia.pksmanager.busmanager.infrastructure.entity;
 
 
 import lombok.*;
 import pl.kompikownia.pksmanager.busmanager.business.projection.BusProjection;
-import pl.kompikownia.pksmanager.busmanager.entity.namemapper.BusColumnNames;
+import pl.kompikownia.pksmanager.busmanager.business.projection.SimpleBusProjection;
+import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.namemapper.BusColumnNames;
 
 import javax.persistence.*;
 import java.util.List;
@@ -45,9 +46,6 @@ public class BusEntity {
                 .id(id)
                 .model(model)
                 .registrationNumber(registrationNumber)
-                .fuelProjections(fuelEntity.stream()
-                        .map(FuelEntity::toProjection)
-                        .collect(Collectors.toList()))
                 .inspectionProjections(inspectionEntity.stream()
                         .map(InspectionEntity::toProjection)
                         .collect(Collectors.toList()))
@@ -57,14 +55,19 @@ public class BusEntity {
                 .build();
     }
 
-    public static BusEntity of(EntityManager em, BusProjection projection){
+    public SimpleBusProjection toSimpleProjection() {
+        return SimpleBusProjection.builder()
+                .id(id)
+                .model(model)
+                .registrationNumber(registrationNumber)
+                .build();
+    }
+
+    public static BusEntity of(EntityManager em, SimpleBusProjection projection){
         return BusEntity.builder()
                 .id(projection.getId())
                 .model(projection.getModel())
                 .registrationNumber(projection.getRegistrationNumber())
-                .fuelEntity(projection.getFuelProjections().stream()
-                        .map(fuelProjection -> FuelEntity.of(em, fuelProjection))
-                        .collect(Collectors.toList()))
                 .build();
     }
 

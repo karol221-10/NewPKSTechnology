@@ -11,11 +11,9 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 @AllArgsConstructor(staticName = "of")
-public class PostInspectionRequest {
-    private Long id;
+public class SimpleInsuranceRequest {
     private String type;
     private LocalDateTime creationDate;
     private LocalDateTime expiryDate;
     private String comment;
-    private Long busId;
 }
