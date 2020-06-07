@@ -1,18 +1,19 @@
-package pl.kompikownia.pksmanager.busmanager.infrastructure.repository;
+package pl.kompikownia.pksmanager.usermanager.infrastructure.repository;
 
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.val;
 import org.springframework.stereotype.Repository;
-import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.UserEntity;
+import pl.kompikownia.pksmanager.usermanager.infrastructure.entity.QUserEntity;
+import pl.kompikownia.pksmanager.usermanager.infrastructure.entity.QWorkerEntity;
+import pl.kompikownia.pksmanager.usermanager.infrastructure.entity.UserEntity;
 import pl.kompikownia.pksmanager.usermanager.business.projection.SavedWorkerInDbProjection;
 import pl.kompikownia.pksmanager.usermanager.business.projection.WorkerData;
 import pl.kompikownia.pksmanager.usermanager.business.projection.CreatedUserProjection;
 import pl.kompikownia.pksmanager.usermanager.business.projection.UserData;
 import pl.kompikownia.pksmanager.usermanager.business.repository.UserRepository;
-import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.WorkerEntity;
-import pl.kompikownia.pksmanager.busmanager.infrastructure.mapper.UserDataMapper;
-import pl.kompikownia.pksmanager.busmanager.infrastructure.mapper.WorkerDataMapper;
-import pl.kompikownia.pksmanager.busmanager.infrastructure.repository.jpa.UserRepositoryJPA;
+import pl.kompikownia.pksmanager.usermanager.infrastructure.entity.WorkerEntity;
+import pl.kompikownia.pksmanager.usermanager.infrastructure.mapper.UserDataMapper;
+import pl.kompikownia.pksmanager.usermanager.infrastructure.mapper.WorkerDataMapper;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,16 +21,11 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static pl.kompikownia.pksmanager.busmanager.infrastructure.entity.QUserEntity.userEntity;
-import static pl.kompikownia.pksmanager.busmanager.infrastructure.entity.QWorkerEntity.workerEntity;
-
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
-
-    private UserRepositoryJPA userRepositoryJPA;
 
     @Override
     @Transactional
@@ -62,7 +58,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public List<UserData> getUserList() {
         JPAQuery<UserEntity> query = new JPAQuery<>(entityManager);
-        val userEntities = query.from(userEntity).where(userEntity.active.isTrue())
+        val userEntities = query.from(QUserEntity.userEntity).where(QUserEntity.userEntity.active.isTrue())
                 .fetchAll()
                 .fetch();
         return userEntities.stream()
@@ -74,9 +70,9 @@ public class UserRepositoryImpl implements UserRepository {
     public List<WorkerData> getWorkersList() {
         JPAQuery<WorkerEntity> query = new JPAQuery<>(entityManager);
 
-        val workers = query.from(workerEntity)
-                .innerJoin(workerEntity.userEntity, userEntity)
-                .where(userEntity.active.isTrue())
+        val workers = query.from(QWorkerEntity.workerEntity)
+                .innerJoin(QWorkerEntity.workerEntity.userEntity, QUserEntity.userEntity)
+                .where(QUserEntity.userEntity.active.isTrue())
                 .fetchAll()
                 .fetch();
 

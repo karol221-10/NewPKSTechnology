@@ -1,10 +1,10 @@
-package pl.kompikownia.pksmanager.busmanager.infrastructure.entity;
+package pl.kompikownia.pksmanager.usermanager.infrastructure.entity;
 
 
 import lombok.*;
-import pl.kompikownia.pksmanager.busmanager.infrastructure.namemapper.UserColumnNames;
+import pl.kompikownia.pksmanager.usermanager.infrastructure.namemapper.UserColumnNames;
 import pl.kompikownia.pksmanager.usermanager.business.projection.WorkerData;
-import pl.kompikownia.pksmanager.busmanager.infrastructure.namemapper.WorkerColumnNames;
+import pl.kompikownia.pksmanager.usermanager.infrastructure.namemapper.WorkerColumnNames;
 
 import javax.persistence.*;
 

@@ -1,4 +1,4 @@
-package pl.kompikownia.pksmanager.busmanager.infrastructure.repository.jpa;
+package pl.kompikownia.pksmanager.busmanager.repository.jpa;
 
 import com.querydsl.jpa.impl.JPADeleteClause;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -11,7 +11,7 @@ import pl.kompikownia.pksmanager.busmanager.business.repository.InsurancesReposi
 import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.BusEntity;
 import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.InsurancesEntity;
 import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.QInsurancesEntity;
-import pl.kompikownia.pksmanager.busmanager.infrastructure.repository.port.InsurancesCrudRepository;
+import pl.kompikownia.pksmanager.busmanager.repository.port.InsurancesCrudRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

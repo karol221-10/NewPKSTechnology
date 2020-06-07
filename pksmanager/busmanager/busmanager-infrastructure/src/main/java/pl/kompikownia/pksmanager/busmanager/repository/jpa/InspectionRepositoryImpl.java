@@ -1,17 +1,16 @@
-package pl.kompikownia.pksmanager.busmanager.infrastructure.repository.jpa;
+package pl.kompikownia.pksmanager.busmanager.repository.jpa;
 
 import com.querydsl.jpa.impl.JPADeleteClause;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Repository;
-import pl.kompikownia.pksmanager.busmanager.business.projection.BusProjection;
 import pl.kompikownia.pksmanager.busmanager.business.projection.InspectionProjection;
 import pl.kompikownia.pksmanager.busmanager.business.repository.InspectionRepository;
 import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.BusEntity;
 import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.InspectionEntity;
 import pl.kompikownia.pksmanager.busmanager.infrastructure.entity.QInspectionEntity;
-import pl.kompikownia.pksmanager.busmanager.infrastructure.repository.port.InspectionCrudRepository;
+import pl.kompikownia.pksmanager.busmanager.repository.port.InspectionCrudRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

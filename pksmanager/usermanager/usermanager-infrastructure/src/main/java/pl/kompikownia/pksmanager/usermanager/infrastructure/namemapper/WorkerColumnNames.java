@@ -1,4 +1,4 @@
-package pl.kompikownia.pksmanager.busmanager.infrastructure.namemapper;
+package pl.kompikownia.pksmanager.usermanager.infrastructure.namemapper;
 
 public class WorkerColumnNames {
     public static final String TABLE_NAME = "WORKER";
