@@ -14,4 +14,6 @@ public class UpdateBusStopResponse {
     private Long townId;
     private LocalDateTime arrivalDate;
     private LocalDateTime departureDate;
+    private Double price;
+    private Double distanceFromPrev;
 }

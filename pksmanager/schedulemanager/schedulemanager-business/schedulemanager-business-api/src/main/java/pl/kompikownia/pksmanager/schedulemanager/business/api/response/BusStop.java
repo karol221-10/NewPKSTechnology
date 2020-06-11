@@ -9,9 +9,11 @@ import java.time.LocalDateTime;
 @ToString
 @EqualsAndHashCode
 public class BusStop {
-    private Long id;
-    private Long scheduleId;
-    private Long townId;
+    private String id;
+    private String scheduleId;
+    private String townId;
     private LocalDateTime arrivalDate;
     private LocalDateTime departureDate;
+    private Double price;
+    private Double distanceFromPrev;
 }

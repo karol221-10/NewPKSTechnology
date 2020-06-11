@@ -12,5 +12,4 @@ import java.util.List;
 public class AddNewScheduleRequest {
     private Long busId;
     private Long workerId;
-    private List<NewBusStopDto> busStops;
 }

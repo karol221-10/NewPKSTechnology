@@ -13,7 +13,9 @@ import java.time.LocalDateTime;
 public class UpdateBusStopCommand implements Command<BusStop> {
 
     private String id;
+    private String scheduleId;
     private String townId;
+    private String price;
     private LocalDateTime arrivalDate;
     private LocalDateTime departureDate;
 }

@@ -42,7 +42,11 @@ public class GetScheduleListWithTownsQueryHandler extends QueryHandler<List<Sche
         schedulesWithNeededTowns
                 .forEach(scheduleProjection ->
                         cutListToContainOnlyBetweenBusStops(sourceTownId, destinationTownId, scheduleProjection));
-        return schedulesWithNeededTowns.stream()
+
+        val afterCalculations = schedulesWithNeededTowns.stream()
+                .filter(scheduleProjection -> !scheduleProjection.getBusStops().isEmpty())
+                .collect(Collectors.toList());
+        return afterCalculations.stream()
                 .map(ScheduleMapper::map)
                 .collect(Collectors.toList());
     }
@@ -55,7 +59,7 @@ public class GetScheduleListWithTownsQueryHandler extends QueryHandler<List<Sche
 
     private boolean containsTown(Long sourceTownId, ScheduleProjection scheduleProjection) {
         return scheduleProjection.getBusStops().stream()
-                .anyMatch(busStopProjection -> busStopProjection.getTownId().equals(sourceTownId));
+                .anyMatch(busStopProjection -> busStopProjection.getTownId().equals(sourceTownId.toString()));
     }
 
     private void cutListToContainOnlyBetweenBusStops(Long sourceTown,
@@ -72,7 +76,7 @@ public class GetScheduleListWithTownsQueryHandler extends QueryHandler<List<Sche
 
     private int getBusStopIndex(Long sourceTown, List<BusStopProjection> projection) {
         return IntStream.range(0, projection.size())
-                .filter(busStop -> projection.get(busStop).getTownId().equals(sourceTown))
+                .filter(busStop -> projection.get(busStop).getTownId().equals(sourceTown.toString()))
                 .findFirst()
                 .getAsInt();
     }

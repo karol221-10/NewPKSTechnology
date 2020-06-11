@@ -12,6 +12,8 @@ public class BusStopMapper {
                 .departureDate(busStopProjection.getDepartureDate())
                 .scheduleId(busStopProjection.getScheduleId())
                 .townId(busStopProjection.getTownId())
+                .distanceFromPrev(busStopProjection.getDistanceFromPrev().doubleValue())
+                .price(busStopProjection.getPrice().doubleValue())
                 .build();
     }
 }

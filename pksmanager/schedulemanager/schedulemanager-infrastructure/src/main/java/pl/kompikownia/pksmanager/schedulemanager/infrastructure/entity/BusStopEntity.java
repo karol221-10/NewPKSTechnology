@@ -7,6 +7,7 @@ import pl.kompikownia.pksmanager.schedulemanager.infrastructure.namemapper.BusSt
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -39,34 +40,46 @@ public class BusStopEntity {
     @Column(name = BusStopColumnNames.COLUMN_DEPARTURE_DATE)
     private LocalDateTime departureDate;
 
+    @Column(name = BusStopColumnNames.COLUMN_PRICE)
+    private BigDecimal price;
+
+    @Column(name = BusStopColumnNames.COLUMN_DISTANCE_FROM_PREV)
+    private BigDecimal distanceFromPrev;
+
     public BusStopProjection toProjection(Long scheduleId) {
         return BusStopProjection.builder()
-                .id(id)
-                .scheduleId(scheduleId)
-                .townId(town.getId())
+                .id(id.toString())
+                .scheduleId(scheduleId.toString())
+                .townId(town.getId().toString())
                 .arrivalDate(arrivalDate)
                 .departureDate(departureDate)
+                .price(price)
+                .distanceFromPrev(distanceFromPrev)
                 .build();
     }
 
     public BusStopProjection toProjection() {
         return BusStopProjection.builder()
-                .id(id)
-                .scheduleId(schedule.getId())
-                .townId(town.getId())
+                .id(id.toString())
+                .scheduleId(schedule.getId().toString())
+                .townId(town.getId().toString())
                 .arrivalDate(arrivalDate)
                 .departureDate(departureDate)
+                .price(price)
+                .distanceFromPrev(distanceFromPrev)
                 .build();
     }
 
 
     public static BusStopEntity of(EntityManager em, BusStopProjection busStopProjection) {
         return BusStopEntity.builder()
-                .id(busStopProjection.getId())
+                .id(busStopProjection.getId() != null ? Long.parseLong(busStopProjection.getId()) : null)
                 .arrivalDate(busStopProjection.getArrivalDate())
                 .departureDate(busStopProjection.getDepartureDate())
-                .schedule(setSchedule(busStopProjection.getScheduleId(), em))
-                .town(em.getReference(TownEntity.class, busStopProjection.getTownId()))
+                .schedule(setSchedule(Long.parseLong(busStopProjection.getScheduleId()), em))
+                .town(em.getReference(TownEntity.class, Long.parseLong(busStopProjection.getTownId())))
+                .price(busStopProjection.getPrice())
+                .distanceFromPrev(busStopProjection.getDistanceFromPrev())
                 .build();
     }
 

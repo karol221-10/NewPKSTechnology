@@ -8,7 +8,7 @@ public class BusStopMapper {
 
     public static BusStop map(NewBusStopDto busStopDto) {
         return BusStop.builder()
-                .townId(busStopDto.getTownId())
+                .townId(busStopDto.getTownId().toString())
                 .departureDate(busStopDto.getDepartureDate())
                 .arrivalDate(busStopDto.getArrivalDate())
                 .build();

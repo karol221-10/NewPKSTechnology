@@ -14,4 +14,6 @@ public class AddNewBusStopResponse {
     private LocalDateTime arrivalDate;
     private LocalDateTime departureDate;
     private String scheduleId;
+    private Double price;
+    private Double distanceFromPrev;
 }

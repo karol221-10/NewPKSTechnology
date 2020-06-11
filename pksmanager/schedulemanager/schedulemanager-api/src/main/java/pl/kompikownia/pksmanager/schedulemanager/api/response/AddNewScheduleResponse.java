@@ -13,5 +13,4 @@ public class AddNewScheduleResponse {
     private long scheduleId;
     private long workerId;
     private long busId;
-    private List<BusStopDto> busStops;
 }

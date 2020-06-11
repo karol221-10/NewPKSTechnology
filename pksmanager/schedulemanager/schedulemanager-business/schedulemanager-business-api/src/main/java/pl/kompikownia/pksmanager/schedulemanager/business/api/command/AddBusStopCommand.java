@@ -4,6 +4,7 @@ import lombok.*;
 import pl.kompikownia.pksmanager.cqrs.domain.Command;
 import pl.kompikownia.pksmanager.schedulemanager.business.api.response.BusStop;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
@@ -16,4 +17,5 @@ public class AddBusStopCommand implements Command<BusStop> {
     private LocalDateTime arrivalDate;
     private LocalDateTime departureDate;
     private String scheduleId;
+    private String price;
 }

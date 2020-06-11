@@ -2,6 +2,7 @@ package pl.kompikownia.pksmanager.schedulemanager.business.application.projectio
 
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -11,9 +12,11 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @Setter
 public class BusStopProjection {
-    private Long id;
-    private Long scheduleId;
-    private Long townId;
+    private String id;
+    private String scheduleId;
+    private String townId;
     private LocalDateTime arrivalDate;
     private LocalDateTime departureDate;
+    private BigDecimal price;
+    private BigDecimal distanceFromPrev;
 }

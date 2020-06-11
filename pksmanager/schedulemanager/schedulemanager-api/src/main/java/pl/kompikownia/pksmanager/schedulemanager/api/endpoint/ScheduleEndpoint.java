@@ -14,6 +14,7 @@ import pl.kompikownia.pksmanager.schedulemanager.api.request.UpdateScheduleReque
 import pl.kompikownia.pksmanager.schedulemanager.api.response.*;
 import pl.kompikownia.pksmanager.schedulemanager.business.api.command.*;
 import pl.kompikownia.pksmanager.schedulemanager.business.api.query.GetAllSchedulesQuery;
+import pl.kompikownia.pksmanager.schedulemanager.business.api.query.GetDistanceBetweenTownsQuery;
 import pl.kompikownia.pksmanager.schedulemanager.business.api.query.GetScheduleListWithTownsQuery;
 import pl.kompikownia.pksmanager.schedulemanager.business.api.query.GetTownListQuery;
 import pl.kompikownia.pksmanager.schedulemanager.business.api.response.Town;
@@ -31,7 +32,7 @@ public class ScheduleEndpoint {
     private CommandExecutor commandExecutor;
 
     @GetMapping(value = "/api/schedule", params = {"sourceTownId", "destinationTownId"})
-    public GetScheduleListResponse getScheduleForTowns(@RequestParam Long sourceTownId, @RequestParam Long destinationTownId){
+    public GetScheduleListResponse getScheduleForTowns(@RequestParam Long sourceTownId, @RequestParam Long destinationTownId) {
         GetScheduleListWithTownsQuery getScheduleListWithTownsQuery = GetScheduleListWithTownsQuery.builder()
                 .sourceTownId(sourceTownId)
                 .destinationTownId(destinationTownId)
@@ -46,13 +47,13 @@ public class ScheduleEndpoint {
     }
 
     @GetMapping("/api/town")
-    public List<Town> getAllTowns(){
+    public List<Town> getAllTowns() {
         GetTownListQuery getTownListQuery = new GetTownListQuery();
         return queryExecutor.execute(getTownListQuery);
     }
 
     @PostMapping("/api/town")
-    public Town addNewTown(@RequestBody Town town){
+    public Town addNewTown(@RequestBody Town town) {
         val command = AddTownCommand.builder()
                 .townName(town.getName())
                 .build();
@@ -65,9 +66,6 @@ public class ScheduleEndpoint {
         val command = AddNewScheduleCommand.builder()
                 .busId(request.getBusId())
                 .workerId(request.getWorkerId())
-                .busStops(request.getBusStops().stream()
-                .map(BusStopMapper::map)
-                .collect(Collectors.toList()))
                 .build();
 
         val result = commandExecutor.execute(command);
@@ -75,9 +73,6 @@ public class ScheduleEndpoint {
                 .scheduleId(result.getId())
                 .workerId(result.getWorkerId())
                 .busId(result.getBusId())
-                .busStops(result.getBusStops().stream()
-                    .map(GetScheduleListResponseMapper::mapBusStop)
-                    .collect(Collectors.toList()))
                 .build();
     }
 
@@ -87,15 +82,18 @@ public class ScheduleEndpoint {
                 .arrivalDate(request.getArrivalDate())
                 .departureDate(request.getDepartureDate())
                 .scheduleId(scheduleId)
+                .price(request.getPrice())
                 .townId(request.getTownId())
                 .build();
         val result = commandExecutor.execute(command);
         return AddNewBusStopResponse.builder()
-                .id(result.getId().toString())
+                .id(result.getId())
                 .arrivalDate(result.getArrivalDate())
                 .departureDate(result.getDepartureDate())
-                .scheduleId(result.getScheduleId().toString())
-                .townId(result.getTownId().toString())
+                .scheduleId(result.getScheduleId())
+                .townId(result.getTownId())
+                .price(result.getPrice())
+                .distanceFromPrev(result.getDistanceFromPrev())
                 .build();
     }
 
@@ -104,16 +102,19 @@ public class ScheduleEndpoint {
                                                @RequestBody UpdateBusStopRequest request) {
         val command = UpdateBusStopCommand.builder()
                 .id(busStopId)
+                .scheduleId(scheduleId)
                 .arrivalDate(request.getArrivalDate())
                 .departureDate(request.getDepartureDate())
                 .townId(request.getTownId())
                 .build();
         val result = commandExecutor.execute(command);
         return UpdateBusStopResponse.builder()
-                .id(result.getId().toString())
+                .id(result.getId())
                 .arrivalDate(result.getArrivalDate())
                 .departureDate(result.getDepartureDate())
-                .townId(result.getTownId())
+                .townId(Long.parseLong(result.getTownId()))
+                .price(result.getPrice())
+                .distanceFromPrev(result.getDistanceFromPrev())
                 .build();
     }
 
@@ -147,6 +148,19 @@ public class ScheduleEndpoint {
                 .busId(result.getBusId())
                 .workerId(result.getWorkerId())
                 .isActive(result.isActive())
+                .build();
+    }
+
+    @GetMapping(value = "/api/distance", params = {"sourceTownId", "destinationTownId"})
+    public GetDistanceBetweenTownsResponse getDistanceBetweenTowns(@RequestParam String sourceTownId, @RequestParam String destinationTownId) {
+        val result = queryExecutor.execute(GetDistanceBetweenTownsQuery.builder()
+                        .sourceTownId(sourceTownId)
+                        .destinationTownId(destinationTownId)
+                        .build());
+        return GetDistanceBetweenTownsResponse.builder()
+                .sourceTownId(result.getSourceTownId())
+                .destinationTownId(result.getDestinationTownId())
+                .distance(result.getDistance())
                 .build();
     }
 }

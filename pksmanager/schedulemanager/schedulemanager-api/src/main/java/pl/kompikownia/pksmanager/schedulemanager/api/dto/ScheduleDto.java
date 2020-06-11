@@ -16,4 +16,6 @@ public class ScheduleDto {
     private boolean isActive;
     private float price;
     private List<BusStopDto> busStops;
+    private Double totalDistance;
+    private Long totalTimeSeconds;
 }

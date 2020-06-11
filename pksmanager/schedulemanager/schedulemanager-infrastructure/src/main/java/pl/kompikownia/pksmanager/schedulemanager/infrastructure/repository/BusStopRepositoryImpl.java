@@ -16,7 +16,9 @@ import pl.kompikownia.pksmanager.schedulemanager.infrastructure.repository.jpa.B
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static pl.kompikownia.pksmanager.schedulemanager.infrastructure.entity.QBusStopEntity.busStopEntity;
@@ -35,7 +37,7 @@ public class BusStopRepositoryImpl implements BusStopRepository {
     @Transactional
     public BusStopProjection save(BusStopProjection busStopProjection) {
         val entityToPersist = BusStopEntity.of(em, busStopProjection);
-        val parentEntity = em.getReference(ScheduleEntity.class, busStopProjection.getScheduleId());
+        val parentEntity = em.getReference(ScheduleEntity.class, Long.parseLong(busStopProjection.getScheduleId()));
         parentEntity.getBusStopEntities().add(entityToPersist);
         em.persist(entityToPersist);
         em.persist(parentEntity);
@@ -49,6 +51,8 @@ public class BusStopRepositoryImpl implements BusStopRepository {
         entity.setTown(em.find(TownEntity.class, busStopProjection.getTownId()));
         entity.setArrivalDate(busStopProjection.getArrivalDate());
         entity.setDepartureDate(busStopProjection.getDepartureDate());
+        entity.setPrice(busStopProjection.getPrice());
+        entity.setDistanceFromPrev(busStopProjection.getDistanceFromPrev());
         val savedEntity = em.merge(entity);
         return savedEntity.toProjection();
     }
@@ -82,6 +86,21 @@ public class BusStopRepositoryImpl implements BusStopRepository {
                 .stream()
                 .map(BusStopEntity::toProjection)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<BusStopProjection> getBusStopBeforeDateTime(Long scheduleId, LocalDateTime dateTime) {
+
+        JPAQuery<BusStopEntity> query = new JPAQuery<>(em);
+
+        val result = query.from(busStopEntity)
+                .where(busStopEntity.schedule.id.eq(scheduleId))
+                .where(busStopEntity.arrivalDate.before(dateTime))
+                .orderBy(busStopEntity.arrivalDate.desc())
+                .fetchFirst();
+
+        if(result == null) return Optional.empty();
+        return Optional.of(result.toProjection());
     }
 
     @Override

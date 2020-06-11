@@ -7,14 +7,10 @@ import java.util.List;
 
 public interface TownRepository { //TODO: Replace TownEntity with TownProjection
 
-    public TownProjection save(TownProjection town);
+    TownProjection save(TownProjection town);
 
-    public List<TownProjection> findAll();
+    TownProjection findById(Long id);
 
-    public List<TownProjection> findByName(String name);
+    List<TownProjection> findAll();
 
-    public void deleteById(Long id);
-
-    void deleteAll();
-    
 }

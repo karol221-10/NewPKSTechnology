@@ -15,5 +15,4 @@ public class AddNewScheduleCommand implements Command<Schedule> {
 
     private Long busId;
     private Long workerId;
-    private List<BusStop> busStops;
 }
