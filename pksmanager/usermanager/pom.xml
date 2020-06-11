@@ -16,6 +16,7 @@
         <module>usermanager-infrastructure</module>
         <module>usermanager-business</module>
         <module>usermanager-api</module>
+        <module>usermanager-business-internal-api</module>
     </modules>
 
     <dependencies>
