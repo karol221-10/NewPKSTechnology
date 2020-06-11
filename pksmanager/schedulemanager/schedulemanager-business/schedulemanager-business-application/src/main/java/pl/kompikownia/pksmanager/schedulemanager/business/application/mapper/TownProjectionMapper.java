@@ -12,7 +12,7 @@ public class TownProjectionMapper {
     public static TownProjection map(AddTownCommand town){
         return TownProjection.builder()
                 .id(town.getId())
-                .townName(town.getTownName())
+                .townName(town.getTownName().toUpperCase())
                 .build();
     }
 }
