@@ -18,6 +18,7 @@ import pl.kompikownia.pksmanager.schedulemanager.business.api.query.GetDistanceB
 import pl.kompikownia.pksmanager.schedulemanager.business.api.query.GetScheduleListWithTownsQuery;
 import pl.kompikownia.pksmanager.schedulemanager.business.api.query.GetTownListQuery;
 import pl.kompikownia.pksmanager.schedulemanager.business.api.response.Town;
+import pl.kompikownia.pksmanager.security.business.internal.api.annotation.AnonymousAccess;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,6 +32,7 @@ public class ScheduleEndpoint {
 
     private CommandExecutor commandExecutor;
 
+    @AnonymousAccess
     @GetMapping(value = "/api/schedule", params = {"sourceTownId", "destinationTownId"})
     public GetScheduleListResponse getScheduleForTowns(@RequestParam Long sourceTownId, @RequestParam Long destinationTownId) {
         GetScheduleListWithTownsQuery getScheduleListWithTownsQuery = GetScheduleListWithTownsQuery.builder()
