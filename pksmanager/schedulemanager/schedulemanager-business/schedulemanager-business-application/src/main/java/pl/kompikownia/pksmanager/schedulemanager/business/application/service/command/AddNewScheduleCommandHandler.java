@@ -26,8 +26,8 @@ public class AddNewScheduleCommandHandler extends CommandHandler<Schedule, AddNe
                 .isActive(true)
                 .workerId(command.getWorkerId())
                 .busStops(command.getBusStops().stream()
-                .map(BusStopProjectionMapper::map)
-                .collect(Collectors.toList()))
+                        .map(BusStopProjectionMapper::map)
+                        .collect(Collectors.toList()))
                 .build();
         val result = scheduleRepository.save(scheduleProjection);
         return ScheduleMapper.map(result);

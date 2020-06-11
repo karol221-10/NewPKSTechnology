@@ -8,7 +8,6 @@ import pl.kompikownia.pksmanager.schedulemanager.business.api.command.AddBusStop
 import pl.kompikownia.pksmanager.schedulemanager.business.api.response.BusStop;
 import pl.kompikownia.pksmanager.schedulemanager.business.application.projection.BusStopProjection;
 import pl.kompikownia.pksmanager.schedulemanager.business.application.repository.BusStopRepository;
-import pl.kompikownia.pksmanager.schedulemanager.business.application.repository.ScheduleRepository;
 
 @Handler
 @AllArgsConstructor

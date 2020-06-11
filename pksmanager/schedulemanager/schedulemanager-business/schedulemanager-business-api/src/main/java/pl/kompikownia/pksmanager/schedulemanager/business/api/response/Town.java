@@ -11,11 +11,8 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode
 @Builder
-public class Schedule {
+public class Town {
     private Long id;
-    private Long busId;
-    private Long workerId;
-    private boolean isActive;
-    private float price;
+    private String name;
     private List<BusStop> busStops;
 }

@@ -38,7 +38,7 @@ public class ScheduleEntity {
     @Column(name = ScheduleColumnNames.COLUMN_PRICE)
     private float price;
 
-    @OneToMany(mappedBy = "schedule", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(mappedBy = "schedule", orphanRemoval = true)
     private List<BusStopEntity> busStopEntities;
 
     public ScheduleProjection toProjection() {

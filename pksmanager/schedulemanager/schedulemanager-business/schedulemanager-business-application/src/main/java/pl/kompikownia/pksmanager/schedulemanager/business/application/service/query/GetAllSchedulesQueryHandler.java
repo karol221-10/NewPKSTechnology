@@ -24,3 +24,4 @@ public class GetAllSchedulesQueryHandler extends QueryHandler<List<Schedule>, Ge
                 .collect(Collectors.toList());
     }
 }
+
