@@ -79,6 +79,7 @@ public class UserSecurityRepositoryImpl implements UserAuthenticationRepository,
     public UserWithPermissionProjection getUserWithPermissionsById(Long id) {
         val userEntity = entityManager.getReference(SecurityUserEntity.class, id);
         return UserWithPermissionProjection.builder()
+                .userId(userEntity.getId().toString())
                 .username(userEntity.getUsername())
                 .permissionNames(userEntity.getRoles().stream()
                         .flatMap(roleEntity -> roleEntity.getPermissions().stream())

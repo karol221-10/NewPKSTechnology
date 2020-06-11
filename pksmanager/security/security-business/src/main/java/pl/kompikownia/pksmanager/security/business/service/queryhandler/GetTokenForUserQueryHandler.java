@@ -22,6 +22,6 @@ public class GetTokenForUserQueryHandler extends QueryHandler<String, GetTokenFo
         if(!userAuthenticationRepository.isUserActive(userId.toString())) {
             throw new IllegalArgumentException("User "+ userId+ "is deactivated");
         }
-        return tokenProvider.generateToken(userWithPermissions.getUsername(), userWithPermissions.getPermissionNames());
+        return tokenProvider.generateToken(userWithPermissions.getUserId(), userWithPermissions.getPermissionNames());
     }
 }

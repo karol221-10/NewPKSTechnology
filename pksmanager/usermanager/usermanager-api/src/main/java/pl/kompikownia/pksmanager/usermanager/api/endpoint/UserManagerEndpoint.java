@@ -12,10 +12,7 @@ import pl.kompikownia.pksmanager.security.business.internal.api.annotation.Anony
 import pl.kompikownia.pksmanager.usermanager.api.mapper.*;
 import pl.kompikownia.pksmanager.usermanager.api.request.CreateNewUserRequest;
 import pl.kompikownia.pksmanager.usermanager.api.request.CreateNewWorkerRequest;
-import pl.kompikownia.pksmanager.usermanager.api.response.CreateNewUserResponse;
-import pl.kompikownia.pksmanager.usermanager.api.response.CreateNewWorkerResponse;
-import pl.kompikownia.pksmanager.usermanager.api.response.GetUserListResponse;
-import pl.kompikownia.pksmanager.usermanager.api.response.GetWorkerListResponse;
+import pl.kompikownia.pksmanager.usermanager.api.response.*;
 import pl.kompikownia.pksmanager.usermanager.business.command.DeactivateUserCommand;
 import pl.kompikownia.pksmanager.usermanager.business.query.GetUserListQuery;
 import pl.kompikownia.pksmanager.usermanager.business.query.GetWorkerListQuery;
@@ -48,6 +45,26 @@ public class UserManagerEndpoint {
     public GetUserListResponse getUserList() {
         val result = queryExecutor.execute(new GetUserListQuery());
         return GetUserListResponseMapper.map(result);
+    }
+
+    @GetMapping("/api/users/{id}")
+    public ResponseUserData getUserWithId(@PathVariable String id) {
+        val result = queryExecutor.execute(new GetUserListQuery());
+        val returnedUser = result.stream()
+                .filter(user -> user.getUserData().getId().equals(id))
+                .findFirst()
+                .orElse(null);
+        if(returnedUser != null) {
+            return ResponseUserData.builder()
+                    .login(returnedUser.getLogin())
+                    .email(returnedUser.getUserData().getEmail())
+                    .surname(returnedUser.getUserData().getSurname())
+                    .name(returnedUser.getUserData().getName())
+                    .isWorker(returnedUser.isWorker())
+                    .build();
+        }
+        return ResponseUserData.builder()
+                .build();
     }
 
     @GetMapping("/api/workers")

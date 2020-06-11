@@ -9,6 +9,7 @@ import java.util.List;
 @Builder(builderClassName = "builder")
 public class UserWithPermissionProjection {
 
+    private String userId;
     private String username;
     private List<String> permissionNames;
 }

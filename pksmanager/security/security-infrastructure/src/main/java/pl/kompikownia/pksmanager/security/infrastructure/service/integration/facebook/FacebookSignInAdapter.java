@@ -37,7 +37,7 @@ public class FacebookSignInAdapter implements SignInAdapter {
                .map(SimpleGrantedAuthority::new)
                .collect(Collectors.toList())
        ));
-       val token = tokenProvider.generateToken(user.getUsername(), user.getPermissionNames());
+       val token = tokenProvider.generateToken(user.getUserId(), user.getPermissionNames());
        val request = (ServletWebRequest) nativeWebRequest;
        request.getResponse().addCookie(getSocialAuthenticationCookie(token));
        return redirectUrl;
