@@ -28,7 +28,7 @@ public class TownEntity{
     @Column(name = TownColumnNames.COLUMN_NAME)
     private String name;
 
-    @OneToMany(mappedBy = "town",cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "town")
     private List<BusStopEntity> busStopEntities;
 
     public TownProjection toProjection(){
