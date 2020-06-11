@@ -6,6 +6,7 @@ import pl.kompikownia.pksmanager.schedulemanager.business.application.projection
 import pl.kompikownia.pksmanager.schedulemanager.infrastructure.namemapper.BusStopColumnNames;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 
 @Entity

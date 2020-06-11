@@ -12,6 +12,7 @@ import pl.kompikownia.pksmanager.schedulemanager.infrastructure.repository.jpa.T
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,7 @@ import static pl.kompikownia.pksmanager.schedulemanager.infrastructure.entity.QT
 
 @Repository
 @RequiredArgsConstructor
+@Transactional
 public class TownRepositoryImpl implements TownRepository {
 
     @PersistenceContext

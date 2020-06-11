@@ -1,10 +1,14 @@
 package pl.kompikownia.pksmanager.schedulemanager.infrastructure.entity;
 
 import lombok.*;
+import pl.kompikownia.pksmanager.schedulemanager.business.application.projection.BusStopProjection;
 import pl.kompikownia.pksmanager.schedulemanager.business.application.projection.TownProjection;
 import pl.kompikownia.pksmanager.schedulemanager.infrastructure.namemapper.TownColumnNames;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,10 +49,7 @@ public class TownEntity{
         return TownEntity.builder()
                 .id(projection.getId())
                 .name(projection.getTownName())
-                .busStopEntities(projection.getBusStopProjections()
-                        .stream()
-                        .map(busStopProjection -> BusStopEntity.of(em,busStopProjection))
-                        .collect(Collectors.toList()))
+                .busStopEntities(new ArrayList<BusStopEntity>())
                 .build();
     }
 }

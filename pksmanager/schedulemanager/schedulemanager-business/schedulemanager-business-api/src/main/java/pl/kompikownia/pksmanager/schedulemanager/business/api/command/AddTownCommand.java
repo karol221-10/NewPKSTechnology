@@ -14,5 +14,4 @@ import java.util.List;
 public class AddTownCommand implements Command<Town> {
     private Long id;
     private String townName;
-    private List<BusStop> busStops;
 }
