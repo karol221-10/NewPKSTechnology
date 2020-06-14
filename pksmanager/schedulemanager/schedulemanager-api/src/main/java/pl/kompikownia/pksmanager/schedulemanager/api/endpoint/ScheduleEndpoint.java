@@ -48,6 +48,7 @@ public class ScheduleEndpoint {
         return GetScheduleListResponseMapper.map(queryExecutor.execute(new GetAllSchedulesQuery()));
     }
 
+    @AnonymousAccess
     @GetMapping("/api/town")
     public List<Town> getAllTowns() {
         GetTownListQuery getTownListQuery = new GetTownListQuery();
