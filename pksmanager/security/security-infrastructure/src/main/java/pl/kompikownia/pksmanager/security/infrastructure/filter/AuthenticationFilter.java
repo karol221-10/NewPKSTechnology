@@ -1,6 +1,5 @@
 package pl.kompikownia.pksmanager.security.infrastructure.filter;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -75,7 +73,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         val header = httpServletRequest.getHeader(TokenFieldNames.HEADER_FIELD);
         val token = getToken(header);
         validateToken(token);
-        UserDetails userDetails = userAuthenticationRepository.findByUsername(tokenProvider.getUsernameFromToken(token));
+        UserDetails userDetails = userAuthenticationRepository.findById(tokenProvider.getUserIdFromToken(token));
         return new UsernamePasswordAuthenticationToken(
                 userDetails,
                 null,
