@@ -3,25 +3,19 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>schedulemanager-business</artifactId>
+        <artifactId>ticketmanager</artifactId>
         <groupId>pl.kompikownia</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>schedulemanager-business-application</artifactId>
+    <artifactId>ticketmanager-infrastructure</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>pl.kompikownia</groupId>
-            <artifactId>schedulemanager-business-api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>pl.kompikownia</groupId>
-            <artifactId>schedulemanager-business-internal-api</artifactId>
+            <artifactId>ticketmanager-business</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
-
 </project>

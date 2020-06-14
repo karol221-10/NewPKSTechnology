@@ -14,6 +14,7 @@
     <modules>
         <module>schedulemanager-business-api</module>
         <module>schedulemanager-business-application</module>
+        <module>schedulemanager-business-internal-api</module>
     </modules>
 
 

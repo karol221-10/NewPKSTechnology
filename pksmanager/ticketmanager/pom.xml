@@ -9,14 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>schedulemanager</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>schedulemanager-api</module>
-        <module>schedulemanager-infrastructure</module>
-        <module>schedulemanager-business</module>
-        <module>schedulemanager-business/schedulemanager-business-internal-api</module>
-    </modules>
+    <artifactId>ticketmanager</artifactId>
 
+    <modules>
+        <module>ticketmanager-api</module>
+        <module>ticketmanager-business</module>
+        <module>ticketmanager-infrastructure</module>
+    </modules>
 
 </project>
