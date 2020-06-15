@@ -56,9 +56,14 @@ public class BusRepositoryImpl implements BusRepository {
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
-        JPADeleteClause deleteClause = new JPADeleteClause(em, QBusEntity.busEntity);
-        deleteClause.where(QBusEntity.busEntity.id.eq(id)).execute();
+//        JPADeleteClause deleteClause = new JPADeleteClause(em, QBusEntity.busEntity);
+//        deleteClause.where(QBusEntity.busEntity.id.eq(id)).execute();
+
+        val entity = em.find(BusEntity.class, id);
+        em.remove(entity);
+        em.flush();
     }
 
     @Override
