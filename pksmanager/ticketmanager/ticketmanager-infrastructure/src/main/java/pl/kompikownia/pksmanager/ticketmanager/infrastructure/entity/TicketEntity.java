@@ -1,6 +1,8 @@
 package pl.kompikownia.pksmanager.ticketmanager.infrastructure.entity;
 
 import lombok.*;
+import pl.kompikownia.pksmanager.ticketmanager.business.projection.DiscountProjection;
+import pl.kompikownia.pksmanager.ticketmanager.business.projection.TicketProjection;
 import pl.kompikownia.pksmanager.ticketmanager.infrastructure.namemapper.TicketColumnNames;
 
 import javax.persistence.*;
@@ -19,6 +21,9 @@ public class TicketEntity {
     @Column(name = TicketColumnNames.COLUMN_ID)
     private Long id;
 
+    @Column(name = TicketColumnNames.COLUMN_SCHEDULE_ID)
+    private String scheduleId;
+
     @Column(name = TicketColumnNames.BUS_STOP_START_COLUMN)
     private String busStopStartId;
 
@@ -36,4 +41,15 @@ public class TicketEntity {
 
     @Column(name = TicketColumnNames.USER_ID_COLUMN)
     private String userId;
+
+    public TicketProjection toProjection() {
+        return TicketProjection.builder()
+                .id(id)
+                .scheduleId(scheduleId)
+                .busStopStartId(busStopStartId)
+                .busStopEndId(busStopEndId)
+                .price(price)
+                .build();
+    }
+
 }

@@ -1,6 +1,7 @@
 package pl.kompikownia.pksmanager.security.infrastructure.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import pl.kompikownia.pksmanager.security.infrastructure.entity.SecurityUserEntity;
@@ -8,7 +9,10 @@ import pl.kompikownia.pksmanager.security.infrastructure.entity.SecurityUserEnti
 import java.util.Collection;
 
 @AllArgsConstructor
+@Getter
 public class UserDetailsModel implements UserDetails {
+
+    private String userId;
 
     private String username;
 
@@ -48,6 +52,8 @@ public class UserDetailsModel implements UserDetails {
     }
 
     public static UserDetailsModel of(SecurityUserEntity securityUserEntity) {
-        return new UserDetailsModel(securityUserEntity.getUsername());
+        return new UserDetailsModel(
+                securityUserEntity.getId().toString(),
+                securityUserEntity.getUsername());
     }
 }

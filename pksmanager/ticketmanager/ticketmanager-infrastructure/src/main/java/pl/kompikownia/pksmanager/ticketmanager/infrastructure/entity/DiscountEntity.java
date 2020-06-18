@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.kompikownia.pksmanager.ticketmanager.business.projection.DiscountProjection;
 import pl.kompikownia.pksmanager.ticketmanager.infrastructure.namemapper.DiscountColumnNames;
 
 import javax.persistence.*;
@@ -44,4 +45,15 @@ public class DiscountEntity {
 
     @OneToMany(mappedBy = "discount")
     private List<TicketEntity> tickets;
+
+    public DiscountProjection toProjection() {
+        return DiscountProjection.builder()
+                .id(id.toString())
+                .name(name)
+                .value(percent)
+                .neededCourses(neededCourses)
+                .neededKm(neededKm)
+                .neededLogin(neededLogin)
+                .build();
+    }
 }

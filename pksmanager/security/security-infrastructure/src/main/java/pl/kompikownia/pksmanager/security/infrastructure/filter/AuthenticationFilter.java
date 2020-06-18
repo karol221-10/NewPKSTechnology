@@ -47,10 +47,19 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        val authResult = this.attemptAuthentication(httpServletRequest, httpServletResponse);
-        if(authResult != null) {
-            this.successfulAuthentication(authResult);
+        try {
+            val authResult = this.attemptAuthentication(httpServletRequest, httpServletResponse);
+            if(authResult != null) {
+                this.successfulAuthentication(authResult);
+            }
         }
+        catch(Exception e) {
+            if(authenticationUrls.stream()
+                    .noneMatch(url -> pathMatcher.match(url, httpServletRequest.getRequestURI()))) {
+                throw e;
+            }
+        }
+
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 
@@ -87,13 +96,5 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         val context = SecurityContextHolder.createEmptyContext();
         context.setAuthentication(authResult);
         SecurityContextHolder.setContext(context);
-    }
-
-    @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException
-    {
-        log.debug("Request URL: "+ request.getRequestURI());
-        return authenticationUrls.stream()
-                .anyMatch(url -> pathMatcher.match(url, request.getRequestURI()));
     }
 }
