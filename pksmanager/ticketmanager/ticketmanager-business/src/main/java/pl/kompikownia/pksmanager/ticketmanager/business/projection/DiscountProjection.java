@@ -1,9 +1,6 @@
 package pl.kompikownia.pksmanager.ticketmanager.business.projection;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 

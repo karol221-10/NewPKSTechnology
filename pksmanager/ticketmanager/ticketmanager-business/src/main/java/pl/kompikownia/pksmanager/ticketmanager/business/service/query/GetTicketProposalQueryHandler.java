@@ -1,4 +1,4 @@
-package pl.kompikownia.pksmanager.ticketmanager.business.service;
+package pl.kompikownia.pksmanager.ticketmanager.business.service.query;
 
 import lombok.val;
 import org.springframework.beans.factory.annotation.Value;

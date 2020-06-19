@@ -3,14 +3,16 @@ package pl.kompikownia.pksmanager.ticketmanager.api.endpoint;
 
 import lombok.AllArgsConstructor;
 import lombok.val;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import pl.kompikownia.pksmanager.cqrs.domain.CommandExecutor;
 import pl.kompikownia.pksmanager.cqrs.domain.QueryExecutor;
 import pl.kompikownia.pksmanager.security.business.internal.api.annotation.AnonymousAccess;
 import pl.kompikownia.pksmanager.ticketmanager.api.dto.DiscountDto;
+import pl.kompikownia.pksmanager.ticketmanager.api.request.TicketBuyRequest;
 import pl.kompikownia.pksmanager.ticketmanager.api.response.GetAvailableDiscountsResponse;
+import pl.kompikownia.pksmanager.ticketmanager.api.response.TicketBuyResponse;
 import pl.kompikownia.pksmanager.ticketmanager.api.response.TicketProposalResponse;
+import pl.kompikownia.pksmanager.ticketmanager.business.command.BuyTicketCommand;
 import pl.kompikownia.pksmanager.ticketmanager.business.projection.DiscountProjection;
 import pl.kompikownia.pksmanager.ticketmanager.business.query.GetTicketDiscountsQuery;
 import pl.kompikownia.pksmanager.ticketmanager.business.query.GetTicketProposalQuery;
@@ -22,6 +24,8 @@ import java.util.stream.Collectors;
 public class TicketEndpoint {
 
     private QueryExecutor queryExecutor;
+
+    private CommandExecutor commandExecutor;
 
     @AnonymousAccess
     @GetMapping(value = "/api/ticket", params = {"scheduleId", "sourceBusStopId", "destinationBusStopId"})
@@ -42,6 +46,23 @@ public class TicketEndpoint {
                 .sourceTownId(ticketProposal.getSourceTownId())
                 .totalDistance(ticketProposal.getTotalDistance())
                 .totalTimeSeconds(ticketProposal.getTotalTimeSeconds())
+                .build();
+    }
+
+    @AnonymousAccess
+    @PostMapping(value = "/api/ticket")
+    TicketBuyResponse buyTicket(@RequestBody TicketBuyRequest request) {
+        val command = BuyTicketCommand.builder()
+                .scheduleId(request.getScheduleId())
+                .sourceBusStopId(request.getSourceBusStopId())
+                .destinationBusStopId(request.getDestinationBusStopId())
+                .discountId(request.getDiscountId())
+                .build();
+        val result = commandExecutor.execute(command);
+
+        return TicketBuyResponse.builder()
+                .status(result.getStatus())
+                .redirectUrl(result.getRedirectUrl())
                 .build();
     }
 
