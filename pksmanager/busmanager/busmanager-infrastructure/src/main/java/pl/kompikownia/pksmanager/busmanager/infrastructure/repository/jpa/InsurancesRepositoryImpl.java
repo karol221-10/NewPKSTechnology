@@ -76,9 +76,13 @@ public class InsurancesRepositoryImpl implements InsurancesRepository {
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
-        JPADeleteClause deleteClause = new JPADeleteClause(em, QInsurancesEntity.insurancesEntity);
-        deleteClause.where(QInsurancesEntity.insurancesEntity.id.eq(id)).execute();
+        val entity = em.find(InsurancesEntity.class,id);
+        val parentEntity = entity.getBus();
+        parentEntity.getInsurancesEntities().remove(entity);
+        em.remove(entity);
+        em.flush();
     }
 
     @Override
@@ -86,7 +90,8 @@ public class InsurancesRepositoryImpl implements InsurancesRepository {
 
     @Override
     public void deleteByBusId(Long id) {
-        JPADeleteClause deleteClause = new JPADeleteClause(em, QInsurancesEntity.insurancesEntity);
-        deleteClause.where(QInsurancesEntity.insurancesEntity.bus.id.eq(id)).execute();
+    val entity = em.find(InsurancesEntity.class,id);
+    em.remove(entity);
+    em.flush();
     }
 }

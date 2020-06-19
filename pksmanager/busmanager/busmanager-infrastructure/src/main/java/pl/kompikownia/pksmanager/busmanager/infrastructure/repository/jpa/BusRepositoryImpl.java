@@ -44,6 +44,7 @@ public class BusRepositoryImpl implements BusRepository {
                 .stream()
                 .map(BusEntity::toProjection)
                 .collect(Collectors.toList());
+
     }
 
     @Override
@@ -56,9 +57,18 @@ public class BusRepositoryImpl implements BusRepository {
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
-        JPADeleteClause deleteClause = new JPADeleteClause(em, QBusEntity.busEntity);
-        deleteClause.where(QBusEntity.busEntity.id.eq(id)).execute();
+        val entity = em.find(BusEntity.class,id);
+
+        entity.getInspectionEntity().forEach(inspectionEntity ->
+                em.remove(inspectionEntity));
+
+        entity.getInsurancesEntities().forEach(insurancesEntity ->
+                em.remove(insurancesEntity));
+
+        em.remove(entity);
+        em.flush();
     }
 
     @Override

@@ -33,7 +33,6 @@ public class InspectionRepositoryImpl implements InspectionRepository {
         val entityToPersist = InspectionEntity.of(em,inspectionProjection);
         val parentEntity = em.getReference(BusEntity.class,inspectionProjection.getBusId());
         parentEntity.getInspectionEntity().add(entityToPersist);
-
         val persistedEntity = em.merge(entityToPersist);
         em.merge(parentEntity);
         em.flush();
@@ -75,9 +74,13 @@ public class InspectionRepositoryImpl implements InspectionRepository {
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
-        JPADeleteClause deleteClause = new JPADeleteClause(em, QInspectionEntity.inspectionEntity);
-        deleteClause.where(QInspectionEntity.inspectionEntity.id.eq(id)).execute();
+        val entity = em.find(InspectionEntity.class,id);
+        val parentEntity = entity.getBus();
+        parentEntity.getInspectionEntity().remove(entity);
+        em.remove(entity);
+        em.flush();
     }
 
     @Override
@@ -85,7 +88,5 @@ public class InspectionRepositoryImpl implements InspectionRepository {
 
     @Override
     public void deleteByBusId(Long id) {
-        JPADeleteClause deleteClause = new JPADeleteClause(em, QInspectionEntity.inspectionEntity);
-        deleteClause.where(QInspectionEntity.inspectionEntity.bus.id.eq(id)).execute();
     }
 }

@@ -10,6 +10,9 @@ import pl.kompikownia.pksmanager.busmanager.api.request.SimpleInsuranceRequest;
 import pl.kompikownia.pksmanager.busmanager.api.response.BusView;
 import pl.kompikownia.pksmanager.busmanager.api.response.InspectionResponse;
 import pl.kompikownia.pksmanager.busmanager.api.response.InsurancesResponse;
+import pl.kompikownia.pksmanager.busmanager.business.command.DeleteBusCommand;
+import pl.kompikownia.pksmanager.busmanager.business.command.DeleteInspectionCommand;
+import pl.kompikownia.pksmanager.busmanager.business.command.DeleteInsurancesCommand;
 import pl.kompikownia.pksmanager.busmanager.business.projection.BusProjection;
 import pl.kompikownia.pksmanager.busmanager.business.projection.InspectionProjection;
 import pl.kompikownia.pksmanager.busmanager.business.projection.InsurancesProjection;
@@ -41,23 +44,28 @@ public class BusManagerEndpoint {
 
     @DeleteMapping(value = "api/bus/{id}")
     public void deleteBusById(@PathVariable("id") Long id){
-        DeleteBusQuery deleteBusQuery = new DeleteBusQuery(id);
 
-        queryExecutor.execute(deleteBusQuery);
+        DeleteBusCommand deleteBusCommand = new DeleteBusCommand(id);
+
+        commandExecutor.execute(deleteBusCommand);
+
     }
 
     @DeleteMapping(value = "api/bus/{busId}/inspection/{inspectionId}")
     public void deleteInspectionById(@PathVariable("busId") Long busId, @PathVariable("inspectionId") Long inspectionId){
-        DeleteInspectionQuery deleteInsurancesQuery = new DeleteInspectionQuery(busId,inspectionId);
 
-        queryExecutor.execute(deleteInsurancesQuery);
+        DeleteInspectionCommand deleteInspectionCommand = new DeleteInspectionCommand(busId,inspectionId);
+
+        commandExecutor.execute(deleteInspectionCommand);
     }
 
     @DeleteMapping(value = "api/bus/{busId}/insurances/{insuranceId}")
     public void deleteInsuranceById(@PathVariable("busId") Long busId, @PathVariable("insuranceId") Long insuranceId){
-        DeleteInsurancesQuery deleteInsurancesQuery = new DeleteInsurancesQuery(busId, insuranceId);
 
-        queryExecutor.execute(deleteInsurancesQuery);
+        DeleteInsurancesCommand deleteInsurancesCommand = new DeleteInsurancesCommand(busId,insuranceId);
+
+        commandExecutor.execute(deleteInsurancesCommand);
+
     }
 
     @GetMapping(value = "api/bus/{id}/inspection")
