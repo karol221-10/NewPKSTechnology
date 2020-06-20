@@ -79,7 +79,7 @@ public class InsurancesRepositoryImpl implements InsurancesRepository {
     @Transactional
     public void deleteById(Long id) {
         val entity = em.find(InsurancesEntity.class,id);
-        val parentEntity = entity.getBus();
+        val parentEntity = em.getReference(BusEntity.class,entity.getBus().getId());
         parentEntity.getInsurancesEntities().remove(entity);
         em.remove(entity);
         em.flush();

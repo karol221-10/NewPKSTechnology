@@ -77,7 +77,7 @@ public class InspectionRepositoryImpl implements InspectionRepository {
     @Transactional
     public void deleteById(Long id) {
         val entity = em.find(InspectionEntity.class,id);
-        val parentEntity = entity.getBus();
+        val parentEntity = em.getReference(BusEntity.class,entity.getBus().getId());
         parentEntity.getInspectionEntity().remove(entity);
         em.remove(entity);
         em.flush();
