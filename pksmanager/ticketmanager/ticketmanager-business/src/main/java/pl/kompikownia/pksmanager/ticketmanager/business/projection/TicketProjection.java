@@ -13,6 +13,7 @@ public class TicketProjection {
     private Long id;
     private String discountId;
     private String paymentId;
+    private String payerId;
     private String scheduleId;
     private String busStopStartId;
     private String busStopEndId;

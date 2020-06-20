@@ -5,5 +5,6 @@ import pl.kompikownia.pksmanager.ticketmanager.business.integration.projection.P
 import java.math.BigDecimal;
 
 public interface PaymentSystem {
-    PaymentStatus generatePayment(String amount, String currency);
+    PaymentStatus generatePayment(String amount, String currency, String ticketId);
+    String completePayment(String paymentId, String payerId);
 }

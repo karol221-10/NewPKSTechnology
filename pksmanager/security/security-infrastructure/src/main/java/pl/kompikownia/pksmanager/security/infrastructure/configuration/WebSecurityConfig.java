@@ -80,9 +80,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .headers().frameOptions().disable().and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
                 .addFilterAt(authenticationFilter(),
                         UsernamePasswordAuthenticationFilter.class);
     }

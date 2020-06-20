@@ -26,6 +26,9 @@ public class TicketEntity {
     @Column(name = TicketColumnNames.PAYMENT_ID_COLUMN)
     private String paymentId;
 
+    @Column(name = TicketColumnNames.PAYER_ID_COLUMN)
+    private String payerId;
+
     @Column(name = TicketColumnNames.COLUMN_SCHEDULE_ID)
     private String scheduleId;
 
@@ -74,6 +77,7 @@ public class TicketEntity {
                 .paymentId(ticketProjection.getPaymentId())
                 .creationDate(LocalDateTime.now())
                 .updateDate(LocalDateTime.now())
+                .payerId(ticketProjection.getPayerId())
                 .build();
     }
 
@@ -86,6 +90,7 @@ public class TicketEntity {
                 .price(price)
                 .priceAfterDiscount(priceAfterDiscount)
                 .paid(paid)
+                .payerId(payerId)
                 .discountId(discount != null ? discount.getId().toString() : null )
                 .build();
     }

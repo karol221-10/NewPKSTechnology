@@ -34,7 +34,7 @@ public class PaypalPaymentSystem implements PaymentSystem {
     private String mode;
 
     @Override
-    public PaymentStatus generatePayment(String ticketPrice, String currency) {
+    public PaymentStatus generatePayment(String ticketPrice, String currency, String ticketId) {
         PaymentStatus paymentStatus = new PaymentStatus();
         Amount amount = new Amount();
         amount.setCurrency(currency);
@@ -51,6 +51,7 @@ public class PaypalPaymentSystem implements PaymentSystem {
         payment.setIntent("sale");
         payment.setPayer(payer);
         payment.setTransactions(transactions);
+        transaction.setCustom(ticketId);
 
         RedirectUrls redirectUrls = new RedirectUrls();
         redirectUrls.setCancelUrl(cancelUrl);
@@ -68,6 +69,8 @@ public class PaypalPaymentSystem implements PaymentSystem {
                    }
                });
                paymentStatus.setStatus("success");
+               paymentStatus.setPaymentId(payment.getId());
+//               paymentStatus.setPayerId(payer.getPayerInfo().getPayerId());
             }
 
         } catch (PayPalRESTException e) {
@@ -77,5 +80,24 @@ public class PaypalPaymentSystem implements PaymentSystem {
                     .build();
         }
         return paymentStatus;
+    }
+
+    @Override
+    public String completePayment(String paymentId, String payerId) {
+        Payment payment = new Payment();
+        payment.setId(paymentId);
+        PaymentExecution paymentExecution = new PaymentExecution();
+        paymentExecution.setPayerId(payerId);
+        try {
+            APIContext context = new APIContext(clientId, clientSecret, mode);
+            Payment createdPayment = payment.execute(context, paymentExecution);
+            if (createdPayment != null) {
+                return createdPayment.getTransactions().get(0).getCustom();
+            }
+        }
+        catch(PayPalRESTException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

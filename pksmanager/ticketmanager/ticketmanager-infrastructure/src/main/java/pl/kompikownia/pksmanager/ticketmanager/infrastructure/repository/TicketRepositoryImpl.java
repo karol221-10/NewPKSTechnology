@@ -12,6 +12,7 @@ import pl.kompikownia.pksmanager.ticketmanager.infrastructure.entity.TicketEntit
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,6 +32,17 @@ public class TicketRepositoryImpl implements TicketRepository {
         val entity = TicketEntity.ofNew(toSave, entityManager);
         entityManager.persist(entity);
         return entity.toProjection();
+    }
+
+    @Override
+    @Transactional
+    public TicketProjection saveTicketAfterPayment(String ticketId, String paymentId, String payerId) {
+        val entity = entityManager.getReference(TicketEntity.class, Long.parseLong(ticketId));
+        entity.setUpdateDate(LocalDateTime.now());
+        entity.setPaid(true);
+        entity.setPayerId(payerId);
+        entity.setPaymentId(paymentId);
+        return entityManager.merge(entity).toProjection();
     }
 
     @Override

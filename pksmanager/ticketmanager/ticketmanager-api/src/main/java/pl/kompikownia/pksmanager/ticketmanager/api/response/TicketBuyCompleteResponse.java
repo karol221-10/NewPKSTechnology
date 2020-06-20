@@ -5,13 +5,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
+@Getter
+@AllArgsConstructor
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor(staticName = "of")
-@Getter
-public class TicketBuyResponse {
-    private String redirectUrl;
-    private String status;
-    private String paymentId;
-    private String payerId;
+public class TicketBuyCompleteResponse {
+    private byte[] qrCode;
 }

@@ -9,6 +9,7 @@ import pl.kompikownia.pksmanager.cqrs.domain.CommandExecutor;
 import pl.kompikownia.pksmanager.security.business.internal.api.command.CreateNewUserCommand;
 import pl.kompikownia.pksmanager.usermanager.business.api.command.UserAccessor;
 import pl.kompikownia.pksmanager.usermanager.business.command.CreateUserCommand;
+import pl.kompikownia.pksmanager.usermanager.business.repository.UserRepository;
 
 @RequiredArgsConstructor
 @Component
@@ -18,6 +19,8 @@ public class UserAccessorImpl implements UserAccessor {
     private String defaultRoleName;
 
     private final CommandExecutor commandExecutor;
+
+    private final UserRepository userRepository;
 
     @Override
     public String createNewUser(String name, String surname, String login, String password, String email) {
@@ -31,5 +34,15 @@ public class UserAccessorImpl implements UserAccessor {
                 .build();
         val result = commandExecutor.execute(newUserCommand);
         return result.getSecurityUserId();
+    }
+
+    @Override
+    public Integer getUserCount() {
+        return userRepository.getUserList().size();
+    }
+
+    @Override
+    public Integer getWorkerCount() {
+        return userRepository.getWorkersList().size();
     }
 }

@@ -12,6 +12,7 @@ public class TicketColumnNames {
     public static final String USER_ID_COLUMN = "USER_ID";
     public static final String PAID_COLUMN = "PAID";
     public static final String PAYMENT_ID_COLUMN = "PAYMENT_ID";
+    public static final String PAYER_ID_COLUMN = "PAYER_ID";
     public static final String CREATION_DATE_COLUMN = "CREATION_DATE_COLUMN";
     public static final String UPDATE_DATE_COLUMN = "UPDATE_DATE_COLUMN";
 }

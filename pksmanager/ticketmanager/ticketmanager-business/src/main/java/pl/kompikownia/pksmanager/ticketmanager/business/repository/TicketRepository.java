@@ -12,6 +12,8 @@ public interface TicketRepository {
 
     TicketProjection saveTicketBeforePayment(TicketProjection toSave);
 
+    TicketProjection saveTicketAfterPayment(String ticketId, String paymentId, String payerId);
+
     Optional<DiscountProjection> getDiscountById(String id);
 
     List<TicketProjection> getTicketsForUser(String userId);

@@ -8,11 +8,14 @@ import pl.kompikownia.pksmanager.cqrs.domain.CommandExecutor;
 import pl.kompikownia.pksmanager.cqrs.domain.QueryExecutor;
 import pl.kompikownia.pksmanager.security.business.internal.api.annotation.AnonymousAccess;
 import pl.kompikownia.pksmanager.ticketmanager.api.dto.DiscountDto;
+import pl.kompikownia.pksmanager.ticketmanager.api.request.TicketBuyCompleteRequest;
 import pl.kompikownia.pksmanager.ticketmanager.api.request.TicketBuyRequest;
 import pl.kompikownia.pksmanager.ticketmanager.api.response.GetAvailableDiscountsResponse;
+import pl.kompikownia.pksmanager.ticketmanager.api.response.TicketBuyCompleteResponse;
 import pl.kompikownia.pksmanager.ticketmanager.api.response.TicketBuyResponse;
 import pl.kompikownia.pksmanager.ticketmanager.api.response.TicketProposalResponse;
 import pl.kompikownia.pksmanager.ticketmanager.business.command.BuyTicketCommand;
+import pl.kompikownia.pksmanager.ticketmanager.business.command.CompletePaymentCommand;
 import pl.kompikownia.pksmanager.ticketmanager.business.projection.DiscountProjection;
 import pl.kompikownia.pksmanager.ticketmanager.business.query.GetTicketDiscountsQuery;
 import pl.kompikownia.pksmanager.ticketmanager.business.query.GetTicketProposalQuery;
@@ -63,7 +66,19 @@ public class TicketEndpoint {
         return TicketBuyResponse.builder()
                 .status(result.getStatus())
                 .redirectUrl(result.getRedirectUrl())
+                .paymentId(result.getPaymentId())
+                .payerId(result.getPayerId())
                 .build();
+    }
+
+    @AnonymousAccess
+    @PostMapping(value = "/api/ticket/complete")
+    TicketBuyCompleteResponse buyTicketComplete(@RequestBody TicketBuyCompleteRequest ticketBuyCompleteRequest) {
+        val result = commandExecutor.execute(CompletePaymentCommand.builder()
+                                .payerId(ticketBuyCompleteRequest.getPayerId())
+                                .paymentId(ticketBuyCompleteRequest.getPaymentId())
+                                .build());
+        return new TicketBuyCompleteResponse(result.getQrCode());
     }
 
     @AnonymousAccess

@@ -10,4 +10,6 @@ import lombok.*;
 public class PaymentStatus {
     private String status;
     private String redirectUrl;
+    private String paymentId;
+    private String payerId;
 }

@@ -57,6 +57,9 @@ public class BuyTicketCommandHandler extends CommandHandler<BuyedTicketProjectio
             priceAfterDiscount = ticketProposal.getPrice().multiply(discountProjection.getValue());
 
         }
+        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.ENGLISH);
+        decimalFormatSymbols.setDecimalSeparator('.');
+        DecimalFormat f = new DecimalFormat("##.00",decimalFormatSymbols);
         val ticket = TicketProjection.builder()
                 .busStopStartId(command.getSourceBusStopId())
                 .busStopEndId(command.getDestinationBusStopId())
@@ -65,11 +68,9 @@ public class BuyTicketCommandHandler extends CommandHandler<BuyedTicketProjectio
                 .priceAfterDiscount(priceAfterDiscount)
                 .paid(false)
                 .build();
-        ticketRepository.saveTicketBeforePayment(ticket);
-        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.ENGLISH);
-        decimalFormatSymbols.setDecimalSeparator('.');
-        DecimalFormat f = new DecimalFormat("##.00",decimalFormatSymbols);
-        val result = paymentSystem.generatePayment(f.format(priceAfterDiscount), currency);
-        return BuyedTicketProjection.of(result.getRedirectUrl(), result.getStatus());
+        val savedTicket = ticketRepository.saveTicketBeforePayment(ticket);
+        val result = paymentSystem.generatePayment(f.format(priceAfterDiscount), currency, savedTicket.getId().toString());
+
+        return BuyedTicketProjection.of(result.getRedirectUrl(), result.getStatus(), result.getPaymentId(), result.getPayerId());
     }
 }

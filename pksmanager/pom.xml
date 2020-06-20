@@ -11,6 +11,7 @@
         <module>usermanager</module>
         <module>schedulemanager</module>
         <module>ticketmanager</module>
+        <module>reportgenerator</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

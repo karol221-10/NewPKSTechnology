@@ -1,15 +1,16 @@
 package pl.kompikownia.pksmanager.ticketmanager.business.projection;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
+import java.time.LocalDateTime;
+
 @NoArgsConstructor
+@Builder
+@Getter
 @AllArgsConstructor(staticName = "of")
-public class BuyedTicketProjection {
-    private String redirectUrl;
-    private String status;
-    private String paymentId;
-    private String payerId;
+public class CompletedPaymentProjection {
+    private byte[] qrCode;
 }
