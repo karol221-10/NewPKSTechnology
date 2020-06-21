@@ -87,6 +87,24 @@
         </dependency>
 
         <dependency>
+            <groupId>pl.kompikownia</groupId>
+            <artifactId>ticketmanager-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.kompikownia</groupId>
+            <artifactId>ticketmanager-business</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.kompikownia</groupId>
+            <artifactId>ticketmanager-infrastructure</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
