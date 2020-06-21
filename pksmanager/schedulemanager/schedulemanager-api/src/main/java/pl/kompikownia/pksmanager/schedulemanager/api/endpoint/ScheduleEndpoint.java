@@ -55,6 +55,15 @@ public class ScheduleEndpoint {
         return queryExecutor.execute(getTownListQuery);
     }
 
+    @AnonymousAccess
+    @GetMapping("/api/town/{id}")
+    public Town getTownById(@PathVariable String id) {
+        return queryExecutor.execute(new GetTownListQuery()).stream()
+                .filter(town -> town.getId().equals(Long.parseLong(id)))
+                .findFirst()
+                .orElse(null);
+    }
+
     @PostMapping("/api/town")
     public Town addNewTown(@RequestBody Town town) {
         val command = AddTownCommand.builder()
