@@ -1,6 +1,5 @@
 package pl.kompikownia.pksmanager.security.infrastructure.filter;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,10 +47,19 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        val authResult = this.attemptAuthentication(httpServletRequest, httpServletResponse);
-        if(authResult != null) {
-            this.successfulAuthentication(authResult);
+        try {
+            val authResult = this.attemptAuthentication(httpServletRequest, httpServletResponse);
+            if(authResult != null) {
+                this.successfulAuthentication(authResult);
+            }
         }
+        catch(Exception e) {
+            if(authenticationUrls.stream()
+                    .noneMatch(url -> pathMatcher.match(url, httpServletRequest.getRequestURI()))) {
+                throw e;
+            }
+        }
+
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 
@@ -75,7 +82,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         val header = httpServletRequest.getHeader(TokenFieldNames.HEADER_FIELD);
         val token = getToken(header);
         validateToken(token);
-        UserDetails userDetails = userAuthenticationRepository.findByUsername(tokenProvider.getUsernameFromToken(token));
+        UserDetails userDetails = userAuthenticationRepository.findById(tokenProvider.getUserIdFromToken(token));
         return new UsernamePasswordAuthenticationToken(
                 userDetails,
                 null,
@@ -89,13 +96,5 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         val context = SecurityContextHolder.createEmptyContext();
         context.setAuthentication(authResult);
         SecurityContextHolder.setContext(context);
-    }
-
-    @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException
-    {
-        log.debug("Request URL: "+ request.getRequestURI());
-        return authenticationUrls.stream()
-                .anyMatch(url -> pathMatcher.match(url, request.getRequestURI()));
     }
 }

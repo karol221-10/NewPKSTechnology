@@ -14,6 +14,6 @@ public class GetScheduleListWithTownsQuery implements Query<List<Schedule>> {
 
     private Long sourceTownId;
     private Long destinationTownId;
-    private LocalDateTime departureDate;
-    private LocalDateTime arrivalDate;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 }

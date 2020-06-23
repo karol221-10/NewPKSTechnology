@@ -4,6 +4,7 @@ import lombok.val;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.kompikownia.pksmanager.security.business.internal.api.annotation.AnonymousAccess;
 
@@ -22,6 +23,7 @@ public class AnonymousUrlAccessFinder {
     public static List<String> scanForAnonymousAccessEndpoints() {
         val scanner = new ClassPathScanningCandidateComponentProvider(false);
         scanner.addIncludeFilter(new AnnotationTypeFilter(RestController.class));
+        scanner.addIncludeFilter(new AnnotationTypeFilter(Controller.class));
         val beanDefinitions = scanner.findCandidateComponents("pl.kompikownia.pksmanager");
         return beanDefinitions.stream()
                 .map(bean -> {
@@ -43,7 +45,8 @@ public class AnonymousUrlAccessFinder {
                 .filter(method -> method.isAnnotationPresent(AnonymousAccess.class))
                 .collect(Collectors.toList());
         val globalAnnotation = className.getAnnotation(RestController.class);
-        val url = globalAnnotation.value();
+        val controllerAnnotation = className.getAnnotation(Controller.class);
+        val url = globalAnnotation != null ? globalAnnotation.value() : controllerAnnotation.value();
         return annotatedMethods.stream()
                 .map(AnonymousUrlAccessFinder::getMappingValue)
                 .filter(not(Optional::isEmpty))

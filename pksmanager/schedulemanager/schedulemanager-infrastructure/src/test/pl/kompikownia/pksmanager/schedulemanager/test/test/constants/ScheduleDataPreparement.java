@@ -42,11 +42,11 @@ public class ScheduleDataPreparement {
 
     static BusStop prepareBusStop(Long busStopId, LocalDateTime arrivalDate, Long townId, Long scheduleId) {
         return BusStop.builder()
-                .id(busStopId)
+                .id(busStopId.toString())
                 .arrivalDate(arrivalDate)
                 .departureDate(arrivalDate.plusMinutes(5L))
-                .scheduleId(scheduleId)
-                .townId(townId)
+                .scheduleId(scheduleId.toString())
+                .townId(townId.toString())
                 .build();
     }
 }

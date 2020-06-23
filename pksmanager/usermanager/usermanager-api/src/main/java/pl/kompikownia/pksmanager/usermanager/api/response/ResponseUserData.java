@@ -10,6 +10,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class ResponseUserData {
+    private String id;
     private String login;
     private String name;
     private String surname;

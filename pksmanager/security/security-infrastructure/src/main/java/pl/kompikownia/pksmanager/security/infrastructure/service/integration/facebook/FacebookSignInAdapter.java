@@ -46,7 +46,9 @@ public class FacebookSignInAdapter implements SignInAdapter {
     private Cookie getSocialAuthenticationCookie(String token) {
         Cookie socialAuthCookie = new Cookie("CONTEXT_DATA", token);
         socialAuthCookie.setPath("/");
-        socialAuthCookie.setMaxAge(10);
+        socialAuthCookie.setMaxAge(10000);
+        socialAuthCookie.setDomain("localhost");
+        socialAuthCookie.setHttpOnly(false);
         return socialAuthCookie;
     }
 }

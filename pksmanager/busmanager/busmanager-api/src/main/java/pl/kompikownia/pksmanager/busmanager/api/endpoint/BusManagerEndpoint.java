@@ -42,7 +42,6 @@ public class BusManagerEndpoint {
     @DeleteMapping(value = "api/bus/{id}")
     public void deleteBusById(@PathVariable("id") Long id){
         DeleteBusQuery deleteBusQuery = new DeleteBusQuery(id);
-
         queryExecutor.execute(deleteBusQuery);
     }
 

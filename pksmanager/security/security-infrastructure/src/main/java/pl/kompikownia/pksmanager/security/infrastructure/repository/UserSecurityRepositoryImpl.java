@@ -42,6 +42,14 @@ public class UserSecurityRepositoryImpl implements UserAuthenticationRepository,
 
     @Override
     @Transactional
+    public UserDetailsModel findById(String id) {
+        JPAQuery<SecurityUserEntity> query = new JPAQuery<>(entityManager);
+        val entity = query.from(securityUserEntity).where(securityUserEntity.id.eq(Long.parseLong(id))).fetchFirst();
+        return UserDetailsModel.of(entity);
+    }
+
+    @Override
+    @Transactional
     public UserProjection putNewUser(NewUserData newUserData) {
         val entityToPersist = SecurityUserEntity.of(entityManager, newUserData);
         entityToPersist.setActive(true);
