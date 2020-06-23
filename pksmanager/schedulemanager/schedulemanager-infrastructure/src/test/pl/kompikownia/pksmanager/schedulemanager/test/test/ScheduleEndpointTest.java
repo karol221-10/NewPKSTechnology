@@ -81,6 +81,7 @@ public class ScheduleEndpointTest extends IntegrationTest {
                 .arrivalDate(THIRD_BUS_DATE)
                 .departureDate(THIRD_BUS_DATE.plusMinutes(10))
                 .townId(WARSAW_TOWN_ID.toString())
+                .price("10")
                 .build();
 
         val requestJson = objectMapper.writeValueAsString(request);

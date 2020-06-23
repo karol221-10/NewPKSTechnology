@@ -80,7 +80,7 @@ public class GetTicketProposalQueryHandler extends QueryHandler<TicketProposal, 
     private List<BusStop> cutBusStopListToContainOnlyNeededTowns(String startBusStopId, String endBusStopId, Schedule schedule) {
         int startIndex = getStartIndex(startBusStopId, schedule);
         int endIndex = getEndInddex(endBusStopId, schedule);
-        return schedule.getBusStops().subList(startIndex, endIndex);
+        return schedule.getBusStops().subList(startIndex, endIndex+1);
     }
 
     private int getStartIndex(String startBusStopId, Schedule schedule) {
