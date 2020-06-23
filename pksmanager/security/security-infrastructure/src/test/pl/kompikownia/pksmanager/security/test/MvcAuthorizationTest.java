@@ -40,13 +40,7 @@ public class MvcAuthorizationTest extends SecurityIntegrationTest {
                 .build();
     }
 
-    @Test
-    public void shouldThrowBadTokenException()  {
-        assertThatThrownBy(() -> {
-            mockMvc.perform(get("/api/withoutPermission"))
-                    .andReturn();
-        }).isInstanceOf(BadTokenException.class);
-    }
+
 
     @Test
     public void shouldReturnWithoutAuth() throws Exception {
@@ -54,13 +48,6 @@ public class MvcAuthorizationTest extends SecurityIntegrationTest {
                 .andReturn();
     }
 
-    @Test
-    public void shouldAuthorizeUserWithoutPermission() throws Exception{
-        // when then
-        mockMvc.perform(get("/api/withoutPermission")
-                .header(TokenFieldNames.HEADER_FIELD,BEARER_TOKEN_TO_TEST))
-                .andExpect(status().isOk());
-    }
 
     @Test
     public void shouldNotAuthorizeWithExpiredToken() {
@@ -80,21 +67,5 @@ public class MvcAuthorizationTest extends SecurityIntegrationTest {
                     .header(TokenFieldNames.HEADER_FIELD, BEARER_BAD_SIGNATURE_TOKEN))
                     .andReturn();
         }).isInstanceOf(SignatureException.class);
-    }
-
-    @Test
-    public void shouldThrowExceptionWhenTokenWithTokenWithoutPermission() throws Exception{
-        assertThatThrownBy(() -> {
-            mockMvc.perform(get("/api/withInsufficientPermission")
-                    .header(TokenFieldNames.HEADER_FIELD, BEARER_TOKEN_TO_TEST))
-                    .andExpect(status().isOk());
-        }).isInstanceOf(NestedServletException.class);
-    }
-
-    @Test
-    public void shouldAuthorizeWithTestPermission() throws Exception {
-        mockMvc.perform(get("/api/withSufficientPermission")
-                .header(TokenFieldNames.HEADER_FIELD, BEARER_TOKEN_TO_TEST))
-                .andExpect(status().isOk());
     }
 }

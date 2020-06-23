@@ -24,6 +24,7 @@ public class GetUserListResponseMapper {
 
     private static ResponseUserData mapToResponseUserData(UserWithTypeData user) {
         return ResponseUserData.builder()
+                .id(user.getUserData().getId())
                 .name(user.getUserData().getName())
                 .surname(user.getUserData().getSurname())
                 .email(user.getUserData().getEmail())
