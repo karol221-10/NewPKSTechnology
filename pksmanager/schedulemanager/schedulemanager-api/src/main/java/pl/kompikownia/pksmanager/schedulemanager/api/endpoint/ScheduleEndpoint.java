@@ -2,6 +2,7 @@ package pl.kompikownia.pksmanager.schedulemanager.api.endpoint;
 
 import lombok.AllArgsConstructor;
 import lombok.val;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import pl.kompikownia.pksmanager.cqrs.domain.CommandExecutor;
 import pl.kompikownia.pksmanager.cqrs.domain.QueryExecutor;
@@ -20,6 +21,9 @@ import pl.kompikownia.pksmanager.schedulemanager.business.api.query.GetTownListQ
 import pl.kompikownia.pksmanager.schedulemanager.business.api.response.Town;
 import pl.kompikownia.pksmanager.security.business.internal.api.annotation.AnonymousAccess;
 
+import java.text.DateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,11 +37,16 @@ public class ScheduleEndpoint {
     private CommandExecutor commandExecutor;
 
     @AnonymousAccess
-    @GetMapping(value = "/api/schedule", params = {"sourceTownId", "destinationTownId"})
-    public GetScheduleListResponse getScheduleForTowns(@RequestParam Long sourceTownId, @RequestParam Long destinationTownId) {
+    @GetMapping(value = "/api/schedule", params = {"sourceTownId", "destinationTownId", "startTime", "endTime"})
+    public GetScheduleListResponse getScheduleForTowns(@RequestParam Long sourceTownId, @RequestParam Long destinationTownId,
+                                                       @RequestParam String startTime,
+                                                       @RequestParam String endTime) {
+        DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
         GetScheduleListWithTownsQuery getScheduleListWithTownsQuery = GetScheduleListWithTownsQuery.builder()
                 .sourceTownId(sourceTownId)
                 .destinationTownId(destinationTownId)
+                .startTime(LocalDateTime.parse(startTime, dateTimeFormat))
+                .endTime(LocalDateTime.parse(endTime, dateTimeFormat))
                 .build();
 
         return GetScheduleListResponseMapper.map(queryExecutor.execute(getScheduleListWithTownsQuery));

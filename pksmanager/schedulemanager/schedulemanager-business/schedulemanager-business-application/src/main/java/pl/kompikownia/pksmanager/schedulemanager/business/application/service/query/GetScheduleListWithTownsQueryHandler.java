@@ -13,6 +13,7 @@ import pl.kompikownia.pksmanager.schedulemanager.business.application.projection
 import pl.kompikownia.pksmanager.schedulemanager.business.application.repository.ScheduleRepository;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
@@ -29,10 +30,10 @@ public class GetScheduleListWithTownsQueryHandler extends QueryHandler<List<Sche
     @Override
     @Transactional
     public List<Schedule> handle(GetScheduleListWithTownsQuery query) {
-        return handleInternal(query.getSourceTownId(), query.getDestinationTownId());
+        return handleInternal(query.getSourceTownId(), query.getDestinationTownId(), query.getStartTime(), query.getEndTime());
     }
 
-    public List<Schedule> handleInternal(long sourceTownId, long destinationTownId) {
+    public List<Schedule> handleInternal(long sourceTownId, long destinationTownId, LocalDateTime startTime, LocalDateTime endTime) {
         val existingSchedules = scheduleRepository.findCoursesByTownId(sourceTownId, destinationTownId);
 
         val schedulesWithNeededTowns = existingSchedules.stream()
@@ -46,7 +47,11 @@ public class GetScheduleListWithTownsQueryHandler extends QueryHandler<List<Sche
         val afterCalculations = schedulesWithNeededTowns.stream()
                 .filter(scheduleProjection -> !scheduleProjection.getBusStops().isEmpty())
                 .collect(Collectors.toList());
-        return afterCalculations.stream()
+        val afterTimeFiltering = afterCalculations.stream()
+                .filter(scheduleProjection -> scheduleProjection.getBusStops().get(0).getArrivalDate().isAfter(startTime)
+                && scheduleProjection.getBusStops().get(0).getArrivalDate().isBefore(endTime))
+                .collect(Collectors.toList());
+        return afterTimeFiltering.stream()
                 .map(ScheduleMapper::map)
                 .collect(Collectors.toList());
     }
