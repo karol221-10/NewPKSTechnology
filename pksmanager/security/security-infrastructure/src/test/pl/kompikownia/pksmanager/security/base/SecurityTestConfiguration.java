@@ -11,8 +11,10 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import pl.kompikownia.pksmanager.cqrs.configuration.CqrsConfiguration;
+import pl.kompikownia.pksmanager.security.business.context.ContextHolder;
 import pl.kompikownia.pksmanager.security.infrastructure.configuration.DateResolver;
 import pl.kompikownia.pksmanager.security.infrastructure.configuration.WebSecurityConfig;
+import pl.kompikownia.pksmanager.security.infrastructure.service.integration.facebook.FacebookConnectionSignup;
 import pl.kompikownia.pksmanager.security.test.Constants;
 
 import static org.mockito.Mockito.when;
@@ -43,5 +45,15 @@ public class SecurityTestConfiguration {
         val dateResolver = Mockito.mock(DateResolver.class);
         when(dateResolver.getActualDate()).thenReturn(Constants.ACTUAL_DATE_MOCK);
         return dateResolver;
+    }
+
+    @Bean
+    ContextHolder contextHolder() {
+        return Mockito.mock(ContextHolder.class);
+    }
+
+    @Bean
+    FacebookConnectionSignup facebookConnectionSignup() {
+        return Mockito.mock(FacebookConnectionSignup.class);
     }
 }

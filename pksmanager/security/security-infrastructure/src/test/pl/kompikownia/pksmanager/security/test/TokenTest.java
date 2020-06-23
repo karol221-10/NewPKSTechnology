@@ -48,7 +48,7 @@ public class TokenTest extends SecurityIntegrationTest {
     @Test
     public void shouldReturnUsernameFromToken() {
         // when
-        val username = tokenProvider.getUsernameFromToken(TOKEN_TO_TEST);
+        val username = tokenProvider.getUserIdFromToken(TOKEN_TO_TEST);
 
         // then
         assertThat(username).isEqualTo(TEST_USER);
